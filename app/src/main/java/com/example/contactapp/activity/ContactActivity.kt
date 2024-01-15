@@ -4,10 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.viewpager2.widget.ViewPager2
-import com.example.contactapp.fragment.ContactListFragment
-import com.example.contactapp.fragment.DetailFragment
+import com.example.contactapp.MyPageFragment
 import com.example.contactapp.adaptor.ViewPager2Adapter
 import com.example.contactapp.databinding.ActivityContactBinding
+import com.example.contactapp.fragment.ContactListFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
 class ContactActivity : AppCompatActivity() {
@@ -23,15 +23,13 @@ class ContactActivity : AppCompatActivity() {
 
     private fun initViewPager() {
         //ViewPager2 Adapter 셋팅
-        var viewPager2Adatper = ViewPager2Adapter(this)
-        viewPager2Adatper.addFragment(ContactListFragment())
-        viewPager2Adatper.addFragment(DetailFragment())
-        // TODO : add fragment to add to the bar
-//        viewPager2Adatper.addFragment(Tab3Fragment())
+        var viewPager2Adapter = ViewPager2Adapter(this)
+        viewPager2Adapter.addFragment(ContactListFragment())
+        viewPager2Adapter.addFragment(MyPageFragment())
 
         //Adapter 연결
         binding.viewPagerContactActivitySwipe.apply {
-            adapter = viewPager2Adatper
+            adapter = viewPager2Adapter
 
             registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             })
