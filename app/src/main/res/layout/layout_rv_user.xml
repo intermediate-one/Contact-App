@@ -7,7 +7,7 @@
     android:background="@drawable/stroke_recycler_view_background">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/ivUser"
+        android:id="@+id/iv_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -20,19 +20,19 @@
         app:shapeAppearanceOverlay="@style/RoundImage" />
 
     <TextView
-        android:id="@+id/tvUserName"
+        android:id="@+id/tv_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="@string/app_name"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/ivUser"
-        app:layout_constraintStart_toEndOf="@+id/ivUser"
-        app:layout_constraintTop_toTopOf="@+id/ivUser" />
+        app:layout_constraintBottom_toBottomOf="@+id/iv_user"
+        app:layout_constraintStart_toEndOf="@+id/iv_user"
+        app:layout_constraintTop_toTopOf="@+id/iv_user" />
 
     <ImageView
-        android:id="@+id/ivFavorite"
+        android:id="@+id/iv_favorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
@@ -42,7 +42,7 @@
         android:src="@tools:sample/avatars"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tvUserName"
+        app:layout_constraintStart_toEndOf="@+id/tv_user_name"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/btn_star_big_off" />
 </androidx.constraintlayout.widget.ConstraintLayout>
