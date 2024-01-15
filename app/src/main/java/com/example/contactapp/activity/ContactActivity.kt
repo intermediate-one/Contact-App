@@ -4,7 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.viewpager2.widget.ViewPager2
-import com.example.contactapp.ContactListFragmentActivity
+import com.example.contactapp.fragment.ContactListFragmentActivity
+import com.example.contactapp.fragment.DetailFragment
 import com.example.contactapp.adaptor.ViewPager2Adapter
 import com.example.contactapp.databinding.ActivityContactBinding
 import com.google.android.material.tabs.TabLayoutMediator
@@ -24,8 +25,8 @@ class ContactActivity : AppCompatActivity() {
         //ViewPager2 Adapter 셋팅
         var viewPager2Adatper = ViewPager2Adapter(this)
         viewPager2Adatper.addFragment(ContactListFragmentActivity())
-        // TODO : 프래그먼트 추가 시 어댑터에 연결해주기
-//        viewPager2Adatper.addFragment(Tab2Fragment())
+        viewPager2Adatper.addFragment(DetailFragment())
+        // TODO : add fragment to add to the bar
 //        viewPager2Adatper.addFragment(Tab3Fragment())
 
         //Adapter 연결
