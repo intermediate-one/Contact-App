@@ -24,6 +24,7 @@ class ContactActivity : AppCompatActivity() {
         //ViewPager2 Adapter 셋팅
         var viewPager2Adatper = ViewPager2Adapter(this)
         viewPager2Adatper.addFragment(ContactListFragmentActivity())
+        // TODO : 프래그먼트 추가 시 어댑터에 연결해주기
 //        viewPager2Adatper.addFragment(Tab2Fragment())
 //        viewPager2Adatper.addFragment(Tab3Fragment())
 
@@ -32,9 +33,6 @@ class ContactActivity : AppCompatActivity() {
             adapter = viewPager2Adatper
 
             registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    super.onPageSelected(position)
-                }
             })
         }
 
