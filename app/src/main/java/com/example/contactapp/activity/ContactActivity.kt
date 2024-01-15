@@ -23,15 +23,15 @@ class ContactActivity : AppCompatActivity() {
 
     private fun initViewPager() {
         //ViewPager2 Adapter 셋팅
-        var viewPager2Adatper = ViewPager2Adapter(this)
-        viewPager2Adatper.addFragment(ContactListFragmentActivity())
-        viewPager2Adatper.addFragment(DetailFragment())
-        // TODO : add fragment to add to the bar
+        var viewPager2Adapter = ViewPager2Adapter(this)
+        viewPager2Adapter.addFragment(ContactListFragmentActivity())
+        viewPager2Adapter.addFragment(DetailFragment())
+        // TODO : fix the fragment the current one is not the valid fragment
 //        viewPager2Adatper.addFragment(Tab3Fragment())
 
         //Adapter 연결
         binding.viewPagerContactActivitySwipe.apply {
-            adapter = viewPager2Adatper
+            adapter = viewPager2Adapter
 
             registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             })
