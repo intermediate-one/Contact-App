@@ -3,7 +3,6 @@ package com.example.contactapp
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.contactapp.databinding.LayoutFragmentContactListBinding
 import com.example.contactapp.databinding.LayoutRvUserBinding
 
 class ContactListAdapter:RecyclerView.Adapter<ContactListAdapter.Holder>() {
