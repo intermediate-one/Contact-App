@@ -93,7 +93,8 @@ class DetailFragment : Fragment() {
         //리스트로 데이터 보내기
         binding.layoutDetailBack.setOnClickListener {
             val bundle = Bundle()
-            bundle.putParcelable(Contants.ITEM_DATA,data)
+//            bundle.putParcelable(Contants.ITEM_DATA,data)
+            bundle.putBoolean(Contants.ITEM_LIKE,isLike)
             bundle.putParcelable(Contants.ITEM_INDEX,position)
             val fragmentList = ContactListFragment()
             fragmentList.arguments = bundle
