@@ -11,26 +11,13 @@ import com.example.contactapp.data.ContactData
 import com.example.contactapp.data.Contants
 import com.example.contactapp.databinding.FragmentDetailBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-//private const val ARG_PARAM1 = "param1"
-//private const val ARG_PARAM2 = "param2"
-
-///**
-// * A simple [Fragment] subclass.
-// * Use the [DetailFragment.newInstance] factory method to
-// * create an instance of this fragment.
-// */
 class DetailFragment : Fragment() {
-//    private val binding by lazy { FragmentDetailBinding.inflate(layoutInflater) }
     //메모리 누수를 막기 위해
     private var _binding : FragmentDetailBinding? = null
     private val binding get() = _binding!!
 
     //데이터 받아오기
     private val data : ContactData? by lazy {
-//        arguments?.getParcelable(Contants.ITEM_DATA,ContactData::class.java)
-//        arguments?.getParcelable<ContactData>(Contants.ITEM_DATA)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             arguments?.getParcelable(Contants.ITEM_DATA,ContactData::class.java)
         }else {
@@ -48,10 +35,8 @@ class DetailFragment : Fragment() {
 //    override fun onCreate(savedInstanceState: Bundle?) {
 //        super.onCreate(savedInstanceState)
 //        arguments?.let {
-//            param1 = it.getString(ARG_PARAM1)
-//            param2 = it.getString(ARG_PARAM2)
-//        }
 
+//        }
 //    }
 
     override fun onCreateView(
