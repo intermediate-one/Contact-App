@@ -1,11 +1,14 @@
 package com.example.contactapp.fragment
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentTransaction
 import com.example.contactapp.R
 import com.example.contactapp.data.ContactData
 import com.example.contactapp.data.Contants
@@ -26,9 +29,9 @@ class DetailFragment : Fragment() {
     }
     private val position : ContactData? by lazy {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            arguments?.getParcelable(Contants.IEIM_INDEX,ContactData::class.java)
+            arguments?.getParcelable(Contants.ITEM_INDEX,ContactData::class.java)
         }else {
-            arguments?.getParcelable<ContactData>(Contants.IEIM_INDEX)
+            arguments?.getParcelable<ContactData>(Contants.ITEM_INDEX)
         }
     }
 //    onCreate 생략가능 -> 데이터를
@@ -55,9 +58,36 @@ class DetailFragment : Fragment() {
         binding.ivDetailPerson.setImageResource(data?.profileImage as Int)
         binding.tvDetailMobilePerson.text = data?.phoneNumber
         binding.tvDetailEmailPerson.text = data?.email
-        //리스트로 데이터 보내기
+        //뒤로가기
         binding.layoutDetailBack.setOnClickListener {
+            val fragmentList = ContactListFragment()
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.viewPager_contact_activity_swipe,fragmentList)
+                .addToBackStack(null)
+                .commit()
+        }
+//        //리스트로 데이터 보내기
+//        binding.layoutDetailBack.setOnClickListener {
+//            val bundle = Bundle()
+//            bundle.putParcelable(Contants.ITEM_DATA,data)
+//            bundle.putParcelable(Contants.ITEM_INDEX,position)
+//            val fragmentList = ContactListFragment()
+//            fragmentList.arguments = bundle
+//            requireActivity().supportFragmentManager.beginTransaction()
+//                .replace(R.id.viewPager_contact_activity_swipe,fragmentList)
+//                .addToBackStack(null)
+//                .commit()
+//        }
 
+        //문자보내기
+        binding.btnDetailMessage.setOnClickListener {
+            val mobileNumber = binding.tvDetailMobilePerson.text
+            startActivity(Intent(Intent.ACTION_CALL, Uri.parse("tel:${mobileNumber}")))
+        }
+        //전화하기
+        binding.btnDetailCall.setOnClickListener {
+            val mobileNumber = binding.tvDetailMobilePerson.text
+            startActivity(Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:${mobileNumber}")))
         }
 
     }
