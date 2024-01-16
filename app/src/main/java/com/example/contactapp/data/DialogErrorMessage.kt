@@ -1,6 +1,7 @@
-package com.example.contactapp
+package com.example.contactapp.data
 
 import androidx.annotation.StringRes
+import com.example.contactapp.R
 
 enum class DialogErrorMessage(@StringRes val message: Int) {
     EMPTY_NAME(R.string.empty_name),
