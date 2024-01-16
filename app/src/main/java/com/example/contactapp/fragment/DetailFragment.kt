@@ -57,7 +57,7 @@ class DetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //리스트에서 데이터 받기
-        binding.tvDetailNamePerson.text = data?.name
+        binding.tvDetailName.text = data?.name
         binding.ivDetailPerson.setImageResource(data?.profileImage as Int)
         binding.tvDetailMobilePerson.text = data?.phoneNumber
         binding.tvDetailEmailPerson.text = data?.email
