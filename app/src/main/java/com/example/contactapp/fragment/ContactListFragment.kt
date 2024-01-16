@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.contactapp.R
+import com.example.contactapp.adaptor.ContactListAdapter
+import com.example.contactapp.databinding.LayoutFragmentContactListBinding
 
 
 private const val ARG_PARAM1 = "param1"
@@ -15,6 +17,9 @@ private const val ARG_PARAM2 = "param2"
 class ContactListFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
+
+    private var _binding:LayoutFragmentContactListBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,12 +32,15 @@ class ContactListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.layout_fragment_contact_list, container, false)
+    ): View {
+        _binding = LayoutFragmentContactListBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val clAdapter = ContactListAdapter()
+        binding.recyclerView.adapter = clAdapter
     }
 
     companion object {
@@ -44,5 +52,10 @@ class ContactListFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
