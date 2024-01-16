@@ -5,16 +5,16 @@ import com.example.contactapp.R
 object ContactDatabase {
 
     // Dummy Data
-    private val contact1 = ContactData("김은이", R.drawable.star_empty, "01012345678", "euny1234@gmail.com")
-    private val contact2 = ContactData("김은이", R.drawable.call_logo, "010129292929", "euny12314@gmail.com")
-    private val contact3 = ContactData("김은이", R.drawable.star_empty, "01012345448", "euny123411@gmail.com")
-    private val contact4 = ContactData("김은이", R.drawable.star_empty, "01013883838", "euny1234111@gmail.com")
-    private val contact5 = ContactData("김은이", R.drawable.star_empty, "01012345678", "euny12341111@gmail.com")
-    private val contact6 = ContactData("김은이", R.drawable.star_empty, "01012345678", "euny113413234@gmail.com")
-    private val contact7 = ContactData("김은이", R.drawable.star_empty, "01012345678", "euny1234111111@gmail.com")
-    private val contact8 = ContactData("김은이", R.drawable.star_empty, "01012345678", "euny12312314@gmail.com")
-    private val contact9 = ContactData("김은이", R.drawable.star_empty, "01012345678", "euny1234134@gmail.com")
-    private val contact10 = ContactData("김은이", R.drawable.star_empty, "01012345678", "euny1231341344@gmail.com")
+    private val contact1 = ContactData("김은이", R.drawable.star_empty, "01012345678", "euny1234@gmail.com",false)
+    private val contact2 = ContactData("김은이", R.drawable.call_logo, "010129292929", "euny12314@gmail.com",false)
+    private val contact3 = ContactData("김은이", R.drawable.star_empty, "01012345448", "euny123411@gmail.com",false)
+    private val contact4 = ContactData("김은이", R.drawable.star_empty, "01013883838", "euny1234111@gmail.com",false)
+    private val contact5 = ContactData("김은이", R.drawable.star_empty, "01012345678", "euny12341111@gmail.com",false)
+    private val contact6 = ContactData("김은이", R.drawable.star_empty, "01012345678", "euny113413234@gmail.com",false)
+    private val contact7 = ContactData("김은이", R.drawable.star_empty, "01012345678", "euny1234111111@gmail.com",false)
+    private val contact8 = ContactData("김은이", R.drawable.star_empty, "01012345678", "euny12312314@gmail.com",false)
+    private val contact9 = ContactData("김은이", R.drawable.star_empty, "01012345678", "euny1234134@gmail.com",false)
+    private val contact10 = ContactData("김은이", R.drawable.star_empty, "01012345678", "euny1231341344@gmail.com",false)
 
 
     var totalContactData: ArrayList<ContactData> = arrayListOf(contact1, contact2, contact3, contact4, contact5, contact6, contact7, contact8, contact9, contact10)

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
 import com.example.contactapp.R
 import com.example.contactapp.data.ContactData
@@ -18,6 +19,9 @@ class DetailFragment : Fragment() {
     //메모리 누수를 막기 위해
     private var _binding : FragmentDetailBinding? = null
     private val binding get() = _binding!!
+
+    //즐겨찾기 상태
+    private var isLike = false
 
     //데이터 받아오기
     private val data : ContactData? by lazy {
@@ -38,7 +42,6 @@ class DetailFragment : Fragment() {
 //    override fun onCreate(savedInstanceState: Bundle?) {
 //        super.onCreate(savedInstanceState)
 //        arguments?.let {
-
 //        }
 //    }
 
@@ -58,26 +61,47 @@ class DetailFragment : Fragment() {
         binding.ivDetailPerson.setImageResource(data?.profileImage as Int)
         binding.tvDetailMobilePerson.text = data?.phoneNumber
         binding.tvDetailEmailPerson.text = data?.email
-        //뒤로가기
-        binding.layoutDetailBack.setOnClickListener {
-            val fragmentList = ContactListFragment()
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.viewPager_contact_activity_swipe,fragmentList)
-                .addToBackStack(null)
-                .commit()
+
+        isLike = data?.isLike == true
+        //즐겨찾기 눌렀을 때와 안 눌렀을 때
+        binding.ivDetailStar.setImageResource(if(isLike)R.drawable.star_full else R.drawable.star_empty)
+
+        //즐겨찾기 눌렀을 때
+        binding.ivDetailStar.setOnClickListener {
+            if (!isLike) {
+                binding.ivDetailStar.setImageResource(R.drawable.star_full)
+                Toast.makeText(context,R.string.detail_favorite,Toast.LENGTH_SHORT).show()
+                isLike = true
+                //그 외
+            }else {
+                binding.ivDetailStar.setImageResource(R.drawable.star_empty)
+                Toast.makeText(context,R.string.detail_favorite_del,Toast.LENGTH_SHORT).show()
+                isLike = false
+            }
         }
-//        //리스트로 데이터 보내기
+
+
+
+        //뒤로가기
 //        binding.layoutDetailBack.setOnClickListener {
-//            val bundle = Bundle()
-//            bundle.putParcelable(Contants.ITEM_DATA,data)
-//            bundle.putParcelable(Contants.ITEM_INDEX,position)
 //            val fragmentList = ContactListFragment()
-//            fragmentList.arguments = bundle
 //            requireActivity().supportFragmentManager.beginTransaction()
 //                .replace(R.id.viewPager_contact_activity_swipe,fragmentList)
 //                .addToBackStack(null)
 //                .commit()
 //        }
+        //리스트로 데이터 보내기
+        binding.layoutDetailBack.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putParcelable(Contants.ITEM_DATA,data)
+            bundle.putParcelable(Contants.ITEM_INDEX,position)
+            val fragmentList = ContactListFragment()
+            fragmentList.arguments = bundle
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.viewPager_contact_activity_swipe,fragmentList)
+                .addToBackStack(null)
+                .commit()
+        }
 
         //문자보내기
         binding.btnDetailMessage.setOnClickListener {

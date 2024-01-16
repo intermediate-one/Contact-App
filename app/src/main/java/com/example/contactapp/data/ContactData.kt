@@ -9,4 +9,5 @@ data class ContactData (
     var profileImage: Int,
     var phoneNumber: String,
     var email: String,
+    var isLike : Boolean
 ):Parcelable
