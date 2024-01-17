@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.viewpager2.widget.ViewPager2
-import com.example.contactapp.MyPageFragment
+import com.example.contactapp.fragment.MyPageFragment
 import com.example.contactapp.adaptor.ViewPager2Adapter
 import com.example.contactapp.databinding.ActivityContactBinding
 import com.example.contactapp.fragment.ContactListFragment
