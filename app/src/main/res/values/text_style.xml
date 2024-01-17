@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="text17">
+        <item name="android:textSize">17sp</item>
+    </style>
+    <style name="text17.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="text20">
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="text20.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+</resources>
