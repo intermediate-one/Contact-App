@@ -15,4 +15,18 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="text35">
+        <item name="android:textSize">35sp</item>
+    </style>
+    <style name="text35.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="text25">
+        <item name="android:textSize">25sp</item>
+    </style>
+    <style name="text25.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

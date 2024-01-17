@@ -26,6 +26,12 @@ private const val GRID_LAYOUT = -1
 class ContactListAdapter(private val userDataList:ArrayList<ContactData>):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var holdList:Holder
     private lateinit var holdGrid:Hold
+
+    interface ItemClick {
+        fun onClick(view : View, position:Int)
+    }
+    var itemClick : ItemClick? = null
+
     inner class Holder(binding: LayoutRvUserBinding):RecyclerView.ViewHolder(binding.root) {
         val image = binding.ivRvUser
         val name = binding.tvRvUserName
@@ -61,6 +67,11 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
 
     // 홀더부터 다시
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        holder.itemView.setOnClickListener{
+            itemClick?.onClick(it,position)
+
+        }
+
         when(listGrid) {
             1 -> {
                 holdList = holder as Holder

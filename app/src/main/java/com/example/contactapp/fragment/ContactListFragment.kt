@@ -7,11 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.contactapp.R
 import com.example.contactapp.activity.ContactActivity
 import com.example.contactapp.adaptor.ContactListAdapter
+import com.example.contactapp.data.ContactData
 import com.example.contactapp.data.ContactDatabase
+import com.example.contactapp.data.Contants
+import com.example.contactapp.data.Contants.ITEM_DATA
 import com.example.contactapp.databinding.FragmentContactListBinding
 
 
@@ -73,6 +78,7 @@ class ContactListFragment : Fragment() {
                 }
             }
         }
+
     }
 
     companion object {
@@ -100,4 +106,5 @@ class ContactListFragment : Fragment() {
         Toast.makeText(mainPage,s,Toast.LENGTH_SHORT).show()
 
     }
+
 }
