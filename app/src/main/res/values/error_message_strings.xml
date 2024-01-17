@@ -6,4 +6,7 @@
     <string name="invalid_name">옳지 않은 이름 형식입니다.</string>
     <string name="invalid_number">유효하지 않은 번호입니다.</string>
     <string name="invalid_email">유효하지 않은 이메일 형식입니다.</string>
+    <string name="invalid_address">유효하지 않는 주소입니다.</string>
+    <string name="invalid_mbti">유효하지 않은 MBTiles.</string>
+    <string name="invalid_memo">최대 100자 까지 작성 가능합니다.</string>
 </resources>

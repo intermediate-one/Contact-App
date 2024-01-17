@@ -40,12 +40,13 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
-                        <TextView
-                            android:id="@+id/btn_add_contact_edit"
+                        <Button
+                            android:id="@+id/btn_add_contact_complete"
                             style="@style/text25.bold"
-                            android:layout_width="80dp"
-                            android:layout_height="50dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:backgroundTint="@color/color_code_3"
                             android:text="@string/add_contact_confirm"
                             android:textColor="@color/white"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -122,8 +123,25 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
-                    android:inputType="number"
+                    android:inputType="phone"
                     app:layout_constraintTop_toBottomOf="@+id/tv_add_contact_number" />
+                <TextView
+                    android:id="@+id/tv_add_contact_address"
+                    style="@style/text20.bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/add_contact_address"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_add_contact_number" />
+
+                <EditText
+                    android:id="@+id/et_add_contact_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:inputType="textPostalAddress"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_add_contact_address" />
 
                 <TextView
                     android:id="@+id/tv_add_contact_email"
@@ -133,7 +151,7 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/detail_email"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_add_contact_number" />
+                    app:layout_constraintTop_toBottomOf="@+id/et_add_contact_address" />
 
                 <EditText
                     android:id="@+id/et_add_contact_email"
@@ -181,14 +199,17 @@
                     android:text="@string/add_contact_birth"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/iv_add_contact_add_group" />
-
-                <EditText
-                    android:id="@+id/et_add_contact_birthday"
-                    android:layout_width="match_parent"
+                <Button
+                    android:id="@id/btn_add_contact_date_picker"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
-                    android:inputType="date"
+                    android:outlineAmbientShadowColor="@color/color_code_5"
+                    android:textColor="@color/white"
+                    android:text="@string/add_contact_select"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_add_contact_birthday" />
+
 
 
                 <TextView
@@ -196,10 +217,10 @@
                     style="@style/text20.bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="20dp"
                     android:text="@string/add_contact_mbti"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_add_contact_birthday" />
+                    app:layout_constraintTop_toBottomOf="@+id/btn_add_contact_date_picker" />
 
 
                 <EditText

@@ -9,5 +9,10 @@ data class ContactData (
     var profileImage: Int,
     var phoneNumber: String,
     var email: String,
+    var group: Int,
+    var birthday: Int,
+    var mbti: String,
+    var memo: String,
+    var notification: Int?,
     var favorite: Boolean
 ):Parcelable
