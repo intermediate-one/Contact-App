@@ -78,7 +78,7 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
                 holdList = holder as Holder
                 with(holdList) {
                     name.text = userDataList[position].name
-                    image.setImageResource(R.drawable.user_profile_empty)
+                    image.setImageResource(userDataList[position].profileImage)
                     favorite.setOnClickListener {
                         when (userDataList[position].favorite) {
                             true -> {
@@ -99,7 +99,7 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
                 holdGrid = holder as Hold
                 with (holdGrid) {
                     name.text = userDataList[position].name
-                    image.setImageResource(R.drawable.user_profile_empty)
+                    image.setImageResource(userDataList[position].profileImage)
                     favorite.setOnClickListener {
                         when (userDataList[position].favorite) {
                             true -> {
