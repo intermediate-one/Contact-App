@@ -20,10 +20,12 @@ import com.example.contactapp.fragment.ContactListFragment.Companion.listGrid
 import java.lang.Exception
 
 
-private const val LINEAR_LAYOUT = 0
-private const val GRID_LAYOUT = 1
+private const val LINEAR_LAYOUT = 1
+private const val GRID_LAYOUT = -1
 
 class ContactListAdapter(private val userDataList:ArrayList<ContactData>):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private lateinit var holdList:Holder
+    private lateinit var holdGrid:Hold
     inner class Holder(binding: LayoutRvUserBinding):RecyclerView.ViewHolder(binding.root) {
         val image = binding.ivRvUser
         val name = binding.tvRvUserName
@@ -35,47 +37,58 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
         val name = binding.tvUserNameGrid
     }
 
-    override fun getItemViewType(position: Int) = listGrid
+    override fun getItemViewType(position: Int):Int {   // 필요한지?
+        when(listGrid) {
+            LINEAR_LAYOUT -> {
+                listGrid = LINEAR_LAYOUT
+                return LINEAR_LAYOUT
+            }
+            GRID_LAYOUT -> {
+                listGrid = GRID_LAYOUT
+                return GRID_LAYOUT
+            }
+        }
+        return listGrid
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):RecyclerView.ViewHolder {
-        when(listGrid) {
-            0 -> return Holder(LayoutRvUserBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-            1 -> return Hold(LayoutRvUserGridBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return when(listGrid) {
+            1 -> Holder(LayoutRvUserBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            -1 -> Hold(LayoutRvUserGridBinding.inflate(LayoutInflater.from(parent.context), parent, false))
             else -> throw Exception("Adapter 연결에 실패함")
         }
     }
 
     // 홀더부터 다시
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        var hold = holder as Holder
-            when(listGrid) {
-            0 -> holder as Holder
-            1 -> holder as Hold
-            else -> throw Exception("Holder를 Casting 할 수 없습니다.")
-        }
+        when(listGrid) {
+            1 -> {
+                holdList = holder as Holder
+                with(holdList) {
+                    name.text = userDataList[position].name
+                    image.setImageResource(R.drawable.user_profile_empty)
+                    favorite.setOnClickListener {
+                        when (userDataList[position].favorite) {
+                            true -> {
+                                userDataList[position].favorite = false
+                                favorite.setImageResource(R.drawable.star_empty)
+                            }
 
-        with(hold) {
-            hold.name.text = userDataList[position].name
-            image.setImageResource(R.drawable.user_profile_empty)
-            favorite.setOnClickListener {
-                when (userDataList[position].favorite) {
-                    true -> {
-                        userDataList[position].favorite = false
-                        favorite.setImageResource(R.drawable.star_empty)
-                    }
-
-                    false -> {
-                        userDataList[position].favorite = true
-                        favorite.setImageResource(R.drawable.star_full)
+                            false -> {
+                                userDataList[position].favorite = true
+                                favorite.setImageResource(R.drawable.star_full)
+                            }
+                        }
+                        userId = position
+                        ContactListAdapter(userDataList).notifyItemChanged(position)
                     }
                 }
-                userId = position
-                ContactListAdapter(userDataList).notifyItemChanged(position)
             }
-        }
-        with (hold) {
-            name.text = userDataList[position].name
-            image.setImageResource(R.drawable.user_profile_empty)
+            -1 -> {
+                holdGrid = holder as Hold
+                with (holdGrid) {
+                    name.text = userDataList[position].name
+                    image.setImageResource(R.drawable.user_profile_empty)
 //            favorite.setOnClickListener {
 //                when (userDataList[position].favorite) {
 //                    true -> {
@@ -91,6 +104,9 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
 //                userId = position
 //                ContactListAdapter(userDataList).notifyItemChanged(position)
 //            }
+                }
+            }
+            else -> throw Exception("Holder를 Casting 할 수 없습니다.")
         }
     }
 
