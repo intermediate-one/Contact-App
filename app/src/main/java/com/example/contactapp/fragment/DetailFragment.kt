@@ -23,21 +23,21 @@ class DetailFragment : Fragment() {
     //즐겨찾기 상태
     private var isFavorite = false
 
-    //데이터 받아오기
-    private val data : ContactData? by lazy {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            arguments?.getParcelable(Contants.ITEM_DATA,ContactData::class.java)
-        }else {
-            arguments?.getParcelable<ContactData>(Contants.ITEM_DATA)
-        }
-    }
-    private val position : ContactData? by lazy {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            arguments?.getParcelable(Contants.ITEM_INDEX,ContactData::class.java)
-        }else {
-            arguments?.getParcelable<ContactData>(Contants.ITEM_INDEX)
-        }
-    }
+//    //데이터 받아오기
+//    private val data : ContactData? by lazy {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//            arguments?.getParcelable(Contants.ITEM_DATA,ContactData::class.java)
+//        }else {
+//            arguments?.getParcelable<ContactData>(Contants.ITEM_DATA)
+//        }
+//    }
+//    private val position : ContactData? by lazy {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//            arguments?.getParcelable(Contants.ITEM_INDEX,ContactData::class.java)
+//        }else {
+//            arguments?.getParcelable<ContactData>(Contants.ITEM_INDEX)
+//        }
+//    }
 //    onCreate 생략가능 -> 데이터를
 //    override fun onCreate(savedInstanceState: Bundle?) {
 //        super.onCreate(savedInstanceState)
@@ -56,13 +56,13 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //리스트에서 데이터 받기
-        binding.tvDetailName.text = data?.name
-        binding.ivDetailPerson.setImageResource(data?.profileImage as Int)
-        binding.tvDetailMobilePerson.text = data?.phoneNumber
-        binding.tvDetailEmailPerson.text = data?.email
-
-        isFavorite = data?.favorite == true
+//        //리스트에서 데이터 받기
+//        binding.tvDetailName.text = data?.name
+//        binding.ivDetailPerson.setImageResource(data?.profileImage as Int)
+//        binding.tvDetailMobilePerson.text = data?.phoneNumber
+//        binding.tvDetailEmailPerson.text = data?.email
+//
+//        isFavorite = data?.favorite == true
         //즐겨찾기 눌렀을 때와 안 눌렀을 때
         binding.ivDetailStar.setImageResource(if(isFavorite)R.drawable.star_full else R.drawable.star_empty)
 
@@ -91,18 +91,18 @@ class DetailFragment : Fragment() {
 //                .commit()
 //        }
         //리스트로 데이터 보내기
-        binding.layoutDetailBack.setOnClickListener {
-            val bundle = Bundle()
-//            bundle.putParcelable(Contants.ITEM_DATA,data)
-            bundle.putBoolean(Contants.ITEM_LIKE,isFavorite)
-            bundle.putParcelable(Contants.ITEM_INDEX,position)
-            val fragmentList = ContactListFragment()
-            fragmentList.arguments = bundle
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.viewPager_contact_activity_swipe,fragmentList)
-                .addToBackStack(null)
-                .commit()
-        }
+//        binding.layoutDetailBack.setOnClickListener {
+//            val bundle = Bundle()
+////            bundle.putParcelable(Contants.ITEM_DATA,data)
+//            bundle.putBoolean(Contants.ITEM_LIKE,isFavorite)
+//            bundle.putParcelable(Contants.ITEM_INDEX,position)
+//            val fragmentList = ContactListFragment()
+//            fragmentList.arguments = bundle
+//            requireActivity().supportFragmentManager.beginTransaction()
+//                .replace(R.id.viewPager_contact_activity_swipe,fragmentList)
+//                .addToBackStack(null)
+//                .commit()
+//        }
 
         //문자보내기
         binding.btnDetailMessage.setOnClickListener {
