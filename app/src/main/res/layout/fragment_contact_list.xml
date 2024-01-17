@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_code_2"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+        app:layout_constraintBottom_toTopOf="@id/recyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -25,13 +25,18 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
+            android:background="@drawable/edittext_focused_background"
             android:ems="10"
             android:hint="@string/user_name_in_here"
             android:inputType="text"
+            android:maxLines="1"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btnUserSearch"
+            app:layout_constraintEnd_toStartOf="@id/btnUserSearch"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -46,9 +51,10 @@
             android:background="@drawable/icon_click_recycler_view_background"
             android:scaleType="fitXY"
             android:src="@android:drawable/ic_menu_search"
-            app:layout_constraintBottom_toBottomOf="@+id/btnListGrid"
-            app:layout_constraintEnd_toStartOf="@+id/btnListGrid"
-            app:layout_constraintTop_toTopOf="@+id/btnListGrid" />
+            android:contentDescription="@string/contact_list_description"
+            app:layout_constraintBottom_toBottomOf="@id/btnListGrid"
+            app:layout_constraintEnd_toStartOf="@id/btnListGrid"
+            app:layout_constraintTop_toTopOf="@id/btnListGrid" />
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/btnListGrid"
@@ -60,6 +66,7 @@
             android:background="@drawable/icon_click_recycler_view_background"
             android:scaleType="centerInside"
             android:src="@drawable/icon_grid_black"
+            android:contentDescription="@string/contact_list_description"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -69,10 +76,12 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/innerConstraintLayout"
+        app:layout_constraintTop_toBottomOf="@id/innerConstraintLayout"
         tools:itemCount="10"
         tools:listitem="@layout/layout_rv_user">
 
@@ -86,7 +95,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
         android:backgroundTint="#E79EFF"
-        android:contentDescription="Button"
+        android:contentDescription="@string/contact_list_description"
         android:elevation="0dp"
         android:src="@android:drawable/ic_input_add"
         app:elevation="0dp"
