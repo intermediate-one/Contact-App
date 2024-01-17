@@ -46,26 +46,29 @@ class ContactListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val clAdapter = ContactListAdapter(ContactDatabase.totalContactData)
+        binding.recyclerView.adapter = clAdapter
         binding.recyclerView.layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
-        binding.btnListGrid.setOnClickListener {
-            binding.recyclerView.apply {
-                adapter = clAdapter
-                when(listGrid) {
-                    0 -> {
-                        listGrid = 1
-                        clAdapter.notifyDataSetChanged()
-                        toast("Grid로 변경")
-                    }
-                    1 -> {
-                        listGrid = 0
-                        clAdapter.notifyDataSetChanged()
-                        toast("Linear로 변경")
-                    }
-                }
-                layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
-//                layoutManager = GridLayoutManager(mainPage, 3, GridLayoutManager.VERTICAL, false)
-            }
-        }
+        toast("첫번째 레이아웃 연결 / 현재 값 = $listGrid")
+//        binding.btnListGrid.setOnClickListener {
+//            binding.recyclerView.apply {
+//                adapter = clAdapter
+//                toast("RV 어댑터 연결 / 현재 값 $listGrid")
+//                when(listGrid) {
+//                    0 -> {
+//                        listGrid = 1
+//                        clAdapter.notifyDataSetChanged()
+//                        layoutManager = GridLayoutManager(mainPage, 3, GridLayoutManager.VERTICAL, false)
+//                        toast("Grid로 변경")
+//                    }
+//                    1 -> {
+//                        listGrid = 0
+//                        clAdapter.notifyDataSetChanged()
+//                        layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
+//                        toast("Linear로 변경")
+//                    }
+//                }
+//            }
+//        }
     }
 
     companion object {

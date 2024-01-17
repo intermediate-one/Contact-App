@@ -37,23 +37,23 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):RecyclerView.ViewHolder {
         when(listGrid) {
-            0 -> {
-                return Holder(LayoutRvUserBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-            }
-            1 -> {
-                return Hold(LayoutRvUserGridBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-            }
+            0 -> return Holder(LayoutRvUserBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            1 -> return Hold(LayoutRvUserGridBinding.inflate(LayoutInflater.from(parent.context), parent, false))
             else -> throw Exception("Adapter 연결에 실패함")
         }
     }
 
     // 홀더부터 다시
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val holdLinear = holder as Holder
-        val holdGrid = holder as Hold
+        var hold = holder as Holder
+            when(listGrid) {
+            0 -> holder as Holder
+            1 -> holder as Hold
+            else -> throw Exception("Holder를 Casting 할 수 없습니다.")
+        }
 
-        with(holdLinear) {
-            name.text = userDataList[position].name
+        with(hold) {
+            hold.name.text = userDataList[position].name
             image.setImageResource(R.drawable.user_profile_empty)
             favorite.setOnClickListener {
                 when (userDataList[position].favorite) {
@@ -71,9 +71,9 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
                 ContactListAdapter(userDataList).notifyItemChanged(position)
             }
         }
-//        with(holdGrid) {
-//            name.text = userDataList[position].name
-//            image.setImageResource(R.drawable.user_profile_empty)
+        with (hold) {
+            name.text = userDataList[position].name
+            image.setImageResource(R.drawable.user_profile_empty)
 //            favorite.setOnClickListener {
 //                when (userDataList[position].favorite) {
 //                    true -> {
@@ -89,7 +89,7 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
 //                userId = position
 //                ContactListAdapter(userDataList).notifyItemChanged(position)
 //            }
-//        }
+        }
     }
 
     override fun getItemCount(): Int = userDataList.size
