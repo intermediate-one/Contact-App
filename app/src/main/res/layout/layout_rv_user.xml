@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="10dp"
-    android:layout_marginTop="6dp"
+    android:layout_marginTop="10dp"
     android:layout_marginEnd="10dp"
-    android:layout_marginBottom="6dp"
+    android:layout_marginBottom="10dp"
     android:background="@drawable/stroke_recycler_view_background">
 
     <com.google.android.material.imageview.ShapeableImageView
@@ -25,16 +25,20 @@
 
     <TextView
         android:id="@+id/tv_rv_user_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="32dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:text="@string/app_name"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_rv_user"
-        app:layout_constraintStart_toEndOf="@+id/iv_rv_user"
-        app:layout_constraintTop_toTopOf="@+id/iv_rv_user" />
+        app:layout_constraintBottom_toBottomOf="@id/iv_rv_user"
+        app:layout_constraintEnd_toStartOf="@id/iv_rv_favorite"
+        app:layout_constraintStart_toEndOf="@id/iv_rv_user"
+        app:layout_constraintTop_toTopOf="@id/iv_rv_user" />
 
     <ImageView
         android:id="@+id/iv_rv_favorite"
@@ -43,7 +47,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="8dp"
-        android:contentDescription="btn_like"
+        android:contentDescription="@string/contact_list_description"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
