@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.contactapp.R
 import com.example.contactapp.activity.ContactActivity
 import com.example.contactapp.adaptor.ContactListAdapter
 import com.example.contactapp.data.ContactDatabase
@@ -64,10 +65,12 @@ class ContactListFragment : Fragment() {
                 when(listGrid) {
                     1 -> {
                         layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
+                        binding.btnListGrid.setImageResource(R.drawable.icon_grid_black)    // 현재가 list니 버튼을 누르면 Grid로 바꿀 수 있다는 것을 미리 보여주기 위해
 //                        toast("현재 : Linear $listGrid")
                     }
                     -1 -> {
                         layoutManager = GridLayoutManager(mainPage, 3, GridLayoutManager.VERTICAL, false)
+                        binding.btnListGrid.setImageResource(R.drawable.icon_list_black)
 //                        toast("현재 : Grid $listGrid")
                     }
                 }
