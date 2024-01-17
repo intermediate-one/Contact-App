@@ -21,7 +21,7 @@ class DetailFragment : Fragment() {
     private val binding get() = _binding!!
 
     //즐겨찾기 상태
-    private var isLike = false
+    private var isFavorite = false
 
     //데이터 받아오기
     private val data : ContactData? by lazy {
@@ -62,21 +62,21 @@ class DetailFragment : Fragment() {
         binding.tvDetailMobilePerson.text = data?.phoneNumber
         binding.tvDetailEmailPerson.text = data?.email
 
-        isLike = data?.isLike == true
+        isFavorite = data?.favorite == true
         //즐겨찾기 눌렀을 때와 안 눌렀을 때
-        binding.ivDetailStar.setImageResource(if(isLike)R.drawable.star_full else R.drawable.star_empty)
+        binding.ivDetailStar.setImageResource(if(isFavorite)R.drawable.star_full else R.drawable.star_empty)
 
         //즐겨찾기 눌렀을 때
         binding.ivDetailStar.setOnClickListener {
-            if (!isLike) {
+            if (!isFavorite) {
                 binding.ivDetailStar.setImageResource(R.drawable.star_full)
                 Toast.makeText(context,R.string.detail_favorite,Toast.LENGTH_SHORT).show()
-                isLike = true
+                isFavorite = true
                 //그 외
             }else {
                 binding.ivDetailStar.setImageResource(R.drawable.star_empty)
                 Toast.makeText(context,R.string.detail_favorite_del,Toast.LENGTH_SHORT).show()
-                isLike = false
+                isFavorite = false
             }
         }
 
@@ -94,7 +94,7 @@ class DetailFragment : Fragment() {
         binding.layoutDetailBack.setOnClickListener {
             val bundle = Bundle()
 //            bundle.putParcelable(Contants.ITEM_DATA,data)
-            bundle.putBoolean(Contants.ITEM_LIKE,isLike)
+            bundle.putBoolean(Contants.ITEM_LIKE,isFavorite)
             bundle.putParcelable(Contants.ITEM_INDEX,position)
             val fragmentList = ContactListFragment()
             fragmentList.arguments = bundle
