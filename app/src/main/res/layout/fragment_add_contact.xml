@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    app:cardCornerRadius="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <Button
+                    android:id="@+id/btn_add_contact_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/color_code_3"
+                    android:text="취소"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/btn_add_contact_done"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/color_code_3"
+                    android:text="완료"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/ibtn_add_contact_profile_image"
+                android:layout_width="200dp"
+                android:layout_height="200dp" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/tv_add_contact_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="이름"
+                    android:textSize="20dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/et_add_contact_name"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_add_contact_number"
+                    app:layout_constraintTop_toTopOf="@+id/et_add_contact_name" />
+
+                <EditText
+                    android:id="@+id/et_add_contact_name"
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="@+id/et_add_contact_number"
+                    app:layout_constraintStart_toEndOf="@+id/tv_add_contact_name"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_add_contact_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="번호"
+                    android:textSize="20dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/et_add_contact_number"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_add_contact_email"
+                    app:layout_constraintTop_toTopOf="@+id/et_add_contact_number"
+                    app:layout_constraintVertical_bias="0.533" />
+
+                <EditText
+                    android:id="@+id/et_add_contact_number"
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="@+id/et_add_contact_email"
+                    app:layout_constraintStart_toEndOf="@+id/tv_add_contact_number"
+                    app:layout_constraintTop_toBottomOf="@+id/et_add_contact_name" />
+
+                <TextView
+                    android:id="@+id/tv_add_contact_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="이메일"
+                    android:textSize="20dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/et_add_contact_email"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_add_contact_notification"
+                    app:layout_constraintTop_toTopOf="@+id/et_add_contact_email" />
+
+                <EditText
+                    android:id="@+id/et_add_contact_email"
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="@+id/et_add_contact_notification"
+                    app:layout_constraintStart_toEndOf="@+id/tv_add_contact_email"
+                    app:layout_constraintTop_toBottomOf="@+id/et_add_contact_number" />
+
+                <TextView
+                    android:id="@+id/tv_add_contact_notification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="알림"
+                    android:textSize="20dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/et_add_contact_notification"
+                    app:layout_constraintTop_toTopOf="@+id/et_add_contact_notification"
+                    tools:layout_editor_absoluteX="45dp" />
+
+                <EditText
+                    android:id="@+id/et_add_contact_notification"
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@+id/tv_add_contact_notification"
+                    app:layout_constraintTop_toBottomOf="@+id/et_add_contact_email" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>
