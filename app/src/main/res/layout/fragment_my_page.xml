@@ -66,26 +66,16 @@
                 android:layout_width="0dp"
                 android:layout_height="300dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/bohyun"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layout_my_page_top" />
+                app:layout_constraintTop_toBottomOf="@id/layout_my_page_top"
+                app:srcCompat="@drawable/scenic_road" />
 
-
-            <ImageView
-                android:id="@+id/iv_my_page_star"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="30dp"
-                android:src="@drawable/star_empty"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layout_my_page_top" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/iv_my_page_person">
+                app:layout_constraintTop_toBottomOf="@id/iv_my_page_person">
 
                 <TextView
                     android:id="@+id/tv_my_page_name"
@@ -103,14 +93,14 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_my_page_name"
+                    app:layout_constraintTop_toBottomOf="@id/tv_my_page_name"
                     android:text="@string/detail_mobile_number"/>
 
                 <View
                     android:id="@+id/view_line1"
                     android:layout_width="390dp"
                     android:layout_height="2dp"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_my_page_mobile_person"
+                    app:layout_constraintTop_toBottomOf="@id/tv_my_page_mobile_person"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginTop="5dp"
@@ -122,21 +112,11 @@
                     android:id="@+id/layout_my_page_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/view_line1"
+                    app:layout_constraintTop_toBottomOf="@id/view_line1"
                     android:layout_marginTop="5dp"
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
 
-                    <ImageView
-                        android:id="@+id/btn_my_page_call"
-                        android:layout_width="0dp"
-                        android:layout_height="40dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/detail_call"/>
-                    <View
-                        android:layout_width="2dp"
-                        android:layout_height="70dp"
-                        android:background="#E1DCDC"/>
                     <ImageView
                         android:id="@+id/iv_my_page_share"
                         android:layout_width="0dp"
@@ -160,7 +140,7 @@
                     android:id="@+id/view_line2"
                     android:layout_width="390dp"
                     android:layout_height="2dp"
-                    app:layout_constraintTop_toBottomOf="@+id/layout_my_page_button"
+                    app:layout_constraintTop_toBottomOf="@id/layout_my_page_button"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginTop="2dp"
@@ -170,7 +150,7 @@
                     android:id="@+id/tv_my_page_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/view_line2"
+                    app:layout_constraintTop_toBottomOf="@id/view_line2"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginTop="10dp"
                     android:text="@string/detail_email"
@@ -181,7 +161,7 @@
                     android:id="@+id/tv_my_page_email_person"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_my_page_email"
+                    app:layout_constraintTop_toBottomOf="@id/tv_my_page_email"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:text="@string/detail_email_example"
@@ -192,7 +172,7 @@
                     android:id="@+id/view_line3"
                     android:layout_width="390dp"
                     android:layout_height="2dp"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_my_page_email_person"
+                    app:layout_constraintTop_toBottomOf="@id/tv_my_page_email_person"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginTop="10dp"
@@ -202,7 +182,7 @@
                     android:id="@+id/tv_my_page_group"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/view_line3"
+                    app:layout_constraintTop_toBottomOf="@id/view_line3"
                     app:layout_constraintStart_toStartOf="parent"
                     android:text="@string/detail_group"
                     android:layout_marginBottom="10dp"
@@ -212,7 +192,7 @@
                     android:id="@+id/tv_my_page_group_person"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_my_page_group"
+                    app:layout_constraintTop_toBottomOf="@id/tv_my_page_group"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:text="@string/detail_group_person"
@@ -223,7 +203,7 @@
                     android:id="@+id/view_line4"
                     android:layout_width="390dp"
                     android:layout_height="2dp"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_my_page_group_person"
+                    app:layout_constraintTop_toBottomOf="@id/tv_my_page_group_person"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginTop="1dp"
@@ -233,7 +213,7 @@
                     android:id="@+id/tv_my_page_birth"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/view_line4"
+                    app:layout_constraintTop_toBottomOf="@id/view_line4"
                     app:layout_constraintStart_toStartOf="parent"
                     android:text="@string/detail_birth"
                     android:layout_marginStart="20dp"
@@ -243,7 +223,7 @@
                     android:id="@+id/tv_my_page_birth_person"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_my_page_birth"
+                    app:layout_constraintTop_toBottomOf="@id/tv_my_page_birth"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:text="@string/detail_birth_person"
@@ -254,7 +234,7 @@
                     android:id="@+id/view_line5"
                     android:layout_width="390dp"
                     android:layout_height="2dp"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_my_page_birth_person"
+                    app:layout_constraintTop_toBottomOf="@id/tv_my_page_birth_person"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginTop="10dp"
@@ -264,7 +244,7 @@
                     android:id="@+id/tv_my_page_mbti"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/view_line5"
+                    app:layout_constraintTop_toBottomOf="@id/view_line5"
                     app:layout_constraintStart_toStartOf="parent"
                     android:text="@string/detail_mbti"
                     android:layout_marginBottom="10dp"
@@ -274,7 +254,7 @@
                     android:id="@+id/tv_my_page_mbti_person"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_my_page_mbti"
+                    app:layout_constraintTop_toBottomOf="@id/tv_my_page_mbti"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:text="@string/detail_mbti_person"
@@ -285,7 +265,7 @@
                     android:id="@+id/view_line6"
                     android:layout_width="390dp"
                     android:layout_height="2dp"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_my_page_mbti_person"
+                    app:layout_constraintTop_toBottomOf="@id/tv_my_page_mbti_person"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginTop="10dp"
@@ -295,7 +275,7 @@
                     android:id="@+id/tv_my_page_notify"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/view_line6"
+                    app:layout_constraintTop_toBottomOf="@id/view_line6"
                     app:layout_constraintStart_toStartOf="parent"
                     android:text="@string/detail_notify"
                     android:layout_marginBottom="10dp"
@@ -305,7 +285,7 @@
                     android:id="@+id/tv_my_page_notify_person"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_my_page_notify"
+                    app:layout_constraintTop_toBottomOf="@id/tv_my_page_notify"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:text="@string/detail_notify_example"
@@ -316,7 +296,7 @@
                     android:id="@+id/view_line7"
                     android:layout_width="390dp"
                     android:layout_height="2dp"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_my_page_notify_person"
+                    app:layout_constraintTop_toBottomOf="@id/tv_my_page_notify_person"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginTop="10dp"
@@ -326,7 +306,7 @@
                     android:id="@+id/tv_my_page_memo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/view_line7"
+                    app:layout_constraintTop_toBottomOf="@id/view_line7"
                     app:layout_constraintStart_toStartOf="parent"
                     android:text="@string/detail_memo"
                     android:layout_marginBottom="10dp"
@@ -336,7 +316,7 @@
                     android:id="@+id/tv_my_page_memo_person"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_my_page_memo"
+                    app:layout_constraintTop_toBottomOf="@id/tv_my_page_memo"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:text="@string/detail_memo_person"
@@ -347,21 +327,16 @@
                     android:id="@+id/view_line8"
                     android:layout_width="390dp"
                     android:layout_height="2dp"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_my_page_memo_person"
+                    app:layout_constraintTop_toBottomOf="@id/tv_my_page_memo_person"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginTop="10dp"
                     android:background="#E1DCDC"/>
 
-
-
-
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     </ScrollView>
 
@@ -382,7 +357,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
