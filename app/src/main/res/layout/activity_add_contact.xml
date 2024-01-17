@@ -4,6 +4,313 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.AddContactActivity">
+    tools:context=".fragment.DetailFragment">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_add_contact_top"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@color/color_code_2"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layout_add_contact_edit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="25dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/btn_add_contact_edit"
+                            style="@style/text25.bold"
+                            android:layout_width="80dp"
+                            android:layout_height="50dp"
+                            android:gravity="center"
+                            android:text="@string/add_contact_confirm"
+                            android:textColor="@color/white"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <ImageView
+                android:id="@+id/iv_add_contact_person"
+                android:layout_width="0dp"
+                android:layout_height="300dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bohyun"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout_add_contact_top" />
+
+
+            <ImageView
+                android:id="@+id/iv_add_contact_star"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
+                android:src="@drawable/star_empty"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout_add_contact_top" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/iv_add_contact_person">
+
+                <TextView
+                    android:id="@+id/tv_add_contact_name"
+                    style="@style/text20.bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/add_contact_name"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/et_add_contact_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:inputType="text"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_add_contact_name" />
+
+                <TextView
+                    android:id="@+id/tv_add_contact_number"
+                    style="@style/text20.bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/add_contact_number"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_add_contact_name" />
+
+                <EditText
+                    android:id="@+id/et_add_contact_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:inputType="number"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_add_contact_number" />
+
+                <TextView
+                    android:id="@+id/tv_add_contact_email"
+                    style="@style/text20.bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/detail_email"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_add_contact_number" />
+
+                <EditText
+                    android:id="@+id/et_add_contact_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:inputType="textEmailAddress"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_add_contact_email" />
+
+                <TextView
+                    android:id="@+id/tv_add_contact_group"
+                    style="@style/text20.bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/add_contact_group"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_add_contact_email" />
+
+                <Spinner
+                    android:id="@+id/sp_add_contact_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_add_contact_group" />
+
+                <ImageButton
+                    android:id="@id/iv_add_contact_add_group"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="20dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_add"
+                    app:layout_constraintBottom_toBottomOf="@+id/sp_add_contact_group"
+                    app:layout_constraintStart_toEndOf="@+id/sp_add_contact_group"
+                    app:layout_constraintTop_toTopOf="@+id/sp_add_contact_group" />
+
+                <TextView
+                    android:id="@+id/tv_add_contact_birthday"
+                    style="@style/text20.bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/add_contact_birth"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_add_contact_add_group" />
+
+                <EditText
+                    android:id="@+id/et_add_contact_birthday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:inputType="date"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_add_contact_birthday" />
+
+
+                <TextView
+                    android:id="@+id/tv_add_contact_mbti"
+                    style="@style/text20.bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/add_contact_mbti"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_add_contact_birthday" />
+
+
+                <EditText
+                    android:id="@+id/et_add_contact_mbti"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:inputType="textCapCharacters"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_add_contact_mbti" />
+
+                <TextView
+                    android:id="@+id/tv_add_contact_notification"
+                    style="@style/text20.bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/add_contact_notification"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_add_contact_mbti" />
+
+                <CheckBox
+                    android:id="@+id/cb_add_contact_birthday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="@string/add_contact_notify_birthday"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_add_contact_notification" />
+
+                <CheckBox
+                    android:id="@+id/cb_add_contact_5s"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="3dp"
+                    android:text="@string/add_contact_notify_5s"
+                    app:layout_constraintStart_toEndOf="@+id/cb_add_contact_birthday"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_add_contact_notification" />
+
+                <CheckBox
+                    android:id="@+id/cb_add_contact_5m"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="3dp"
+                    android:text="@string/add_contact_notify_5m"
+                    app:layout_constraintStart_toEndOf="@+id/cb_add_contact_5s"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_add_contact_notification" />
+
+                <CheckBox
+                    android:id="@+id/cb_add_contact_10m"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="3dp"
+                    android:text="@string/add_contact_notify_10m"
+                    app:layout_constraintStart_toEndOf="@+id/cb_add_contact_5m"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_add_contact_notification" />
+
+                <TextView
+                    android:id="@+id/tv_detail_memo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/cb_add_contact_10m"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@string/add_contact_memo"
+                    android:layout_marginBottom="10dp"
+                    style="@style/text20.bold"/>
+                <EditText
+                    android:id="@+id/et_add_contact_memo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="3"
+                    android:maxLines="10"
+                    android:gravity="top|start"
+                    android:layout_marginTop="3dp"
+                    android:inputType="textMultiLine"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_detail_memo"
+                    android:scrollbars="vertical"
+                    android:outlineAmbientShadowColor="@color/color_code_2"/>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_detail_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_detail_back"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
