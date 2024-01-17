@@ -106,7 +106,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
-                    android:inputType="text"
+                    android:inputType="textPersonName"
                     app:layout_constraintTop_toBottomOf="@+id/tv_add_contact_name" />
 
                 <TextView
@@ -182,7 +182,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/tv_add_contact_group" />
 
                 <ImageButton
-                    android:id="@id/iv_add_contact_add_group"
+                    android:id="@id/ibtn_add_contact_add_group"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginStart="20dp"
@@ -200,7 +200,7 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/add_contact_birth"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/iv_add_contact_add_group" />
+                    app:layout_constraintTop_toBottomOf="@+id/ibtn_add_contact_add_group" />
 
                 <Button
                     android:id="@id/btn_add_contact_date_picker"
