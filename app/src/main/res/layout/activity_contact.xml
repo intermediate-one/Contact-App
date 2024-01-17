@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:backgroundTint="@color/default_background"
     tools:context=".activity.ContactActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -24,10 +25,11 @@
         android:id="@+id/tabLayout_contact_activity_switch"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/color_code_4"
+        android:background="@color/default_background"
         app:tabIconTint="@color/grey"
-        app:tabIndicatorColor="@color/color_code_3"
-        app:tabSelectedTextColor="@color/color_code_2"
+        app:tabIndicatorColor="@color/tab_unselected"
+        app:tabSelectedTextColor="@color/color_code_5"
+        app:tabSelectedTextAppearance="@style/Base.CardView"
         app:tabTextColor="@color/black" />
 
 
