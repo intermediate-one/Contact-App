@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
 import com.example.contactapp.R
 import com.example.contactapp.data.ContactData
+import com.example.contactapp.data.ContactDatabase
 import com.example.contactapp.data.Contants
 import com.example.contactapp.databinding.FragmentDetailBinding
 
@@ -23,21 +25,16 @@ class DetailFragment : Fragment() {
     //즐겨찾기 상태
     private var isFavorite = false
 
-//    //데이터 받아오기
-//    private val data : ContactData? by lazy {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-//            arguments?.getParcelable(Contants.ITEM_DATA,ContactData::class.java)
-//        }else {
-//            arguments?.getParcelable<ContactData>(Contants.ITEM_DATA)
-//        }
-//    }
-//    private val position : ContactData? by lazy {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-//            arguments?.getParcelable(Contants.ITEM_INDEX,ContactData::class.java)
-//        }else {
-//            arguments?.getParcelable<ContactData>(Contants.ITEM_INDEX)
-//        }
-//    }
+    //데이터 받아오기
+    private val data : ContactData? by lazy {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            arguments?.getParcelable(Contants.ITEM_DATA,ContactData::class.java)
+        }else {
+            arguments?.getParcelable<ContactData>(Contants.ITEM_DATA)
+        }
+    }
+
+
 //    onCreate 생략가능 -> 데이터를
 //    override fun onCreate(savedInstanceState: Bundle?) {
 //        super.onCreate(savedInstanceState)
@@ -51,18 +48,26 @@ class DetailFragment : Fragment() {
     ): View? {
         _binding = FragmentDetailBinding.inflate(inflater,container,false)
         return binding.root
+        Log.d("DetailFragment","aaa onCreateView")
+
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        //리스트에서 데이터 받기
-//        binding.tvDetailName.text = data?.name
-//        binding.ivDetailPerson.setImageResource(data?.profileImage as Int)
-//        binding.tvDetailMobilePerson.text = data?.phoneNumber
-//        binding.tvDetailEmailPerson.text = data?.email
-//
-//        isFavorite = data?.favorite == true
+        if (arguments != null) {
+            binding.tvDetailName.text = getArguments()?.getString(ContactDatabase.totalContactData.toString())
+            binding.tvDetailMobilePerson.text = getArguments()?.getString(ContactDatabase.totalContactData.toString())
+        }
+
+        //리스트에서 데이터 받기
+        binding.tvDetailName.text = data?.name
+        binding.ivDetailPerson.setImageResource(data?.profileImage as Int)
+        binding.tvDetailMobilePerson.text = data?.phoneNumber
+        binding.tvDetailEmailPerson.text = data?.email
+
+        isFavorite = data?.favorite == true
         //즐겨찾기 눌렀을 때와 안 눌렀을 때
         binding.ivDetailStar.setImageResource(if(isFavorite)R.drawable.star_full else R.drawable.star_empty)
 
@@ -90,7 +95,7 @@ class DetailFragment : Fragment() {
 //                .addToBackStack(null)
 //                .commit()
 //        }
-        //리스트로 데이터 보내기
+//        //리스트로 데이터 보내기
 //        binding.layoutDetailBack.setOnClickListener {
 //            val bundle = Bundle()
 ////            bundle.putParcelable(Contants.ITEM_DATA,data)
@@ -107,14 +112,14 @@ class DetailFragment : Fragment() {
         //문자보내기
         binding.btnDetailMessage.setOnClickListener {
             val mobileNumber = binding.tvDetailMobilePerson.text
-            startActivity(Intent(Intent.ACTION_CALL, Uri.parse("tel:${mobileNumber}")))
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("sms:${mobileNumber}")))
         }
         //전화하기
         binding.btnDetailCall.setOnClickListener {
             val mobileNumber = binding.tvDetailMobilePerson.text
-            startActivity(Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:${mobileNumber}")))
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("tel:${mobileNumber}")))
         }
-
+        Log.d("DetailFragment","aaa onViewCreated")
     }
 
     override fun onDestroyView() {

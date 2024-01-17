@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.contactapp.R
@@ -17,6 +18,7 @@ import com.example.contactapp.data.ContactDatabase
 import com.example.contactapp.databinding.ActivityContactBinding
 import com.example.contactapp.databinding.LayoutRvUserGridBinding
 import com.example.contactapp.fragment.ContactListFragment.Companion.listGrid
+import com.example.contactapp.fragment.DetailFragment
 import java.lang.Exception
 
 
@@ -71,6 +73,7 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
             itemClick?.onClick(it,position)
 
         }
+
 
         when(listGrid) {
             1 -> {

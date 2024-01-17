@@ -1,6 +1,8 @@
 package com.example.contactapp.fragment
 
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -30,10 +32,12 @@ class ContactListFragment : Fragment() {
     private var param2: String? = null
 
 
+
     private var _binding:FragmentContactListBinding? = null
     private val binding get() = _binding!!
 
     private val mainPage by lazy { context as ContactActivity }
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,7 +82,19 @@ class ContactListFragment : Fragment() {
                 }
             }
         }
+        clAdapter.itemClick = object : ContactListAdapter.ItemClick{
+            override fun onClick(view: View, position: Int) {
+                val bundle = Bundle()
+                bundle.putParcelable(ITEM_DATA,ContactDatabase.totalContactData[position])
+                val tran = activity!!.supportFragmentManager.beginTransaction()
+                val detail = DetailFragment()
+                detail.arguments = bundle
+                tran.replace(R.id.viewPager_contact_activity_swipe,detail)
+                tran.addToBackStack(null)
+                tran.commit()
 
+            }
+        }
     }
 
     companion object {
