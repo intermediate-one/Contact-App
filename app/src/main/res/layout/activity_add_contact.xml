@@ -10,7 +10,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="-16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -45,8 +46,8 @@
                             style="@style/text25.bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
                             android:backgroundTint="@color/color_code_3"
+                            android:gravity="center"
                             android:text="@string/add_contact_confirm"
                             android:textColor="@color/white"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -125,6 +126,7 @@
                     android:layout_marginTop="3dp"
                     android:inputType="phone"
                     app:layout_constraintTop_toBottomOf="@+id/tv_add_contact_number" />
+
                 <TextView
                     android:id="@+id/tv_add_contact_address"
                     style="@style/text20.bold"
@@ -199,17 +201,17 @@
                     android:text="@string/add_contact_birth"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/iv_add_contact_add_group" />
+
                 <Button
                     android:id="@id/btn_add_contact_date_picker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:outlineAmbientShadowColor="@color/color_code_5"
-                    android:textColor="@color/white"
-                    android:text="@string/add_contact_select"
                     android:layout_marginTop="10dp"
+                    android:outlineAmbientShadowColor="@color/color_code_5"
+                    android:text="@string/add_contact_select"
+                    android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_add_contact_birthday" />
-
 
 
                 <TextView
@@ -282,25 +284,26 @@
 
                 <TextView
                     android:id="@+id/tv_detail_memo"
+                    style="@style/text20.bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/cb_add_contact_10m"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:text="@string/add_contact_memo"
                     android:layout_marginBottom="10dp"
-                    style="@style/text20.bold"/>
+                    android:text="@string/add_contact_memo"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cb_add_contact_10m" />
+
                 <EditText
                     android:id="@+id/et_add_contact_memo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:gravity="top|start"
+                    android:inputType="textMultiLine"
                     android:lines="3"
                     android:maxLines="10"
-                    android:gravity="top|start"
-                    android:layout_marginTop="3dp"
-                    android:inputType="textMultiLine"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_detail_memo"
+                    android:outlineAmbientShadowColor="@color/color_code_2"
                     android:scrollbars="vertical"
-                    android:outlineAmbientShadowColor="@color/color_code_2"/>
+                    app:layout_constraintTop_toBottomOf="@+id/tv_detail_memo" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
