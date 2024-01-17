@@ -9,6 +9,8 @@ import com.example.contactapp.adaptor.ViewPager2Adapter
 import com.example.contactapp.databinding.ActivityContactBinding
 import com.example.contactapp.fragment.ContactListFragment
 import com.example.contactapp.fragment.DetailFragment
+import com.example.contactapp.fragment.GroupFragment
+import com.example.contactapp.fragment.TrashBinFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
 class ContactActivity : AppCompatActivity() {
@@ -26,6 +28,8 @@ class ContactActivity : AppCompatActivity() {
         //ViewPager2 Adapter 셋팅
         var viewPager2Adapter = ViewPager2Adapter(this)
         viewPager2Adapter.addFragment(ContactListFragment())
+        viewPager2Adapter.addFragment(GroupFragment())
+        viewPager2Adapter.addFragment(TrashBinFragment())
         viewPager2Adapter.addFragment(MyPageFragment())
 
         //Adapter 연결
@@ -41,7 +45,9 @@ class ContactActivity : AppCompatActivity() {
             Log.e("YMC", "ViewPager position: $position")
             when (position) {
                 0 -> tab.text = "연락처"
-                1 -> tab.text = "마이페이지"
+                1 -> tab.text = "그룹"
+                2 -> tab.text = "휴지통"
+                3 -> tab.text = "마이페이지"
             }
         }.attach()
     }

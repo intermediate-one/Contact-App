@@ -12,7 +12,6 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import com.example.contactapp.data.DialogErrorMessage
 import com.example.contactapp.R
-import com.example.contactapp.data.ContactData
 import com.example.contactapp.data.EditTextValidExtension.includeKorean
 import com.example.contactapp.data.EditTextValidExtension.validEmail
 import com.example.contactapp.databinding.FragmentAddContactBinding
