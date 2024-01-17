@@ -24,9 +24,14 @@ import java.lang.Exception
 private const val LINEAR_LAYOUT = 1
 private const val GRID_LAYOUT = -1
 
-class ContactListAdapter(private var userDataList:ArrayList<ContactData>):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ContactListAdapter(private val userDataList:ArrayList<ContactData>):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var holdList:Holder
     private lateinit var holdGrid:Hold
+
+    interface ItemClick {
+        fun onClick(view : View, position:Int)
+    }
+    var itemClick : ItemClick? = null
 
     inner class Holder(binding: LayoutRvUserBinding):RecyclerView.ViewHolder(binding.root) {
         val image = binding.ivRvUser
@@ -64,6 +69,10 @@ class ContactListAdapter(private var userDataList:ArrayList<ContactData>):Recycl
 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        holder.itemView.setOnClickListener{
+            itemClick?.onClick(it,position)
+        }
+
         when(listGrid) {
             1 -> {
                 holdList = holder as Holder
