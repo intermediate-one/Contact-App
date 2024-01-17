@@ -37,7 +37,7 @@ class ContactActivity : AppCompatActivity() {
 
         //ViewPager, TabLayout 연결
         TabLayoutMediator(binding.tabLayoutContactActivitySwitch, binding.viewPagerContactActivitySwipe) { tab, position ->
-            Log.e("YMC", "ViewPager position: ${position}")
+            Log.e("YMC", "ViewPager position: $position")
             when (position) {
                 0 -> tab.text = "연락처"
                 1 -> tab.text = "마이페이지"
