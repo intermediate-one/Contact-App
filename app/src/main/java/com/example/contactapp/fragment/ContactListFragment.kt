@@ -83,6 +83,8 @@ class ContactListFragment : Fragment() {
             }
         }
 
+        // FloatingActionButton
+        binding.btnAddItem
     }
 
     companion object {
