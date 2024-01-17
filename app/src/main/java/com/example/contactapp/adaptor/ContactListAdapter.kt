@@ -11,14 +11,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.contactapp.R
 import com.example.contactapp.data.ContactData
 import com.example.contactapp.databinding.LayoutRvUserBinding
-import com.example.contactapp.fragment.ContactListFragment.Companion.userId
 import androidx.recyclerview.widget.DiffUtil
 import androidx.viewbinding.ViewBinding
 import com.example.contactapp.data.ContactDatabase
 import com.example.contactapp.databinding.ActivityContactBinding
+import com.example.contactapp.databinding.FragmentContactListBinding
 import com.example.contactapp.databinding.LayoutRvUserGridBinding
 import com.example.contactapp.fragment.ContactListFragment.Companion.listGrid
+<<<<<<< HEAD
 import com.example.contactapp.fragment.DetailFragment
+=======
+import com.example.contactapp.fragment.ContactListFragment.Companion.userPosition
+>>>>>>> b4f8f55c8c05f528e2559db8054313923130efda
 import java.lang.Exception
 
 
@@ -43,6 +47,7 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
     inner class Hold(binding: LayoutRvUserGridBinding): RecyclerView.ViewHolder(binding.root) {
         val image = binding.ivRvUserGrid
         val name = binding.tvUserNameGrid
+        val favorite = binding.ivRvFavoriteGrid
     }
 
     override fun getItemViewType(position: Int):Int {   // 필요한지?
@@ -67,11 +72,10 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
         }
     }
 
-    // 홀더부터 다시
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         holder.itemView.setOnClickListener{
             itemClick?.onClick(it,position)
-
         }
 
 
@@ -80,7 +84,7 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
                 holdList = holder as Holder
                 with(holdList) {
                     name.text = userDataList[position].name
-                    image.setImageResource(R.drawable.user_profile_empty)
+                    image.setImageResource(userDataList[position].profileImage)
                     favorite.setOnClickListener {
                         when (userDataList[position].favorite) {
                             true -> {
@@ -93,8 +97,7 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
                                 favorite.setImageResource(R.drawable.star_full)
                             }
                         }
-                        userId = position
-                        ContactListAdapter(userDataList).notifyItemChanged(position)
+                        userPosition = position
                     }
                 }
             }
@@ -102,22 +105,21 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
                 holdGrid = holder as Hold
                 with (holdGrid) {
                     name.text = userDataList[position].name
-                    image.setImageResource(R.drawable.user_profile_empty)
-//            favorite.setOnClickListener {
-//                when (userDataList[position].favorite) {
-//                    true -> {
-//                        userDataList[position].favorite = false
-//                        favorite.setImageResource(R.drawable.star_empty)
-//                    }
-//
-//                    false -> {
-//                        userDataList[position].favorite = true
-//                        favorite.setImageResource(R.drawable.star_full)
-//                    }
-//                }
-//                userId = position
-//                ContactListAdapter(userDataList).notifyItemChanged(position)
-//            }
+                    image.setImageResource(userDataList[position].profileImage)
+                    favorite.setOnClickListener {
+                        when (userDataList[position].favorite) {
+                            true -> {
+                                userDataList[position].favorite = false
+                                favorite.setImageResource(R.drawable.star_empty)
+                            }
+
+                            false -> {
+                                userDataList[position].favorite = true
+                                favorite.setImageResource(R.drawable.star_full)
+                            }
+                        }
+                        userPosition = position
+                    }
                 }
             }
             else -> throw Exception("Holder를 Casting 할 수 없습니다.")
