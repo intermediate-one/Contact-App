@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.contactapp.activity.ContactActivity
 import com.example.contactapp.adaptor.ContactListAdapter
@@ -45,11 +46,26 @@ class ContactListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val clAdapter = ContactListAdapter(ContactDatabase.totalContactData)
-        binding.recyclerView.apply {
-            adapter = clAdapter
-            layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
+        binding.recyclerView.layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
+        binding.btnListGrid.setOnClickListener {
+            binding.recyclerView.apply {
+                adapter = clAdapter
+                when(listGrid) {
+                    0 -> {
+                        listGrid = 1
+                        clAdapter.notifyDataSetChanged()
+                        toast("Grid로 변경")
+                    }
+                    1 -> {
+                        listGrid = 0
+                        clAdapter.notifyDataSetChanged()
+                        toast("Linear로 변경")
+                    }
+                }
+                layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
+//                layoutManager = GridLayoutManager(mainPage, 3, GridLayoutManager.VERTICAL, false)
+            }
         }
-        toast("${ContactDatabase.totalContactData[userId].favorite}")
     }
 
     companion object {
@@ -62,6 +78,7 @@ class ContactListFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+        var listGrid = 0
     }
 
     override fun onDestroyView() {

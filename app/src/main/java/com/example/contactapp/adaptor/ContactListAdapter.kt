@@ -10,21 +10,49 @@ import com.example.contactapp.data.ContactData
 import com.example.contactapp.databinding.LayoutRvUserBinding
 import com.example.contactapp.fragment.ContactListFragment.Companion.userId
 import androidx.recyclerview.widget.DiffUtil
+import androidx.viewbinding.ViewBinding
+import com.example.contactapp.data.ContactDatabase
+import com.example.contactapp.databinding.ActivityContactBinding
+import com.example.contactapp.databinding.LayoutRvUserGridBinding
+import com.example.contactapp.fragment.ContactListFragment.Companion.listGrid
+import java.lang.Exception
 
-class ContactListAdapter(private val userDataList:ArrayList<ContactData>):RecyclerView.Adapter<ContactListAdapter.Holder>() {
+
+private const val LINEAR_LAYOUT = 0
+private const val GRID_LAYOUT = 1
+
+class ContactListAdapter(private val userDataList:ArrayList<ContactData>):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     inner class Holder(binding: LayoutRvUserBinding):RecyclerView.ViewHolder(binding.root) {
         val image = binding.ivRvUser
         val name = binding.tvRvUserName
         val favorite = binding.ivRvFavorite
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val binding = LayoutRvUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return Holder(binding)
+    inner class Hold(binding: LayoutRvUserGridBinding): RecyclerView.ViewHolder(binding.root) {
+        val image = binding.ivRvUserGrid
+        val name = binding.tvUserNameGrid
     }
 
-    override fun onBindViewHolder(holder: Holder, position: Int) {
-        with(holder) {
+    override fun getItemViewType(position: Int) = listGrid
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):RecyclerView.ViewHolder {
+        when(listGrid) {
+            0 -> {
+                return Holder(LayoutRvUserBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            }
+            1 -> {
+                return Hold(LayoutRvUserGridBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            }
+            else -> throw Exception("Adapter 연결에 실패함")
+        }
+    }
+
+    // 홀더부터 다시
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val holdLinear = holder as Holder
+        val holdGrid = holder as Hold
+
+        with(holdLinear) {
             name.text = userDataList[position].name
             image.setImageResource(R.drawable.user_profile_empty)
             favorite.setOnClickListener {
@@ -43,40 +71,82 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
                 ContactListAdapter(userDataList).notifyItemChanged(position)
             }
         }
+//        with(holdGrid) {
+//            name.text = userDataList[position].name
+//            image.setImageResource(R.drawable.user_profile_empty)
+//            favorite.setOnClickListener {
+//                when (userDataList[position].favorite) {
+//                    true -> {
+//                        userDataList[position].favorite = false
+//                        favorite.setImageResource(R.drawable.star_empty)
+//                    }
+//
+//                    false -> {
+//                        userDataList[position].favorite = true
+//                        favorite.setImageResource(R.drawable.star_full)
+//                    }
+//                }
+//                userId = position
+//                ContactListAdapter(userDataList).notifyItemChanged(position)
+//            }
+//        }
     }
 
     override fun getItemCount(): Int = userDataList.size
 }
 
-//class ContactListAdapter : ListAdapter<ContactData, ContactListAdapter.ViewHolder>(
-//    object : DiffUtil.ItemCallback<ContactData>() {
-//        override fun areItemsTheSame(oldItem: ContactData, newItem: ContactData): Boolean {
-//            // item의 구성요소가 같은지
-//            return oldItem.phoneNumber == newItem.phoneNumber
+//class ContactListAdapter : ListAdapter<ContactData, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
+//    companion object {
+//        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ContactData>() {
+//            override fun areItemsTheSame(oldItem: ContactData, newItem: ContactData): Boolean {
+//                // item의 구성요소가 같은지
+//                return oldItem.phoneNumber == newItem.phoneNumber
+//            }
+//
+//            override fun areContentsTheSame(oldItem: ContactData, newItem: ContactData): Boolean {
+//                // item의 모든 필드가 같은지
+//                return oldItem == newItem
+//            }
 //        }
 //
-//        override fun areContentsTheSame(oldItem: ContactData, newItem: ContactData): Boolean {
-//            // item의 모든 필드가 같은지
-//            return oldItem == newItem
+//        private const val LINEAR_LAYOUT = 0
+//        private const val GRID_LAYOUT = 1
+//    }
+//
+//    override fun getItemViewType(position: Int): Int {
+//        return when(listGrid) {
+//            0 -> GRID_LAYOUT
+//            else -> LINEAR_LAYOUT
 //        }
-//    }) {
-//    inner class ViewHolder(binding: LayoutRvUserBinding): RecyclerView.ViewHolder(binding.root) {
+//    }
+//
+//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+//        // ViewHolder 생성 로직
+//        // 예시: return VideoViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.video_view_holder, parent, false))
+//        return when(viewType){
+//            LINEAR_LAYOUT -> ViewHolderLinear(LayoutInflater.from(parent.context).inflate(R.layout.layout_rv_user, parent, false))
+//            GRID_LAYOUT -> ViewHolderGrid(LayoutInflater.from(parent.context).inflate(R.layout.layout_rv_user_grid, parent, false))
+//            else -> throw Exception("ViewType Error")
+//        }
+//    }
+//
+//    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+//        // ViewHolder 바인딩 로직
+//        val userItem = getItem(position)
+//    }
+//
+//    inner class ViewHolderLinear(v:View): RecyclerView.ViewHolder(v) {
 //        // ViewHolder 구현
 //        // fun bind(video: Video) { /* 아이템 바인딩 */ }
+//        fun bind(item: ContactData) {
+//
+//        }
 //        val image = binding.ivRvUser
 //        val name = binding.tvRvUserName
 //        val favorite = binding.ivRvFavorite
 //    }
 //
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactListAdapter.ViewHolder {
-//        // ViewHolder 생성 로직
-//        // 예시: return VideoViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.video_view_holder, parent, false))
-//        val binding = LayoutRvUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-//        return ViewHolder(binding)
-//    }
+//    inner class ViewHolderGrid(v:View):RecyclerView.ViewHolder(v) {
 //
-//    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        // ViewHolder 바인딩 로직
-//        val userItem = getItem(position)
 //    }
 //}
