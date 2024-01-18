@@ -10,9 +10,6 @@ import com.example.contactapp.databinding.LayoutRvUserBinding
 import com.example.contactapp.databinding.LayoutRvUserGridBinding
 import com.example.contactapp.fragment.ContactListFragment.Companion.listGrid
 
-
-import com.example.contactapp.fragment.ContactListFragment.Companion.userPosition
-
 import java.lang.Exception
 
 
