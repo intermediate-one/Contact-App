@@ -37,4 +37,22 @@ object AddContactValidExtension {
      */
     fun String.includeValidMemo() =
         Regex("^{0,100}\$").containsMatchIn(this)
+    /*
+    * overlapping group
+     */
+    fun String.overlappingGroup(): Boolean {
+        var answer = 0
+        ContactDatabase.groupData.forEach {
+            when {
+                (this == it) -> answer = 1
+            }
+        }
+        return when (answer) {
+            1 -> false
+            else -> true
+        }
+    }
+
+
+
 }
