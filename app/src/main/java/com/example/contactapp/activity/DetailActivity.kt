@@ -8,10 +8,13 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import com.example.contactapp.R
 import com.example.contactapp.data.ContactData
 import com.example.contactapp.data.Contants
 import com.example.contactapp.databinding.ActivityDetailBinding
+import com.example.contactapp.fragment.ContactListFragment
 
 
 class DetailActivity : AppCompatActivity() {
@@ -88,6 +91,13 @@ class DetailActivity : AppCompatActivity() {
         binding.layoutDetailBack.setOnClickListener {
             val intent = Intent(this,ContactActivity::class.java)
             startActivity(intent)
+//            val dataToSend = data
+//            val dataToSend2 = isFavorite
+//            val bundle = Bundle()
+//            bundle.putParcelable(Contants.ITEM_DATA,dataToSend)
+//            bundle.getBoolean("favorite",dataToSend2)
+//            val fragment = ContactListFragment()
+//            fragment.arguments
         }
 
         //수정하기
@@ -115,10 +125,23 @@ class DetailActivity : AppCompatActivity() {
                 binding.tvDetailName.text = data?.name
                 binding.tvDetailMobilePerson.text = data?.phoneNumber
                 binding.tvDetailEmailPerson.text = data?.email
+                binding.tvDetailGroupPerson.text = data?.group
+                binding.tvDetailMbtiPerson.text = data?.mbti
+                binding.tvDetailMemoPerson.text = data?.memo
+                binding.tvDetailLocationPerson.text = data?.address
+                binding.tvDetailBirthPerson.text = data?.birthday
+                binding.tvDetailNotifyPerson.text = data?.notification?.toChar().toString()
 
             }
         }
 
+    }
+    private fun setFragment(frag : Fragment) {
+        supportFragmentManager.commit {
+            replace(R.id.viewPager_contact_activity_swipe,frag)
+            setReorderingAllowed(true)
+            addToBackStack("")
+        }
     }
 
 }
