@@ -1,8 +1,6 @@
 package com.example.contactapp.adaptor
 
 import android.view.LayoutInflater
-
-
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -42,7 +40,7 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
         val favorite = binding.ivRvFavoriteGrid
     }
 
-    override fun getItemViewType(position: Int):Int {   // 필요한지?
+    override fun getItemViewType(position: Int):Int {   // Holder나 Hold를 Casting하기 위해 사용
         when(listGrid) {
             LINEAR_LAYOUT -> {
                 listGrid = LINEAR_LAYOUT
@@ -77,20 +75,23 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
                 with(holdList) {
                     name.text = userDataList[position].name
                     image.setImageResource(userDataList[position].profileImage)
-                    favorite.setOnClickListener {
-                        when (userDataList[position].favorite) {
-                            true -> {
+                    when (userDataList[position].favorite) {
+                        true -> {
+                            favorite.setImageResource(R.drawable.star_full)
+                            favorite.setOnClickListener {
                                 userDataList[position].favorite = false
                                 favorite.setImageResource(R.drawable.star_empty)
                             }
-
-                            false -> {
+                        }
+                        false -> {
+                            favorite.setImageResource(R.drawable.star_empty)
+                            favorite.setOnClickListener {
                                 userDataList[position].favorite = true
                                 favorite.setImageResource(R.drawable.star_full)
                             }
                         }
-                        userPosition = position
                     }
+                    userPosition = position     // 현재 선택된 아이템의 Position을 userPosition이라는 companion object에 저장
                 }
             }
             -1 -> {
@@ -98,20 +99,23 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
                 with (holdGrid) {
                     name.text = userDataList[position].name
                     image.setImageResource(userDataList[position].profileImage)
-                    favorite.setOnClickListener {
-                        when (userDataList[position].favorite) {
-                            true -> {
+                    when (userDataList[position].favorite) {
+                        true -> {
+                            favorite.setImageResource(R.drawable.star_full)
+                            favorite.setOnClickListener {
                                 userDataList[position].favorite = false
                                 favorite.setImageResource(R.drawable.star_empty)
                             }
-
-                            false -> {
+                        }
+                        false -> {
+                            favorite.setImageResource(R.drawable.star_empty)
+                            favorite.setOnClickListener {
                                 userDataList[position].favorite = true
                                 favorite.setImageResource(R.drawable.star_full)
                             }
                         }
-                        userPosition = position
                     }
+                    userPosition = position
                 }
             }
             else -> throw Exception("Holder를 Casting 할 수 없습니다.")
@@ -120,60 +124,3 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
 
     override fun getItemCount(): Int = userDataList.size
 }
-
-//class ContactListAdapter : ListAdapter<ContactData, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
-//    companion object {
-//        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ContactData>() {
-//            override fun areItemsTheSame(oldItem: ContactData, newItem: ContactData): Boolean {
-//                // item의 구성요소가 같은지
-//                return oldItem.phoneNumber == newItem.phoneNumber
-//            }
-//
-//            override fun areContentsTheSame(oldItem: ContactData, newItem: ContactData): Boolean {
-//                // item의 모든 필드가 같은지
-//                return oldItem == newItem
-//            }
-//        }
-//
-//        private const val LINEAR_LAYOUT = 0
-//        private const val GRID_LAYOUT = 1
-//    }
-//
-//    override fun getItemViewType(position: Int): Int {
-//        return when(listGrid) {
-//            0 -> GRID_LAYOUT
-//            else -> LINEAR_LAYOUT
-//        }
-//    }
-//
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-//        // ViewHolder 생성 로직
-//        // 예시: return VideoViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.video_view_holder, parent, false))
-//        return when(viewType){
-//            LINEAR_LAYOUT -> ViewHolderLinear(LayoutInflater.from(parent.context).inflate(R.layout.layout_rv_user, parent, false))
-//            GRID_LAYOUT -> ViewHolderGrid(LayoutInflater.from(parent.context).inflate(R.layout.layout_rv_user_grid, parent, false))
-//            else -> throw Exception("ViewType Error")
-//        }
-//    }
-//
-//    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-//        // ViewHolder 바인딩 로직
-//        val userItem = getItem(position)
-//    }
-//
-//    inner class ViewHolderLinear(v:View): RecyclerView.ViewHolder(v) {
-//        // ViewHolder 구현
-//        // fun bind(video: Video) { /* 아이템 바인딩 */ }
-//        fun bind(item: ContactData) {
-//
-//        }
-//        val image = binding.ivRvUser
-//        val name = binding.tvRvUserName
-//        val favorite = binding.ivRvFavorite
-//    }
-//
-//    inner class ViewHolderGrid(v:View):RecyclerView.ViewHolder(v) {
-//
-//    }
-//}
-

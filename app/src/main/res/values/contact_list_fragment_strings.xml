@@ -2,4 +2,5 @@
 <resources>
     <string name="user_name_in_here">사용자 검색</string>
     <string name="contact_list_description">description</string>
+    <string name="recycler_view_title">ㄱ</string>
 </resources>
