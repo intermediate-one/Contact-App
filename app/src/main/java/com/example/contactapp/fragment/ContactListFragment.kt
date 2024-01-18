@@ -1,24 +1,18 @@
 package com.example.contactapp.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import android.widget.Toast
-import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.contactapp.R
 import com.example.contactapp.activity.ContactActivity
 import com.example.contactapp.adaptor.ContactListAdapter
-import com.example.contactapp.data.ContactData
 import com.example.contactapp.data.ContactDatabase
-import com.example.contactapp.data.Contants
-import com.example.contactapp.data.Contants.ITEM_DATA
 import com.example.contactapp.databinding.FragmentContactListBinding
-
 
 
 private const val ARG_PARAM1 = "param1"
@@ -46,11 +40,9 @@ class ContactListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-
     ): View {
         _binding = FragmentContactListBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,23 +50,19 @@ class ContactListFragment : Fragment() {
 
         val sortedList = ContactDatabase.totalContactData
         val clAdapter = ContactListAdapter(sortedList)
-        with(binding) {             // 값은 저장되나, RecyclerView가 아이템을 변경하지 못함
+        with(binding) {
             recyclerView.adapter = clAdapter
             recyclerView.layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
-//            toast("어댑터 첫 연결 position = $userPosition = ${sortedList[userPosition].name}, ${sortedList[userPosition].favorite}")
             btnListGrid.setOnClickListener {
                 listGrid *= -1
                 binding.recyclerView.apply {
-//                    toast("어댑터 2 연결 position = $userPosition = ${sortedList[userPosition].name}, ${sortedList[userPosition].favorite}")
                     when (listGrid) {
                         1 -> {
-                            recyclerView.adapter = clAdapter
                             layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
                             btnListGrid.setImageResource(R.drawable.icon_grid_black)    // 현재가 list니 버튼을 누르면 Grid로 바꿀 수 있다는 것을 미리 보여주기 위해
                         }
 
                         -1 -> {
-                            recyclerView.adapter = clAdapter
                             layoutManager = GridLayoutManager(mainPage, 3, GridLayoutManager.VERTICAL, false)
                             btnListGrid.setImageResource(R.drawable.icon_list_black)
                         }
@@ -100,7 +88,6 @@ class ContactListFragment : Fragment() {
 
         var userPosition = 0
         var listGrid = 1
-
     }
 
     override fun onDestroyView() {
@@ -111,5 +98,4 @@ class ContactListFragment : Fragment() {
     fun toast(s:String) {
         Toast.makeText(mainPage,s,Toast.LENGTH_SHORT).show()
     }
-
 }
