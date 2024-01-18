@@ -11,7 +11,7 @@ object AddContactValidExtension {
     * 휴대폰 번호
      */
     fun String.includeNumberWithDash() =
-        Regex("^01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})$").containsMatchIn(this)
+        Regex("^(?:(\\+82|0)(?:-?)(?:2|10)-?)?(\\d{3,4})(?:-?)(\\d{4})\$").containsMatchIn(this)
 
 
     /*
@@ -36,5 +36,5 @@ object AddContactValidExtension {
     * memo
      */
     fun String.includeValidMemo() =
-        Regex("^[A-Za-z0-9가-힣]{0,100}\$").containsMatchIn(this)
+        Regex("^{0,100}\$").containsMatchIn(this)
 }

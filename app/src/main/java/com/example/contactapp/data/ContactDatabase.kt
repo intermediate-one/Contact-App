@@ -5,17 +5,17 @@ import com.example.contactapp.R
 object ContactDatabase {
 
     // Dummy Data
-    private val contact1 = ContactData("안보현", R.drawable.bohyun, "01011111111", "bohyun1111@gmail.com", "친구",20000101, "ENFP", "아무말1", null, false)
-    private val contact2 = ContactData("박보영", R.drawable.boyoung, "010222222222", "boyoung22@gmail.com", "친구",19990102, "ISTP", "아무말2", null, true)
-    private val contact3 = ContactData("톰", R.drawable.tom, "01033333333", "tom3333@gmail.com", "친구",19980202,"INTP", "아무말3", null, false)
-    private val contact4 = ContactData("박은빈", R.drawable.eunbin, "01044444444", null, "친구",19980205,"ESFJ", "아무말4", null, true)
-    private val contact5 = ContactData("김수현", R.drawable.suhyun, "01055555555", "suhyun45@kakao.com",null,20020207, null, null, null, true)
-    private val contact6 = ContactData("젠데야", R.drawable.zendaya, "01066666666", "zenday.thecool@naver.com", null, 20051010,"ISFJ", "아무말5", null, false)
-    private val contact7 = ContactData("엄마", R.drawable.blank_profile_image_square, "01077777777", "mum@gmail.com", "가족", 20010101,"INFJ", "아무말6", null, true)
-    private val contact8 = ContactData("아빠", R.drawable.blank_profile_image_square, "01088888888", "dad@gmail.com", "가족", 19901212,"ENFJ", "아무말7", null, true)
-    private val contact9 = ContactData("동생", R.drawable.blank_profile_image_square, "01099999999", null, "가족", 19951023,"ENTP", "아무말8", null, true)
-    private val contact10 = ContactData("형", R.drawable.blank_profile_image_square, "01000000000", null, "가족", 20010103,"INFP", "아무말9", null, true)
-    private val contact11 = ContactData("직장상사1", R.drawable.blank_profile_image_square, "01012345678", "workplace@companyName.ac.kr", "회사", null,null, "아무말10", null, false)
+    private val contact1 = ContactData("안보현", R.drawable.bohyun, "01011111111", null,"bohyun1111@gmail.com", "친구",20000101, "ENFP", "아무말1", null, false)
+    private val contact2 = ContactData("박보영", R.drawable.boyoung, "010222222222",null, "boyoung22@gmail.com", "친구",19990102, "ISTP", "아무말2", null, true)
+    private val contact3 = ContactData("톰", R.drawable.tom, "01033333333", null,"tom3333@gmail.com", "친구",19980202,"INTP", "아무말3", null, false)
+    private val contact4 = ContactData("박은빈", R.drawable.eunbin, "01044444444", null,null, "친구",19980205,"ESFJ", "아무말4", null, true)
+    private val contact5 = ContactData("김수현", R.drawable.suhyun, "01055555555", null,"suhyun45@kakao.com",null,20020207, null, null, null, true)
+    private val contact6 = ContactData("젠데야", R.drawable.zendaya, "01066666666", null,"zenday.thecool@naver.com", null, 20051010,"ISFJ", "아무말5", null, false)
+    private val contact7 = ContactData("엄마", R.drawable.blank_profile_image_square, "01077777777", null,"mum@gmail.com", "가족", 20010101,"INFJ", "아무말6", null, true)
+    private val contact8 = ContactData("아빠", R.drawable.blank_profile_image_square, "01088888888", null,"dad@gmail.com", "가족", 19901212,"ENFJ", "아무말7", null, true)
+    private val contact9 = ContactData("동생", R.drawable.blank_profile_image_square, "01099999999", null,null, "가족", 19951023,"ENTP", "아무말8", null, true)
+    private val contact10 = ContactData("형", R.drawable.blank_profile_image_square, "01000000000", null,null, "가족", 20010103,"INFP", "아무말9", null, true)
+    private val contact11 = ContactData("직장상사1", R.drawable.blank_profile_image_square, "01012345678", null,"workplace@companyName.ac.kr", "회사", null,null, "아무말10", null, false)
 
 
     var totalContactData: ArrayList<ContactData> = arrayListOf(contact1, contact2, contact3, contact4, contact5, contact6, contact7, contact8, contact9, contact10, contact11)

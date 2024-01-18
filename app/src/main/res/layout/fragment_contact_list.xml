@@ -58,18 +58,18 @@
     </androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnAddNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
+        android:id="@+id/fbtn_contact_list_add_contact"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
-        android:backgroundTint="#E79EFF"
+        android:backgroundTint="@color/color_code_1"
         android:contentDescription="Button"
         android:elevation="0dp"
         android:src="@android:drawable/ic_input_add"
         app:elevation="0dp"
-        app:fabCustomSize="40dp"
+        app:fabCustomSize="60dp"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

@@ -2,11 +2,13 @@ package com.example.contactapp.activity
 
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.media.ImageReader
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.telephony.PhoneNumberUtils
 import android.view.View
+import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
@@ -21,9 +23,12 @@ import com.example.contactapp.data.AddContactValidExtension.includeValidAddress
 import com.example.contactapp.data.AddContactValidExtension.includeValidEmail
 import com.example.contactapp.data.AddContactValidExtension.includeValidMbti
 import com.example.contactapp.data.AddContactValidExtension.includeValidMemo
+import com.example.contactapp.data.ContactData
+import com.example.contactapp.data.ContactDatabase.addContact
 import com.example.contactapp.data.ContactDatabase.addGroup
 import com.example.contactapp.data.ContactDatabase.groupData
 import com.example.contactapp.databinding.ActivityAddContactBinding
+import com.example.contactapp.fragment.ContactListFragment
 
 class AddContactActivity : AppCompatActivity() {
 
@@ -63,6 +68,7 @@ class AddContactActivity : AppCompatActivity() {
 
     private fun addGroupBtn() {
         binding.ibtnAddContactAddGroup.setOnClickListener {
+
             val builder = AlertDialog.Builder(this)
             builder.setTitle(getString(R.string.dialog_add_group))
             builder.setMessage(getString(R.string.dialog_new_group))
@@ -79,20 +85,16 @@ class AddContactActivity : AppCompatActivity() {
                 // 새로운 그룹 이름으로 입력 된 값이 비어 있거나 이미 있는 그룹을 입력하고
                 // 확인을 누르면 토스트 메세지를 띄우도록 만들어보았습니다.
                 // TODO : 아직 작동이 잘 되는지 확인이 안되었습니당.
-                if (p1 == DialogInterface.BUTTON_POSITIVE) {
-                    groupData.forEach {
-                        if (newGroup?.text.toString().isEmpty()) {
-                            shortToastMessage(this,R.string.dialog_empty_text_message)
-                        } else if (newGroup?.text.toString() == it) {
-                            shortToastMessage(this,R.string.dialog_existing_group_message)
-                        } else {
-                            newContactGroup = newGroup?.text.toString()
-                            addGroup(newContactGroup)
-                        }
-                    }
+
+                var invalidMessage = getMessageValidGroup(newGroup?.text.toString())
+
+                newGroup?.error = invalidMessage
+
+                if (invalidMessage == null) {
+                    newContactGroup = newGroup?.text.toString()
+                    addGroup(newGroup?.text.toString())
                 }
 
-                newContactGroup = newGroup?.text.toString()
             }
 
             builder.setPositiveButton(getString(R.string.dialog_confirm_add_group), listener)
@@ -104,7 +106,7 @@ class AddContactActivity : AppCompatActivity() {
     }
 
     private fun shortToastMessage(context: Context, message: Int) {
-        Toast.makeText(context,getString(message),Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, getString(message), Toast.LENGTH_SHORT).show()
     }
 
     // 스피너에서 현재 있는 그룹 리스트를 표시해주는 함수.
@@ -176,8 +178,32 @@ class AddContactActivity : AppCompatActivity() {
         }
     }
 
+    private fun getMessageValidGroup(text: String?): String? {
+        val errorCode = when {
+            text?.isBlank() == true -> AddContactErrorMessage.EMPTY_GROUP_NAME
+            text?.overlappingGroup() == true -> AddContactErrorMessage.OVERLAPPING_GROUP_NAME
+            else -> null
+        }
+        return errorCode?.let {
+            getString(it.message)
+        }
+    }
+
+    private fun String.overlappingGroup(): Boolean {
+        var answer = 0
+        groupData.forEach() {
+            when {
+                (this == it) -> answer += 1
+            }
+        }
+        return when (answer) {
+            1 -> false
+            else -> true
+        }
+    }
+
     private fun getMessageValidNumber(): String? {
-        val text = binding.etAddContactName.text.toString()
+        val text = binding.etAddContactNumber.text.toString()
         val errorCode = when {
             text.isBlank() -> AddContactErrorMessage.EMPTY_NUMBER
             text.includeNumberWithDash() -> null
@@ -244,7 +270,27 @@ class AddContactActivity : AppCompatActivity() {
     }
 
     private fun onClickButtonComplete() {
-        //TODO : 데이터 저장
+        var newContact = ContactData(
+            binding.etAddContactName.text.toString(),
+            R.drawable.blank_profile_image_square,
+            binding.etAddContactNumber.text.toString(),
+            binding.etAddContactAddress.text.toString(),
+            binding.etAddContactEmail.text.toString(),
+            null,
+            null,
+            binding.etAddContactMbti.text.toString(),
+            binding.etAddContactMemo.text.toString(),
+            null,
+            false
+        )
+        binding.btnAddContactComplete.setOnClickListener {
+            addContact(newContact)
+            finish()
+        }
+
+
+
+
     }
 
     private fun setConfirmButtonEnable() {
