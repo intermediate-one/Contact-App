@@ -15,6 +15,7 @@ import com.example.contactapp.activity.ContactActivity
 import com.example.contactapp.activity.DetailActivity
 import com.example.contactapp.adaptor.ContactListAdapter
 import com.example.contactapp.data.ContactDatabase
+import com.example.contactapp.data.Contants
 import com.example.contactapp.databinding.FragmentContactListBinding
 
 
@@ -74,6 +75,14 @@ class ContactListFragment : Fragment() {
                             clAdapter.notifyItemRangeChanged(userPosition,sortedList.size)
                         }
                     }
+                }
+            }
+            clAdapter.itemClick = object : ContactListAdapter.ItemClick{
+                override fun onClick(view: View, position: Int) {
+                    val intent = Intent(activity,DetailActivity::class.java)
+                    intent.putExtra(Contants.ITEM_DATA,sortedList[position])
+                    intent.putExtra(Contants.ITEM_INDEX,position)
+                    startActivity(intent)
                 }
             }
         }
