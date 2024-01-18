@@ -66,13 +66,10 @@ class ContactListFragment : Fragment() {
                         1 -> {
                             layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
                             btnListGrid.setImageResource(R.drawable.icon_grid_black)    // 현재가 list니 버튼을 누르면 Grid로 바꿀 수 있다는 것을 미리 보여주기 위해
-                            clAdapter.notifyItemRangeChanged(userPosition,sortedList.size)
                         }
-
                         -1 -> {
                             layoutManager = GridLayoutManager(mainPage, 3, GridLayoutManager.VERTICAL, false)
                             btnListGrid.setImageResource(R.drawable.icon_list_black)
-                            clAdapter.notifyItemRangeChanged(userPosition,sortedList.size)
                         }
                     }
                 }
@@ -99,7 +96,6 @@ class ContactListFragment : Fragment() {
                 }
             }
 
-        var userPosition = 0
         var listGrid = 1
     }
 
