@@ -117,6 +117,7 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
                             }
                         }
                     }
+                    userPosition = position
                 }
             }
             else -> throw Exception("Holder를 Casting 할 수 없습니다.")
