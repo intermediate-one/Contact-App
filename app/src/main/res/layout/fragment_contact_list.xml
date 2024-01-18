@@ -88,13 +88,13 @@
     </androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnAddItem"
+        android:id="@+id/fbtn_contact_list_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
-        android:backgroundTint="#E79EFF"
+        android:backgroundTint="@color/color_code_1"
         android:contentDescription="@string/contact_list_description"
         android:elevation="0dp"
         android:src="@android:drawable/ic_input_add"

@@ -1,5 +1,6 @@
 package com.example.contactapp.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.contactapp.R
+import com.example.contactapp.activity.AddContactActivity
 import com.example.contactapp.activity.ContactActivity
 import com.example.contactapp.adaptor.ContactListAdapter
 import com.example.contactapp.data.ContactData
@@ -56,6 +58,8 @@ class ContactListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        onClickFloatingActionButtonAddContact()
         val sortedList = ContactDatabase.totalContactData
         val clAdapter = ContactListAdapter(sortedList)
         with(binding) {             // 값은 저장되나, RecyclerView가 아이템을 변경하지 못함
@@ -83,11 +87,11 @@ class ContactListFragment : Fragment() {
             }
         }
 
-        // FloatingActionButton
-        binding.btnAddItem
+
     }
 
     companion object {
+        internal var userId = 0
 
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
@@ -110,6 +114,15 @@ class ContactListFragment : Fragment() {
 
     fun toast(s:String) {
         Toast.makeText(mainPage,s,Toast.LENGTH_SHORT).show()
+
     }
 
+
+    // 플로팅 액션 버튼 클릭 시 연락처 추가 액티비티 (AddContactActivity.kt)로 이동하는 코드
+    private fun onClickFloatingActionButtonAddContact() {
+        binding.fbtnContactListAdd.setOnClickListener {
+            val intent = Intent(activity, AddContactActivity::class.java)
+            startActivity(intent)
+        }
+    }
 }
