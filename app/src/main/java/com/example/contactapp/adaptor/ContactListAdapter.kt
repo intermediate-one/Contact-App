@@ -11,12 +11,17 @@ import com.example.contactapp.databinding.LayoutRvUserGridBinding
 import com.example.contactapp.fragment.ContactListFragment.Companion.listGrid
 
 
-private const val LINEAR_LAYOUT = 1
-private const val GRID_LAYOUT = -1
 
 class ContactListAdapter(private val userDataList:ArrayList<ContactData>):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var holdList:Holder
     private lateinit var holdGrid:Hold
+
+    companion object {
+        private const val LINEAR_LAYOUT = 1
+        private const val GRID_LAYOUT = -1
+        private const val TYPE_HEADER = 2
+        private const val TYPE_CONTENT = -2
+    }
 
     interface ItemClick {
         fun onClick(view : View, position:Int)
