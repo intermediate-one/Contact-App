@@ -66,6 +66,7 @@ class AddContactActivity : AppCompatActivity() {
         setGroupProvider()
         setMbtiProvider()
         addGroupBtn()
+
     }
 
     private fun addGroupBtn() {
@@ -278,7 +279,9 @@ class AddContactActivity : AppCompatActivity() {
     }
 
     private fun onClickButtonBack() {
-
+        binding.ibtnAddContactBack.setOnClickListener {
+            finish()
+        }
     }
 
     private fun onClickButtonComplete() {
