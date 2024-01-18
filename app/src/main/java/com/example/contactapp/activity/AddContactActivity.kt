@@ -1,14 +1,11 @@
 package com.example.contactapp.activity
 
+import android.app.DatePickerDialog
 import android.content.Context
 import android.content.DialogInterface
-import android.content.Intent
-import android.media.ImageReader
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.telephony.PhoneNumberUtils
 import android.view.View
-import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
@@ -21,7 +18,6 @@ import com.example.contactapp.data.AddContactValidExtension.includeKorean
 import com.example.contactapp.data.AddContactValidExtension.includeNumberWithDash
 import com.example.contactapp.data.AddContactValidExtension.includeValidAddress
 import com.example.contactapp.data.AddContactValidExtension.includeValidEmail
-import com.example.contactapp.data.AddContactValidExtension.includeValidMbti
 import com.example.contactapp.data.AddContactValidExtension.includeValidMemo
 import com.example.contactapp.data.ContactData
 import com.example.contactapp.data.ContactDatabase.addContact
@@ -29,14 +25,19 @@ import com.example.contactapp.data.ContactDatabase.addGroup
 import com.example.contactapp.data.ContactDatabase.groupData
 import com.example.contactapp.data.ContactDatabase.mbtiData
 import com.example.contactapp.databinding.ActivityAddContactBinding
-import com.example.contactapp.fragment.ContactListFragment
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class AddContactActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddContactBinding
+    private val calendar = Calendar.getInstance()
+
     private lateinit var newContactName: String
-    private lateinit var newContactGroup: String
-    private lateinit var newContactMbti: String
+    private var newContactGroup: String? = null
+    private var newContactMbti: String? = null
+    private var newContactBirthday: String? = null
 
     val editTextArray by lazy {
         arrayOf(
@@ -62,11 +63,43 @@ class AddContactActivity : AppCompatActivity() {
         setOnFocusChangedListener()
         onClickButtonComplete()
         onClickButtonBack()
+        onClickDatePicker()
 
         setGroupProvider()
         setMbtiProvider()
         addGroupBtn()
 
+    }
+
+    private fun onClickDatePicker() {
+
+        binding.btnAddContactDatePicker.setOnClickListener {
+            showDatePicker()
+        }
+
+    }
+
+    private fun showDatePicker() {
+        val datePickerDialog = DatePickerDialog(
+            this, {DatePicker, year: Int, monthOfYear: Int, dayOfMonth: Int ->
+                // Create a new Calendar instance to hold the selected date
+                val selectedDate = Calendar.getInstance()
+                // Set the selected date using the values received from the DatePicker dialog
+                selectedDate.set(year, monthOfYear, dayOfMonth)
+                // Create a SimpleDateFormat to format the date as "dd/MM/yyyy"
+                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                // Format the selected date into a string
+                val formattedDate = dateFormat.format(selectedDate.time)
+                // Update the TextView to display the selected date with the "Selected Date: " prefix
+                binding.tvAddContactSelectedDate.text = "생일: $formattedDate"
+                newContactBirthday = formattedDate
+            },
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        )
+        // Show the DatePicker dialog
+        datePickerDialog.show()
     }
 
     private fun addGroupBtn() {
@@ -257,7 +290,6 @@ class AddContactActivity : AppCompatActivity() {
             text.isBlank() -> null
             text.includeValidAddress() -> null
             else -> AddContactErrorMessage.INVALID_ADDRESS
-            // TODO : 정규식 정상 작동하는지 확인 필요...
         }
         return errorCode?.let {
             getString(it.message)
@@ -271,7 +303,6 @@ class AddContactActivity : AppCompatActivity() {
             text.isBlank() -> null
             text.includeValidMemo() -> null
             else -> AddContactErrorMessage.INVALID_MEMO
-            // TODO : 정규식 정상 작동하는지 확인 필요...
         }
         return errorCode?.let {
             getString(it.message)
@@ -292,7 +323,7 @@ class AddContactActivity : AppCompatActivity() {
             binding.etAddContactAddress.text.toString(),
             binding.etAddContactEmail.text.toString(),
             newContactGroup,
-            null,
+            newContactBirthday,
             newContactMbti,
             binding.etAddContactMemo.text.toString(),
             null,

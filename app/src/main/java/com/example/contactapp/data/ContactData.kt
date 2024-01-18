@@ -11,7 +11,7 @@ data class ContactData (
     var address: String?,
     var email: String?,
     var group: String?,
-    var birthday: Int?,
+    var birthday: String?,
     var mbti: String?,
     var memo: String?,
     var notification: Int?,

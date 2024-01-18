@@ -12,7 +12,6 @@ enum class AddContactErrorMessage(@StringRes val message: Int) {
     INVALID_NUMBER(R.string.invalid_number),
     INVALID_EMAIL(R.string.invalid_email),
     INVALID_ADDRESS(R.string.invalid_address),
-    INVALID_MBTI(R.string.invalid_mbti),
     INVALID_MEMO(R.string.invalid_memo),
     OVERLAPPING_GROUP_NAME(R.string.overlapping_group_name),
 
