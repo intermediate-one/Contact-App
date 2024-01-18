@@ -1,11 +1,15 @@
 package com.example.contactapp.adaptor
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
 import androidx.recyclerview.widget.RecyclerView
 import com.example.contactapp.R
+import com.example.contactapp.activity.DetailActivity
 import com.example.contactapp.data.ContactData
+import com.example.contactapp.data.Contants
 import com.example.contactapp.databinding.LayoutRvUserBinding
 import com.example.contactapp.databinding.LayoutRvUserGridBinding
 import com.example.contactapp.fragment.ContactListFragment.Companion.listGrid
@@ -23,6 +27,7 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
     private lateinit var holdList:Holder
     private lateinit var holdGrid:Hold
 
+
     interface ItemClick {
         fun onClick(view : View, position:Int)
     }
@@ -32,6 +37,8 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
         val image = binding.ivRvUser
         val name = binding.tvRvUserName
         val favorite = binding.ivRvFavorite
+
+
     }
 
     inner class Hold(binding: LayoutRvUserGridBinding): RecyclerView.ViewHolder(binding.root) {
@@ -66,6 +73,7 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         holder.itemView.setOnClickListener{
             itemClick?.onClick(it,position)
+
         }
 
 
@@ -123,4 +131,5 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
     }
 
     override fun getItemCount(): Int = userDataList.size
+
 }

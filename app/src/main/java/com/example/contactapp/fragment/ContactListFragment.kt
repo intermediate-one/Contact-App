@@ -14,6 +14,7 @@ import com.example.contactapp.activity.AddContactActivity
 import com.example.contactapp.activity.ContactActivity
 import com.example.contactapp.activity.DetailActivity
 import com.example.contactapp.adaptor.ContactListAdapter
+import com.example.contactapp.data.ContactData
 import com.example.contactapp.data.ContactDatabase
 import com.example.contactapp.data.Contants
 import com.example.contactapp.databinding.FragmentContactListBinding
@@ -55,6 +56,9 @@ class ContactListFragment : Fragment() {
 
         onClickFloatingActionButtonAddContact()
         val sortedList = ContactDatabase.totalContactData
+//        val data = arguments?.getParcelable<ContactData>(Contants.ITEM_DATA)
+//        val favorite = arguments?.getBoolean("favorite",false)
+//        val index = arguments?.getInt(Contants.ITEM_INDEX,0)
         val clAdapter = ContactListAdapter(sortedList)
         with(binding) {
             recyclerView.adapter = clAdapter
@@ -87,6 +91,7 @@ class ContactListFragment : Fragment() {
             }
         }
     }
+
 
     companion object {
 

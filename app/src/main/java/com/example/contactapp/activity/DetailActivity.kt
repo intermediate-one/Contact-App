@@ -8,10 +8,13 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.example.contactapp.R
+import com.example.contactapp.adaptor.ContactListAdapter
 import com.example.contactapp.data.ContactData
+import com.example.contactapp.data.ContactDatabase
 import com.example.contactapp.data.Contants
 import com.example.contactapp.databinding.ActivityDetailBinding
 import com.example.contactapp.fragment.ContactListFragment
@@ -89,15 +92,30 @@ class DetailActivity : AppCompatActivity() {
 
         //뒤로가기(리스트로)
         binding.layoutDetailBack.setOnClickListener {
-            val intent = Intent(this,ContactActivity::class.java)
+//            val intent = Intent(this,ContactListAdapter::class.java)
+//            intent.putExtra(Contants.ITEM_INDEX,position)
+//            intent.putExtra(Contants.ITEM_DATA,data)
+//            intent.putExtra("favorite",isFavorite)
+
+
+
+
+
+
+//            onBackPressed()
+//            val intent = Intent(this,ContactActivity::class.java)
+//            startActivity(intent)
+            //데이터를 ContactActivity로 보내서 fragment로 전달
+            val dataToSend = data
+            val dataToSend2 = isFavorite
+            val bundle = Bundle()
+            bundle.putInt(Contants.ITEM_INDEX,position)
+            bundle.putParcelable(Contants.ITEM_DATA,dataToSend)
+            bundle.getBoolean("favorite",dataToSend2)
+            val intent = Intent(this@DetailActivity,ContactActivity::class.java)
+            intent.putExtras(bundle)
             startActivity(intent)
-//            val dataToSend = data
-//            val dataToSend2 = isFavorite
-//            val bundle = Bundle()
-//            bundle.putParcelable(Contants.ITEM_DATA,dataToSend)
-//            bundle.getBoolean("favorite",dataToSend2)
-//            val fragment = ContactListFragment()
-//            fragment.arguments
+
         }
 
         //수정하기
@@ -136,6 +154,8 @@ class DetailActivity : AppCompatActivity() {
         }
 
     }
+
+
     private fun setFragment(frag : Fragment) {
         supportFragmentManager.commit {
             replace(R.id.viewPager_contact_activity_swipe,frag)
