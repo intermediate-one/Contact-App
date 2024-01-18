@@ -126,6 +126,8 @@ class AddContactActivity : AppCompatActivity() {
 
 
             val editGroup = dialogView.findViewById<EditText>(R.id.et_dialog_add_group)
+
+
             editGroup?.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
@@ -148,6 +150,12 @@ class AddContactActivity : AppCompatActivity() {
 
                 override fun afterTextChanged(p0: Editable?) {}
             })
+
+            builder.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                ContactDatabase.addGroup(editGroup.text.toString())
+                setGroupProvider()
+                builder.dismiss()
+            }
 
 
         }
