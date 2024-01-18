@@ -82,14 +82,6 @@ class ContactListFragment : Fragment() {
                 }
             }
         }
-        clAdapter.itemClick = object : ContactListAdapter.ItemClick{
-            override fun onClick(view: View, position: Int) {
-                val intent = Intent(activity,DetailActivity::class.java)
-                intent.putExtra(Contants.ITEM_DATA,sortedList[position])
-                intent.putExtra(Contants.ITEM_INDEX,position)
-                startActivity(intent)
-            }
-        }
         // FloatingActionButton
         binding.btnAddItem
     }

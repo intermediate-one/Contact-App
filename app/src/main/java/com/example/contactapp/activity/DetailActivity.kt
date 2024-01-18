@@ -1,6 +1,7 @@
 package com.example.contactapp.activity
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -64,6 +65,17 @@ class DetailActivity : AppCompatActivity() {
                 Toast.makeText(this,R.string.detail_favorite_del, Toast.LENGTH_SHORT).show()
                 isFavorite = false
             }
+        }
+
+        //메세지보내기
+        binding.btnDetailMessage.setOnClickListener {
+            val mobileNumber = binding.tvDetailMobilePerson.text
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("sms:${mobileNumber}")))
+        }
+        //전화하기
+        binding.btnDetailCall.setOnClickListener {
+            val mobileNumber = binding.tvDetailMobilePerson.text
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("tel:${mobileNumber}")))
         }
 
         //뒤로가기(리스트로)
