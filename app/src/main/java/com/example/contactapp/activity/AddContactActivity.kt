@@ -291,9 +291,9 @@ class AddContactActivity : AppCompatActivity() {
             binding.etAddContactNumber.text.toString(),
             binding.etAddContactAddress.text.toString(),
             binding.etAddContactEmail.text.toString(),
+            newContactGroup,
             null,
-            null,
-            null,
+            newContactMbti,
             binding.etAddContactMemo.text.toString(),
             null,
             false
