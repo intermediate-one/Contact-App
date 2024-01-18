@@ -25,4 +25,6 @@
     <string name="add_contact_notify_5s">5초 뒤</string>
     <string name="add_contact_notify_5m">5분 뒤</string>
     <string name="add_contact_notify_10m">10분 뒤</string>
+
+    <string name="add_contact_add_memo">메모를 입력하세요.</string>
 </resources>

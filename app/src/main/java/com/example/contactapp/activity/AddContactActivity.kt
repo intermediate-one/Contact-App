@@ -42,7 +42,6 @@ class AddContactActivity : AppCompatActivity() {
             binding.etAddContactNumber,
             binding.etAddContactAddress,
             binding.etAddContactEmail,
-            binding.etAddContactMbti,
             binding.etAddContactMemo
         )
     }
@@ -159,7 +158,6 @@ class AddContactActivity : AppCompatActivity() {
             binding.etAddContactNumber -> error = getMessageValidNumber()
             binding.etAddContactEmail -> error = getMessageValidEmail()
             binding.etAddContactAddress -> error = getMessageValidAddress()
-            binding.etAddContactMbti -> error = getMessageValidMbti()
             binding.etAddContactMemo -> error = getMessageValidMemo()
 
             else -> Unit
@@ -239,18 +237,6 @@ class AddContactActivity : AppCompatActivity() {
         }
     }
 
-    private fun getMessageValidMbti(): String? {
-        val text = binding.etAddContactMbti.text.toString()
-        val errorCode = when {
-            text.isBlank() -> null
-            text.includeValidMbti() -> null
-            else -> AddContactErrorMessage.INVALID_MBTI
-            // TODO : 정규식 정상 작동하는지 확인 필요...
-        }
-        return errorCode?.let {
-            getString(it.message)
-        }
-    }
 
     private fun getMessageValidMemo(): String? {
         val text = binding.etAddContactMemo.text.toString()
@@ -278,7 +264,7 @@ class AddContactActivity : AppCompatActivity() {
             binding.etAddContactEmail.text.toString(),
             null,
             null,
-            binding.etAddContactMbti.text.toString(),
+            null,
             binding.etAddContactMemo.text.toString(),
             null,
             false
@@ -298,7 +284,6 @@ class AddContactActivity : AppCompatActivity() {
                 && getMessageValidNumber() == null
                 && getMessageValidEmail() == null
                 && getMessageValidAddress() == null
-                && getMessageValidMbti() == null
                 && getMessageValidMemo() == null
     }
 
