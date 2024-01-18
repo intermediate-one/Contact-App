@@ -21,6 +21,7 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
         private const val GRID_LAYOUT = -1
         private const val TYPE_HEADER = 2
         private const val TYPE_CONTENT = -2
+        private var pair:Pair<Int, Int> = Pair(0,0)
     }
 
     interface ItemClick {
@@ -44,11 +45,9 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
         when(listGrid) {
             LINEAR_LAYOUT -> {
                 listGrid = LINEAR_LAYOUT
-                return LINEAR_LAYOUT
             }
             GRID_LAYOUT -> {
                 listGrid = GRID_LAYOUT
-                return GRID_LAYOUT
             }
         }
         return listGrid
