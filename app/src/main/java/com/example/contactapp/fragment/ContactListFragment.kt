@@ -97,13 +97,11 @@ class ContactListFragment : Fragment() {
                 tran.addToBackStack(null)
                 tran.commit()
 
-<<<<<<< HEAD
+
             }
         }
-=======
         // FloatingActionButton
         binding.btnAddItem
->>>>>>> b4f8f55c8c05f528e2559db8054313923130efda
     }
 
     companion object {
