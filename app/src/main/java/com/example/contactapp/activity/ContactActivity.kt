@@ -8,7 +8,6 @@ import com.example.contactapp.fragment.MyPageFragment
 import com.example.contactapp.adaptor.ViewPager2Adapter
 import com.example.contactapp.databinding.ActivityContactBinding
 import com.example.contactapp.fragment.ContactListFragment
-import com.example.contactapp.fragment.DetailFragment
 import com.example.contactapp.fragment.GroupFragment
 import com.example.contactapp.fragment.TrashBinFragment
 import com.google.android.material.tabs.TabLayoutMediator

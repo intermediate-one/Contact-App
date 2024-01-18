@@ -11,6 +11,11 @@ import com.example.contactapp.databinding.LayoutRvUserGridBinding
 import com.example.contactapp.fragment.ContactListFragment.Companion.listGrid
 
 
+import com.example.contactapp.fragment.ContactListFragment.Companion.userPosition
+
+import java.lang.Exception
+
+
 
 class ContactListAdapter(private val userDataList:ArrayList<ContactData>):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var holdList:Holder
@@ -66,6 +71,7 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
         holder.itemView.setOnClickListener{
             itemClick?.onClick(it,position)
         }
+
 
         when(listGrid) {
             1 -> {
