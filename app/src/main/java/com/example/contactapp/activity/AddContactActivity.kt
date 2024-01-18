@@ -27,6 +27,7 @@ import com.example.contactapp.data.ContactData
 import com.example.contactapp.data.ContactDatabase.addContact
 import com.example.contactapp.data.ContactDatabase.addGroup
 import com.example.contactapp.data.ContactDatabase.groupData
+import com.example.contactapp.data.ContactDatabase.mbtiData
 import com.example.contactapp.databinding.ActivityAddContactBinding
 import com.example.contactapp.fragment.ContactListFragment
 
@@ -35,6 +36,7 @@ class AddContactActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddContactBinding
     private lateinit var newContactName: String
     private lateinit var newContactGroup: String
+    private lateinit var newContactMbti: String
 
     val editTextArray by lazy {
         arrayOf(
@@ -62,6 +64,7 @@ class AddContactActivity : AppCompatActivity() {
         onClickButtonBack()
 
         setGroupProvider()
+        setMbtiProvider()
         addGroupBtn()
     }
 
@@ -124,6 +127,29 @@ class AddContactActivity : AppCompatActivity() {
                     id: Long
                 ) {
                     newContactGroup = parent?.getItemAtPosition(position).toString()
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) = Unit
+
+            }
+
+    }
+
+    private fun setMbtiProvider() {
+        //object클래스 ContactDatabase.kt에 저장되어 있는 groupData에 있는 값들을 추가해준다.
+        binding.spAddContactMbti.adapter = ArrayAdapter(
+            this, android.R.layout.simple_spinner_dropdown_item,
+            mbtiData.toList()
+        )
+        binding.spAddContactGroup.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    newContactMbti = parent?.getItemAtPosition(position).toString()
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) = Unit

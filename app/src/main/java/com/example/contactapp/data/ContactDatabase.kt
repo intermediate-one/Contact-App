@@ -20,8 +20,10 @@ object ContactDatabase {
 
     var totalContactData: ArrayList<ContactData> = arrayListOf(contact1, contact2, contact3, contact4, contact5, contact6, contact7, contact8, contact9, contact10, contact11)
 
+    var mbtiData: List<String> = listOf("선택 안함", "ESTJ", "ESTP", "ESFJ", "ESFP", "ENTJ", "ENTP", "ENFJ", "ENFP","ISTJ", "ISTP", "ISFJ", "ISFP", "INTJ", "INTP", "INFJ", "INFP")
+
     // 디폴트 그룹 종류 가족 | 친구 | 회사
-    var groupData: MutableList<String> = mutableListOf("가족","친구","회사")
+    var groupData: MutableList<String> = mutableListOf("선택 안함","가족","친구","회사")
 
     // 그룹 종류를 추가하는 함수
     fun addGroup(group: String) {
