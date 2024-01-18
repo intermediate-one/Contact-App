@@ -3,6 +3,9 @@ package com.example.contactapp.data
 import com.example.contactapp.R
 
 object ContactDatabase {
+    // 내 정보
+//    var myContact = new()
+    var myContact = ContactData("박보영", R.drawable.boyoung, "01099887766", "boyoung@gmail.com", true)
 
     // Dummy Data
     private val contact1 = ContactData("안보현", R.drawable.bohyun, "01011111111", null,"bohyun1111@gmail.com", "친구","2000/01/01", "ENFP", "아무말1", null, false)
@@ -66,4 +69,7 @@ object ContactDatabase {
             it.phoneNumber = contact.phoneNumber
         }
     }
+
+    // 빈 데이터 생성하는 함수
+    fun new() = ContactData("name", R.drawable.user_profile_empty, "", "", false)
 }

@@ -34,7 +34,6 @@ class ContactListFragment : Fragment() {
 
     private var _binding:FragmentContactListBinding? = null
     private val binding get() = _binding!!
-
     private val mainPage by lazy { context as ContactActivity }
 
 
@@ -54,37 +53,42 @@ class ContactListFragment : Fragment() {
         _binding = FragmentContactListBinding.inflate(inflater, container, false)
         return binding.root
 
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        onClickFloatingActionButtonAddContact()
 
-        val clAdapter = ContactListAdapter(ContactDatabase.totalContactData)
-        binding.recyclerView.adapter = clAdapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
-//        toast("첫번째 레이아웃 연결 / 현재 값 = $listGrid")
-        binding.btnListGrid.setOnClickListener {
-            listGrid *= -1
-            binding.recyclerView.apply {
-                adapter = clAdapter
-//                toast("RV 어댑터 연결 / 현재 값 $listGrid")
-                when(listGrid) {
-                    1 -> {
-                        layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
-//                        toast("현재 : Linear $listGrid")
-                    }
-                    -1 -> {
-                        layoutManager = GridLayoutManager(mainPage, 3, GridLayoutManager.VERTICAL, false)
-//                        toast("현재 : Grid $listGrid")
+        onClickFloatingActionButtonAddContact()
+        val sortedList = ContactDatabase.totalContactData
+        val clAdapter = ContactListAdapter(sortedList)
+        with(binding) {             // 값은 저장되나, RecyclerView가 아이템을 변경하지 못함
+            recyclerView.adapter = clAdapter
+            recyclerView.layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
+//            toast("어댑터 첫 연결 position = $userPosition = ${sortedList[userPosition].name}, ${sortedList[userPosition].favorite}")
+            btnListGrid.setOnClickListener {
+                listGrid *= -1
+                binding.recyclerView.apply {
+//                    toast("어댑터 2 연결 position = $userPosition = ${sortedList[userPosition].name}, ${sortedList[userPosition].favorite}")
+                    when (listGrid) {
+                        1 -> {
+                            recyclerView.adapter = clAdapter
+                            layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
+                            btnListGrid.setImageResource(R.drawable.icon_grid_black)    // 현재가 list니 버튼을 누르면 Grid로 바꿀 수 있다는 것을 미리 보여주기 위해
+                        }
+
+                        -1 -> {
+                            recyclerView.adapter = clAdapter
+                            layoutManager = GridLayoutManager(mainPage, 3, GridLayoutManager.VERTICAL, false)
+                            btnListGrid.setImageResource(R.drawable.icon_list_black)
+                        }
                     }
                 }
             }
         }
 
+        // FloatingActionButton
+        binding.btnAddItem
     }
 
     companion object {
@@ -99,6 +103,7 @@ class ContactListFragment : Fragment() {
                 }
             }
 
+        var userPosition = 0
         var listGrid = 1
 
     }
@@ -110,6 +115,7 @@ class ContactListFragment : Fragment() {
 
     fun toast(s:String) {
         Toast.makeText(mainPage,s,Toast.LENGTH_SHORT).show()
+
     }
 
 
