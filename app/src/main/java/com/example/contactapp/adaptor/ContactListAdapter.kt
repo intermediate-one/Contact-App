@@ -5,19 +5,16 @@ import android.view.LayoutInflater
 
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.contactapp.R
 import com.example.contactapp.data.ContactData
 import com.example.contactapp.databinding.LayoutRvUserBinding
-import androidx.recyclerview.widget.DiffUtil
-import androidx.viewbinding.ViewBinding
-import com.example.contactapp.data.ContactDatabase
-import com.example.contactapp.databinding.ActivityContactBinding
-import com.example.contactapp.databinding.FragmentContactListBinding
 import com.example.contactapp.databinding.LayoutRvUserGridBinding
 import com.example.contactapp.fragment.ContactListFragment.Companion.listGrid
+
+
 import com.example.contactapp.fragment.ContactListFragment.Companion.userPosition
+
 import java.lang.Exception
 
 
@@ -72,6 +69,7 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
         holder.itemView.setOnClickListener{
             itemClick?.onClick(it,position)
         }
+
 
         when(listGrid) {
             1 -> {
