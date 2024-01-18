@@ -1,7 +1,7 @@
 package com.example.contactapp.activity
 
 import android.app.DatePickerDialog
-import android.content.DialogInterface
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
 import com.example.contactapp.R
@@ -154,25 +155,19 @@ class AddContactActivity : AppCompatActivity() {
             builder.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                 ContactDatabase.addGroup(editGroup.text.toString())
                 setGroupProvider()
+                shortToastMessage(this, R.string.dialog_new_group_added)
                 builder.dismiss()
             }
 
 
         }
 
-        // p0에 해당 AlertDialog가 들어온다. findViewById를 통해 view를 가져와서 사용
-        val listener = DialogInterface.OnClickListener { p0, _ ->
-            val alert = p0 as AlertDialog
-            val newGroup: EditText? = alert.findViewById(R.id.et_dialog_add_group)
-
-        }
-
 
     }
 
-//    private fun shortToastMessage(context: Context, message: Int) {
-//        Toast.makeText(context, getString(message), Toast.LENGTH_SHORT).show()
-//    }
+    private fun shortToastMessage(context: Context, message: Int) {
+        Toast.makeText(context, getString(message), Toast.LENGTH_SHORT).show()
+    }
 
     // 스피너에서 현재 있는 그룹 리스트를 표시해주는 함수.
     private fun setGroupProvider() {
