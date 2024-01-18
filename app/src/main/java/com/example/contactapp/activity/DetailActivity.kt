@@ -1,20 +1,21 @@
 package com.example.contactapp.activity
 
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Parcelable
 import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import com.example.contactapp.R
 import com.example.contactapp.data.ContactData
 import com.example.contactapp.data.Contants
 import com.example.contactapp.databinding.ActivityDetailBinding
-import com.example.contactapp.fragment.ContactListFragment
+
 
 class DetailActivity : AppCompatActivity() {
 
+    //데이터 받기
     private val data : ContactData? by lazy {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent?.getParcelableExtra(Contants.ITEM_DATA, ContactData::class.java)
@@ -22,24 +23,32 @@ class DetailActivity : AppCompatActivity() {
             intent?.getParcelableExtra<ContactData>(Contants.ITEM_DATA)
         }
     }
-    private val position by lazy {
+    private val position : Int by lazy {
         intent.getIntExtra(Contants.ITEM_INDEX,0)
     }
     //즐겨찾기 상태
     private var isFavorite = false
 
+    //수정해서 다시 돌아오기
+    lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
+
     private lateinit var binding : ActivityDetailBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         //리스트에서 데이터 받기
+        data?.profileImage?.let { binding.ivDetailPerson.setImageResource(it) }
         binding.tvDetailName.text = data?.name
-        binding.ivDetailPerson.setImageResource(data?.profileImage as Int)
         binding.tvDetailMobilePerson.text = data?.phoneNumber
         binding.tvDetailEmailPerson.text = data?.email
 
         isFavorite = data?.favorite == true
+
+
+
         //즐겨찾기 눌렀을 때와 안 눌렀을 때
         binding.ivDetailStar.setImageResource(if(isFavorite)R.drawable.star_full else R.drawable.star_empty)
 
@@ -59,18 +68,39 @@ class DetailActivity : AppCompatActivity() {
 
         //뒤로가기(리스트로)
         binding.layoutDetailBack.setOnClickListener {
-            val fragment = ContactListFragment()
-            setFragment(fragment)
+            val intent = Intent(this,ContactActivity::class.java)
+            startActivity(intent)
         }
 
+        //수정하기
+        binding.layoutDetailEdit.setOnClickListener {
+            val intent = Intent(this,AddContactActivity::class.java)
+            intent.putExtra(Contants.ITEM_DATA,data)
+            intent.putExtra(Contants.ITEM_INDEX,position)
+            activityResultLauncher.launch(intent)
 
-    }
-    private fun setFragment(frag : Fragment) {
-        supportFragmentManager.commit {
-            replace(R.id.viewPager_contact_activity_swipe,frag)
-            setReorderingAllowed(true)
-            addToBackStack("")
         }
+
+        //수정해서 받기
+        activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_OK) {
+//                val data = intent?.getParcelableExtra<ContactData>(Contants.ITEM_DATA)
+//                val indexNum = intent?.getIntExtra(Contants.ITEM_INDEX,0)
+                val data : ContactData? by lazy {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        intent?.getParcelableExtra(Contants.ITEM_DATA, ContactData::class.java)
+                    }else {
+                        intent?.getParcelableExtra<ContactData>(Contants.ITEM_DATA)
+                    }
+                }
+                data?.profileImage?.let { binding.ivDetailPerson.setImageResource(it) }
+                binding.tvDetailName.text = data?.name
+                binding.tvDetailMobilePerson.text = data?.phoneNumber
+                binding.tvDetailEmailPerson.text = data?.email
+
+            }
+        }
+
     }
 
 }

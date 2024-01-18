@@ -11,10 +11,10 @@ import com.example.contactapp.data.ContactData
 import com.example.contactapp.databinding.LayoutRvUserBinding
 import com.example.contactapp.databinding.LayoutRvUserGridBinding
 import com.example.contactapp.fragment.ContactListFragment.Companion.listGrid
-<<<<<<< HEAD
-=======
+
+
 import com.example.contactapp.fragment.ContactListFragment.Companion.userPosition
->>>>>>> b4f8f55c8c05f528e2559db8054313923130efda
+
 import java.lang.Exception
 
 
