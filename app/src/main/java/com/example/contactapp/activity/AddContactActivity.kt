@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -20,10 +21,11 @@ import com.example.contactapp.data.AddContactValidExtension.includeValidAddress
 import com.example.contactapp.data.AddContactValidExtension.includeValidEmail
 import com.example.contactapp.data.AddContactValidExtension.includeValidMemo
 import com.example.contactapp.data.ContactData
-import com.example.contactapp.data.ContactDatabase.addContact
+import com.example.contactapp.data.ContactDatabase
 import com.example.contactapp.data.ContactDatabase.addGroup
 import com.example.contactapp.data.ContactDatabase.groupData
 import com.example.contactapp.data.ContactDatabase.mbtiData
+import com.example.contactapp.data.ContactDatabase.totalContactData
 import com.example.contactapp.databinding.ActivityAddContactBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -316,21 +318,24 @@ class AddContactActivity : AppCompatActivity() {
     }
 
     private fun onClickButtonComplete() {
-        var newContact = ContactData(
-            binding.etAddContactName.text.toString(),
-            R.drawable.blank_profile_image_square,
-            binding.etAddContactNumber.text.toString(),
-            binding.etAddContactAddress.text.toString(),
-            binding.etAddContactEmail.text.toString(),
-            newContactGroup,
-            newContactBirthday,
-            newContactMbti,
-            binding.etAddContactMemo.text.toString(),
-            null,
-            false
-        )
+
         binding.btnAddContactComplete.setOnClickListener {
-            addContact(newContact)
+            ContactDatabase.addContact(
+                ContactData(
+                    binding.etAddContactName.text.toString(),
+                    R.drawable.blank_profile_image_square,
+                    binding.etAddContactNumber.text.toString(),
+                    binding.etAddContactAddress.text.toString(),
+                    binding.etAddContactEmail.text.toString(),
+                    newContactGroup,
+                    newContactBirthday,
+                    newContactMbti,
+                    binding.etAddContactMemo.text.toString(),
+                    null,
+                    false
+                )
+            )
+            Log.d("saveToDataBase", "total Contact List $totalContactData")
             finish()
         }
 
