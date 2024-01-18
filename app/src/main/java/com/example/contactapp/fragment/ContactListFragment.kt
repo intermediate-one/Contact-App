@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.contactapp.R
 import com.example.contactapp.activity.AddContactActivity
 import com.example.contactapp.activity.ContactActivity
+import com.example.contactapp.activity.DetailActivity
 import com.example.contactapp.adaptor.ContactListAdapter
 import com.example.contactapp.data.ContactData
 import com.example.contactapp.data.ContactDatabase

@@ -45,6 +45,12 @@ class DetailActivity : AppCompatActivity() {
         binding.tvDetailName.text = data?.name
         binding.tvDetailMobilePerson.text = data?.phoneNumber
         binding.tvDetailEmailPerson.text = data?.email
+        binding.tvDetailGroupPerson.text = data?.group
+        binding.tvDetailMbtiPerson.text = data?.mbti
+        binding.tvDetailMemoPerson.text = data?.memo
+        binding.tvDetailLocationPerson.text = data?.address
+        binding.tvDetailBirthPerson.text = data?.birthday
+        binding.tvDetailNotifyPerson.text = data?.notification?.toChar().toString()
 
         isFavorite = data?.favorite == true
 
