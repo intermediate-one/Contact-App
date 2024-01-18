@@ -1,11 +1,18 @@
 package com.example.contactapp.fragment
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.contactapp.R
+import androidx.fragment.app.Fragment
+import com.example.contactapp.data.ContactData
+import com.example.contactapp.data.ContactDatabase
+import com.example.contactapp.databinding.FragmentMyPageBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,6 +25,9 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class MyPageFragment : Fragment() {
+    private lateinit var binding: FragmentMyPageBinding
+    private val me = ContactDatabase.myContact
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -33,9 +43,37 @@ class MyPageFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_page, container, false)
+        binding = FragmentMyPageBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setData(ContactDatabase.myContact)
+        binding.ivMyPageShare.setOnClickListener {
+            val clipboard =
+                requireActivity().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = ClipData.newPlainText("label", me.phoneNumber)
+            clipboard.setPrimaryClip(clip)
+        }
+        binding.btnMyPageMessage.setOnClickListener {
+            val phoneNumber = me.phoneNumber
+            val smsUri = Uri.parse("smsto:$phoneNumber") //phonNumber에는 01012345678과 같은 구성.
+            val intent = Intent(Intent.ACTION_SENDTO)
+            intent.data = smsUri
+            intent.putExtra("sms_body", "") //해당 값에 전달하고자 하는 문자메시지 전달
+            startActivity(intent)
+        }
+    }
+
+    private fun setData(contactData: ContactData) {
+        binding.tvMyPageName.text = contactData.name
+        binding.ivMyPagePerson.setImageResource(contactData.profileImage)
+        binding.tvMyPageMobilePerson.text = contactData.phoneNumber
+        binding.tvMyPageEmailPerson.text = contactData.email
     }
 
     companion object {

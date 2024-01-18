@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dialog_add_group">그룹 추가</string>
+    <string name="dialog_new_group">새 그룹 이름</string>
+    <string name="dialog_enter_group">새 그룹 이름을 입력하세요</string>
+    <string name="dialog_confirm_add_group">확인</string>
+    <string name="dialog_cancel_add_group">취소</string>
+
+    <string name="dialog_existing_group_message">"이미 존재하는 그룹입니다."</string>
+    <string name="dialog_empty_text_message">"그룹 이름을 입력해주세요."</string>
+</resources>

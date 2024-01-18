@@ -1,5 +1,6 @@
 package com.example.contactapp.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.contactapp.R
+import com.example.contactapp.activity.AddContactActivity
 import com.example.contactapp.activity.ContactActivity
 import com.example.contactapp.adaptor.ContactListAdapter
 import com.example.contactapp.data.ContactDatabase
@@ -48,6 +50,8 @@ class ContactListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        onClickFloatingActionButtonAddContact()
         val sortedList = ContactDatabase.totalContactData
         val clAdapter = ContactListAdapter(sortedList)
         with(binding) {
@@ -70,9 +74,6 @@ class ContactListFragment : Fragment() {
                 }
             }
         }
-
-        // FloatingActionButton
-        binding.btnAddItem
     }
 
     companion object {
@@ -97,5 +98,14 @@ class ContactListFragment : Fragment() {
 
     fun toast(s:String) {
         Toast.makeText(mainPage,s,Toast.LENGTH_SHORT).show()
+    }
+
+
+    // 플로팅 액션 버튼 클릭 시 연락처 추가 액티비티 (AddContactActivity.kt)로 이동하는 코드
+    private fun onClickFloatingActionButtonAddContact() {
+        binding.fbtnContactListAdd.setOnClickListener {
+            val intent = Intent(activity, AddContactActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

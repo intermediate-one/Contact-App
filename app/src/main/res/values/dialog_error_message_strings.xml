@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="empty_name">이름을 적어주세요.</string>
-    <string name="empty_number">이름을 적어주세요.</string>
-
-    <string name="invalid_name">옳지 않은 이름 형식입니다.</string>
-    <string name="invalid_number">유효하지 않은 번호입니다.</string>
-    <string name="invalid_email">유효하지 않은 이메일 형식입니다.</string>
-</resources>
