@@ -34,10 +34,10 @@ class AddContactActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddContactBinding
     private val calendar = Calendar.getInstance()
 
-    private lateinit var newContactName: String
-    private var newContactGroup: String? = null
-    private var newContactMbti: String? = null
-    private var newContactBirthday: String? = null
+    private var newContactName: String = ""
+    private var newContactGroup: String = ""
+    private var newContactMbti: String = ""
+    private var newContactBirthday: String = ""
 
     val editTextArray by lazy {
         arrayOf(

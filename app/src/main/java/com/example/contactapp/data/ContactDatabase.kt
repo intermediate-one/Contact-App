@@ -5,20 +5,20 @@ import com.example.contactapp.R
 object ContactDatabase {
     // 내 정보
 //    var myContact = new()
-    var myContact = ContactData("박보영", R.drawable.boyoung, "01099887766", "boyoung@gmail.com", true)
+    var myContact = ContactData("박보영", R.drawable.boyoung, "01099887766", "집주소","boyoung@gmail.com","친구", "2003/03/03", "", "할말 없.",null, false)
 
     // Dummy Data
-    private val contact1 = ContactData("안보현", R.drawable.bohyun, "01011111111", null,"bohyun1111@gmail.com", "친구","2000/01/01", "ENFP", "아무말1", null, false)
-    private val contact2 = ContactData("박보영", R.drawable.boyoung, "010222222222",null, "boyoung22@gmail.com", "친구","1999/01/02", "ISTP", "아무말2", null, true)
-    private val contact3 = ContactData("톰", R.drawable.tom, "01033333333", null,"tom3333@gmail.com", "친구","1998/02/02","INTP", "아무말3", null, false)
-    private val contact4 = ContactData("박은빈", R.drawable.eunbin, "01044444444", null,null, "친구","1998/02/05","ESFJ", "아무말4", null, true)
-    private val contact5 = ContactData("김수현", R.drawable.suhyun, "01055555555", null,"suhyun45@kakao.com",null,"2002/02/07", null, null, null, true)
-    private val contact6 = ContactData("젠데야", R.drawable.zendaya, "01066666666", null,"zenday.thecool@naver.com", null, "2005/10/10","ISFJ", "아무말5", null, false)
-    private val contact7 = ContactData("엄마", R.drawable.blank_profile_image_square, "01077777777", null,"mum@gmail.com", "가족", "2001/01/01","INFJ", "아무말6", null, true)
-    private val contact8 = ContactData("아빠", R.drawable.blank_profile_image_square, "01088888888", null,"dad@gmail.com", "가족", "1990/12/12","ENFJ", "아무말7", null, true)
-    private val contact9 = ContactData("동생", R.drawable.blank_profile_image_square, "01099999999", null,null, "가족", "1995/10/23","ENTP", "아무말8", null, true)
-    private val contact10 = ContactData("형", R.drawable.blank_profile_image_square, "01000000000", null,null, "가족", "2001/01/03","INFP", "아무말9", null, true)
-    private val contact11 = ContactData("직장상사1", R.drawable.blank_profile_image_square, "01012345678", null,"workplace@companyName.ac.kr", "회사", null,null, "아무말10", null, false)
+    private val contact1 = ContactData("안보현", R.drawable.bohyun, "01011111111", "","bohyun1111@gmail.com", "친구","2000/01/01", "ENFP", "아무말1", null, false)
+    private val contact2 = ContactData("박보영", R.drawable.boyoung, "010222222222","", "boyoung22@gmail.com", "친구","1999/01/02", "ISTP", "아무말2", null, true)
+    private val contact3 = ContactData("톰", R.drawable.tom, "01033333333", "","tom3333@gmail.com", "친구","1998/02/02","INTP", "아무말3", null, false)
+    private val contact4 = ContactData("박은빈", R.drawable.eunbin, "01044444444", "","", "친구","1998/02/05","ESFJ", "아무말4",null , true)
+    private val contact5 = ContactData("김수현", R.drawable.suhyun, "01055555555", "","suhyun45@kakao.com","","2002/02/07", "", "", null, true)
+    private val contact6 = ContactData("젠데야", R.drawable.zendaya, "01066666666", "","zenday.thecool@naver.com", "", "2005/10/10","ISFJ", "아무말5", null, false)
+    private val contact7 = ContactData("엄마", R.drawable.blank_profile_image_square, "01077777777", "","mum@gmail.com", "가족", "2001/01/01","INFJ", "아무말6", null, true)
+    private val contact8 = ContactData("아빠", R.drawable.blank_profile_image_square, "01088888888", "","dad@gmail.com", "가족", "1990/12/12","ENFJ", "아무말7", null, true)
+    private val contact9 = ContactData("동생", R.drawable.blank_profile_image_square, "01099999999", "","", "가족", "1995/10/23","ENTP", "아무말8", null, true)
+    private val contact10 = ContactData("형", R.drawable.blank_profile_image_square, "01000000000", "","", "가족", "2001/01/03","INFP", "아무말9", null, true)
+    private val contact11 = ContactData("직장상사1", R.drawable.blank_profile_image_square, "01012345678", "","workplace@companyName.ac.kr", "회사", "","", "아무말10", null, false)
 
 
     var totalContactData: ArrayList<ContactData> = arrayListOf(contact1, contact2, contact3, contact4, contact5, contact6, contact7, contact8, contact9, contact10, contact11)
@@ -71,5 +71,5 @@ object ContactDatabase {
     }
 
     // 빈 데이터 생성하는 함수
-    fun new() = ContactData("name", R.drawable.user_profile_empty, "", "", false)
+    fun new() = ContactData("이름", R.drawable.user_profile_empty, "", "", "", "", "", "", "", null, false)
 }

@@ -87,8 +87,7 @@ class ContactListFragment : Fragment() {
             }
         }
 
-        // FloatingActionButton
-        binding.btnAddItem
+
     }
 
     companion object {
@@ -121,7 +120,7 @@ class ContactListFragment : Fragment() {
 
     // 플로팅 액션 버튼 클릭 시 연락처 추가 액티비티 (AddContactActivity.kt)로 이동하는 코드
     private fun onClickFloatingActionButtonAddContact() {
-        binding.fbtnContactListAddContact.setOnClickListener {
+        binding.fbtnContactListAdd.setOnClickListener {
             val intent = Intent(activity, AddContactActivity::class.java)
             startActivity(intent)
         }
