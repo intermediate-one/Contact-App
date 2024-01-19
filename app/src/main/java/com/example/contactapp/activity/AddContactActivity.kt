@@ -59,6 +59,12 @@ class AddContactActivity : AppCompatActivity() {
         initView()
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding = ActivityAddContactBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+    }
+
     private fun initView() {
 
         setTextChangedListener()
@@ -72,6 +78,7 @@ class AddContactActivity : AppCompatActivity() {
         addGroupBtn()
 
     }
+
 
     private fun onClickDatePicker() {
 
@@ -153,7 +160,8 @@ class AddContactActivity : AppCompatActivity() {
             })
 
             builder.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-                ContactDatabase.addGroup(editGroup.text.toString())
+                newContactGroup = editGroup.text.toString()
+                ContactDatabase.addGroup(newContactGroup)
                 setGroupProvider()
                 shortToastMessage(this, R.string.dialog_new_group_added)
                 builder.dismiss()
@@ -175,9 +183,9 @@ class AddContactActivity : AppCompatActivity() {
         binding.spAddContactGroup.adapter = ArrayAdapter(
             this, android.R.layout.simple_spinner_dropdown_item,
             groupData.toList()
-
-
         )
+
+
         binding.spAddContactGroup.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -192,6 +200,7 @@ class AddContactActivity : AppCompatActivity() {
                 override fun onNothingSelected(p0: AdapterView<*>?) = Unit
 
             }
+
 
     }
 
