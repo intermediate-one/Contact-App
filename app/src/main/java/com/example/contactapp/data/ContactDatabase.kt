@@ -60,6 +60,18 @@ object ContactDatabase {
         return totalContactData.find { it.phoneNumber == phoneNumber }
     }
 
+    /** 인덱스에 해당하는 연락처를 가져오는 함수 */
+    fun getContact(index: Int) = totalContactData[index]
+
+    /** 전화번호로 해당 연락처의 인덱스를 가져오는 함수 (없으면 -1) */
+    fun getIndex(phoneNumber: String) =
+        totalContactData.indexOfFirst { it.phoneNumber == phoneNumber }
+
+    /** 인덱스에 해당하는 연락처를 넘겨준 데이터로 변경 */
+    fun editContactData(index: Int, contact: ContactData) {
+        totalContactData[index] = contact
+    }
+
     // 연락처 정보를 수정하는 함수
     fun editContactData(contact: ContactData) {
         getContact(contact.phoneNumber)?.let {

@@ -2,6 +2,7 @@ package com.example.contactapp.activity
 
 import android.app.DatePickerDialog
 import android.content.DialogInterface
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -14,6 +15,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
 import com.example.contactapp.R
+import com.example.contactapp.data.ActType
 import com.example.contactapp.data.AddContactErrorMessage
 import com.example.contactapp.data.AddContactValidExtension.includeKorean
 import com.example.contactapp.data.AddContactValidExtension.includeNumberWithDash
@@ -26,6 +28,7 @@ import com.example.contactapp.data.ContactDatabase
 import com.example.contactapp.data.ContactDatabase.groupData
 import com.example.contactapp.data.ContactDatabase.mbtiData
 import com.example.contactapp.data.ContactDatabase.totalContactData
+import com.example.contactapp.data.Contants
 import com.example.contactapp.databinding.ActivityAddContactBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -39,6 +42,15 @@ class AddContactActivity : AppCompatActivity() {
     private var newContactGroup: String = ""
     private var newContactMbti: String = ""
     private var newContactBirthday: String = ""
+
+    private lateinit var actType: ActType
+    private val data: ContactData? by lazy {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent?.getParcelableExtra(Contants.ITEM_DATA, ContactData::class.java)
+        } else {
+            intent?.getParcelableExtra<ContactData>(Contants.ITEM_DATA)
+        }
+    }
 
     private val editTextArray by lazy {
         arrayOf(
@@ -55,10 +67,17 @@ class AddContactActivity : AppCompatActivity() {
         binding = ActivityAddContactBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        actType = intent.getSerializableExtra(Contants.ActType) as ActType? ?: run {
+            Log.e("myTag", "ActType null")
+            ActType.ADD_CONTACT
+        }
+
         initView()
     }
 
     private fun initView() {
+
+        if (actType == ActType.EDIT_DETAIL || actType == ActType.EDIT_MY_PAGE) setDataToViews()
 
         setTextChangedListener()
         setOnFocusChangedListener()
@@ -141,7 +160,8 @@ class AddContactActivity : AppCompatActivity() {
 
                         }
 
-                        else -> editGroup.error = getString(AddContactErrorMessage.OVERLAPPING_GROUP_NAME.message)
+                        else -> editGroup.error =
+                            getString(AddContactErrorMessage.OVERLAPPING_GROUP_NAME.message)
 
                     }
                 }
@@ -260,7 +280,6 @@ class AddContactActivity : AppCompatActivity() {
     }
 
 
-
     private fun getMessageValidNumber(): String? {
         val text = binding.etAddContactNumber.text.toString()
         val errorCode = when {
@@ -317,28 +336,37 @@ class AddContactActivity : AppCompatActivity() {
     }
 
     private fun onClickButtonComplete() {
+        when (actType) {
+            ActType.ADD_CONTACT -> {
+                binding.btnAddContactComplete.setOnClickListener {
+                    ContactDatabase.addContact(makeData())
+                    Log.d("saveToDataBase", "total Contact List $totalContactData")
+                }
+            }
 
-        binding.btnAddContactComplete.setOnClickListener {
-            ContactDatabase.addContact(
-                ContactData(
-                    binding.etAddContactName.text.toString(),
-                    R.drawable.blank_profile_image_square,
-                    binding.etAddContactNumber.text.toString(),
-                    binding.etAddContactAddress.text.toString(),
-                    binding.etAddContactEmail.text.toString(),
-                    newContactGroup,
-                    newContactBirthday,
-                    newContactMbti,
-                    binding.etAddContactMemo.text.toString(),
-                    null,
-                    false
-                )
-            )
-            Log.d("saveToDataBase", "total Contact List $totalContactData")
-            finish()
+            ActType.EDIT_DETAIL -> {
+                binding.btnAddContactComplete.setOnClickListener {
+                    if (data == null) {
+                        Log.e("myTag", "data == null")
+                        return@setOnClickListener
+                    }
+                    val index = ContactDatabase.getIndex(data!!.phoneNumber)
+                    if (index == -1) {
+                        Log.e("myTag", "index == -1")
+                        return@setOnClickListener
+                    }
+                    ContactDatabase.editContactData(index, makeData())
+                }
+            }
+
+            ActType.EDIT_MY_PAGE -> {
+                binding.btnAddContactComplete.setOnClickListener {
+                    ContactDatabase.myContact = makeData()
+                }
+            }
         }
 
-
+        finish()
     }
 
     private fun setConfirmButtonEnable() {
@@ -349,4 +377,39 @@ class AddContactActivity : AppCompatActivity() {
                 && getMessageValidMemo() == null
     }
 
+    private fun makeData() = ContactData(
+        binding.etAddContactName.text.toString(),
+        R.drawable.blank_profile_image_square,
+        binding.etAddContactNumber.text.toString(),
+        binding.etAddContactAddress.text.toString(),
+        binding.etAddContactEmail.text.toString(),
+        newContactGroup,
+        newContactBirthday,
+        newContactMbti,
+        binding.etAddContactMemo.text.toString(),
+        null,
+        false
+    )
+
+    private fun setData(data: ContactData) {
+        binding.apply {
+            etAddContactName.setText(data.name)
+            etAddContactNumber.setText(data.phoneNumber)
+            etAddContactAddress.setText(data.address)
+            etAddContactEmail.setText(data.email)
+            // TODO: 그룹 스피너 세팅
+            // TODO: 생일 세팅
+            // TODO: MBTI 세팅
+            // TODO: 알림 생일이면 세팅?
+            etAddContactMemo.setText(data.memo)
+        }
+    }
+
+    private fun setDataToViews() {
+        if (data == null) {
+            Log.e("myTag", "data == null")
+            return
+        }
+        setData(data!!)
+    }
 }
