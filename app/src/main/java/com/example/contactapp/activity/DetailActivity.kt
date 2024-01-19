@@ -111,9 +111,9 @@ class DetailActivity : AppCompatActivity() {
 //                val indexNum = intent?.getIntExtra(Contants.ITEM_INDEX,0)
                     data =
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                            intent?.getParcelableExtra(Contants.ITEM_DATA, ContactData::class.java)
+                            it.data?.getParcelableExtra(Contants.ITEM_DATA, ContactData::class.java)
                         } else {
-                            intent?.getParcelableExtra<ContactData>(Contants.ITEM_DATA)
+                            it.data?.getParcelableExtra<ContactData>(Contants.ITEM_DATA)
                         }
                 }
                 setData(data)
