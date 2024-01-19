@@ -67,8 +67,8 @@ class ContactListAdapter(private val userDataList:List<ContactData>):RecyclerVie
         holder.itemView.setOnClickListener{
             itemClick?.onClick(it,position)
         }
-        //이름을 사전순으로
-        userDataList.sortBy { it.name }
+//        //이름을 사전순으로
+//        userDataList.sortBy { it.name }
 
 
         when(listGrid) {
