@@ -67,7 +67,6 @@ class ContactListAdapter(private val userDataList:List<ContactData>):RecyclerVie
         holder.itemView.setOnClickListener{
             itemClick?.onClick(it,position)
         }
-
         when(listGrid) {
             1 -> {
                 holdList = holder as Holder

@@ -83,23 +83,23 @@ class ContactListFragment : Fragment() {
                     startActivity(intent)
                 }
             }
-            clAdapter.favChange = object : ContactListAdapter.FavoriteChange {
-                override fun favChanged(view: View, position: Int) {
-                    sortedList = ContactDatabase.nameSorting()
-                    clAdapter = ContactListAdapter(sortedList)
-                    recyclerView.adapter = clAdapter
-                    when (listGrid) {
-                        1 -> {
-                            binding.recyclerView.layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
-                            btnListGrid.setImageResource(R.drawable.icon_grid_black)    // 현재가 list니 버튼을 누르면 Grid로 바꿀 수 있다는 것을 미리 보여주기 위해
-                        }
-                        -1 -> {
-                            binding.recyclerView.layoutManager = GridLayoutManager(mainPage, 3, GridLayoutManager.VERTICAL, false)
-                            btnListGrid.setImageResource(R.drawable.icon_list_black)
-                        }
-                    }
-                }
-            }
+//            clAdapter.favChange = object : ContactListAdapter.FavoriteChange {
+//                override fun favChanged(view: View, position: Int) {
+//                    sortedList = ContactDatabase.nameSorting()
+//                    clAdapter = ContactListAdapter(sortedList)
+//                    recyclerView.adapter = clAdapter
+//                    when (listGrid) {
+//                        1 -> {
+//                            binding.recyclerView.layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
+//                            btnListGrid.setImageResource(R.drawable.icon_grid_black)    // 현재가 list니 버튼을 누르면 Grid로 바꿀 수 있다는 것을 미리 보여주기 위해
+//                        }
+//                        -1 -> {
+//                            binding.recyclerView.layoutManager = GridLayoutManager(mainPage, 3, GridLayoutManager.VERTICAL, false)
+//                            btnListGrid.setImageResource(R.drawable.icon_list_black)
+//                        }
+//                    }
+//                }
+//            }
         }
     }
 
