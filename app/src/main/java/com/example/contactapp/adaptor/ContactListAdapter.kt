@@ -1,21 +1,21 @@
 package com.example.contactapp.adaptor
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.contactapp.R
 import com.example.contactapp.data.ContactData
+import com.example.contactapp.data.ContactDatabase
+import com.example.contactapp.data.ContactDatabase.nameSorting
+import com.example.contactapp.databinding.FragmentContactListBinding
 import com.example.contactapp.databinding.LayoutRvUserBinding
 import com.example.contactapp.databinding.LayoutRvUserGridBinding
-import com.example.contactapp.databinding.LayoutRvUserTitleBinding
 import com.example.contactapp.fragment.ContactListFragment.Companion.listGrid
+import kotlinx.coroutines.NonDisposableHandle.parent
 
-import java.lang.Exception
-
-
-
-class ContactListAdapter(private val userDataList:ArrayList<ContactData>):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ContactListAdapter(private val userDataList:List<ContactData>):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var holdList:Holder
     private lateinit var holdGrid:Hold
 
@@ -28,6 +28,11 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
         fun onClick(view : View, position:Int)
     }
     var itemClick : ItemClick? = null
+
+    interface FavoriteChange {
+        fun favChanged(view: View, position: Int)
+    }
+    var favChange : FavoriteChange? = null
 
     inner class Holder(binding: LayoutRvUserBinding):RecyclerView.ViewHolder(binding.root) {
         val image = binding.ivRvUser
@@ -63,7 +68,6 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
             itemClick?.onClick(it,position)
         }
 
-
         when(listGrid) {
             1 -> {
                 holdList = holder as Holder
@@ -79,10 +83,12 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
                             true -> {
                                 userDataList[position].favorite = false
                                 favorite.setImageResource(R.drawable.star_empty)
+                                favChange?.favChanged(it,position)
                             }
                             false -> {
                                 userDataList[position].favorite = true
                                 favorite.setImageResource(R.drawable.star_full)
+                                favChange?.favChanged(it,position)
                             }
                         }
                     }
@@ -102,10 +108,12 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
                             true -> {
                                 userDataList[position].favorite = false
                                 favorite.setImageResource(R.drawable.star_empty)
+                                favChange?.favChanged(it,position)
                             }
                             false -> {
                                 userDataList[position].favorite = true
                                 favorite.setImageResource(R.drawable.star_full)
+                                favChange?.favChanged(it,position)
                             }
                         }
                     }

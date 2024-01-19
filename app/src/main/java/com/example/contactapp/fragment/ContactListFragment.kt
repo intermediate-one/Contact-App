@@ -2,6 +2,7 @@ package com.example.contactapp.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,8 +55,8 @@ class ContactListFragment : Fragment() {
 
 
         onClickFloatingActionButtonAddContact()
-        val sortedList = ContactDatabase.totalContactData
-        val clAdapter = ContactListAdapter(sortedList)
+        var sortedList = ContactDatabase.nameSorting()
+        var clAdapter = ContactListAdapter(sortedList)
         with(binding) {
             recyclerView.adapter = clAdapter
             recyclerView.layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
@@ -80,6 +81,23 @@ class ContactListFragment : Fragment() {
                     intent.putExtra(Contants.ITEM_DATA,sortedList[position])
                     intent.putExtra(Contants.ITEM_INDEX,position)
                     startActivity(intent)
+                }
+            }
+            clAdapter.favChange = object : ContactListAdapter.FavoriteChange {
+                override fun favChanged(view: View, position: Int) {
+                    sortedList = ContactDatabase.nameSorting()
+                    clAdapter = ContactListAdapter(sortedList)
+                    recyclerView.adapter = clAdapter
+                    when (listGrid) {
+                        1 -> {
+                            binding.recyclerView.layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
+                            btnListGrid.setImageResource(R.drawable.icon_grid_black)    // 현재가 list니 버튼을 누르면 Grid로 바꿀 수 있다는 것을 미리 보여주기 위해
+                        }
+                        -1 -> {
+                            binding.recyclerView.layoutManager = GridLayoutManager(mainPage, 3, GridLayoutManager.VERTICAL, false)
+                            btnListGrid.setImageResource(R.drawable.icon_list_black)
+                        }
+                    }
                 }
             }
         }
