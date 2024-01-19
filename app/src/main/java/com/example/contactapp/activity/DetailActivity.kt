@@ -1,19 +1,18 @@
 package com.example.contactapp.activity
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.res.ResourcesCompat
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
+import androidx.appcompat.app.AppCompatActivity
 import com.example.contactapp.R
-import com.example.contactapp.adaptor.ContactListAdapter
 import com.example.contactapp.data.ActType
 import com.example.contactapp.data.ContactData
 import com.example.contactapp.data.ContactDatabase
@@ -80,6 +79,14 @@ class DetailActivity : AppCompatActivity() {
         binding.btnDetailCall.setOnClickListener {
             val mobileNumber = binding.tvDetailMobilePerson.text
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("tel:${mobileNumber}")))
+        }
+        // 공유하기
+        binding.ivDetailShare.setOnClickListener {
+            val clipboard =
+                getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = ClipData.newPlainText("label", ContactDatabase.myContact.phoneNumber)
+            clipboard.setPrimaryClip(clip)
+            Toast.makeText(this, "전화번호가 클립보드에 복사되었습니다", Toast.LENGTH_SHORT).show()
         }
 
         //뒤로가기(리스트로)
