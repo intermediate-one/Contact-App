@@ -68,6 +68,8 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
         holder.itemView.setOnClickListener{
             itemClick?.onClick(it,position)
         }
+        //이름을 사전순으로
+        userDataList.sortBy { it.name }
 
 
         when(listGrid) {
@@ -122,4 +124,5 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
     }
 
     override fun getItemCount(): Int = userDataList.size
+
 }
