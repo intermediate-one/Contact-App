@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -24,13 +25,7 @@ import com.example.contactapp.fragment.ContactListFragment
 class DetailActivity : AppCompatActivity() {
 
     //데이터 받기
-    private val data: ContactData? by lazy {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent?.getParcelableExtra(Contants.ITEM_DATA, ContactData::class.java)
-        } else {
-            intent?.getParcelableExtra<ContactData>(Contants.ITEM_DATA)
-        }
-    }
+    private var data: ContactData? = null
     private val position: Int by lazy {
         intent.getIntExtra(Contants.ITEM_INDEX, 0)
     }
@@ -47,18 +42,12 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-        //리스트에서 데이터 받기
-        data?.profileImage?.let { binding.ivDetailPerson.setImageResource(it) }
-        binding.tvDetailName.text = data?.name
-        binding.tvDetailMobilePerson.text = data?.phoneNumber
-        binding.tvDetailEmailPerson.text = data?.email
-        binding.tvDetailGroupPerson.text = data?.group
-        binding.tvDetailMbtiPerson.text = data?.mbti
-        binding.tvDetailMemoPerson.text = data?.memo
-        binding.tvDetailLocationPerson.text = data?.address
-        binding.tvDetailBirthPerson.text = data?.birthday
-        binding.tvDetailNotifyPerson.text = data?.notification?.toChar().toString()
+        data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                intent?.getParcelableExtra(Contants.ITEM_DATA, ContactData::class.java)
+            } else {
+                intent?.getParcelableExtra<ContactData>(Contants.ITEM_DATA)
+            }
+        setData(data)
 
         isFavorite = data?.favorite == true
 
@@ -68,7 +57,6 @@ class DetailActivity : AppCompatActivity() {
 
         //즐겨찾기 눌렀을 때
         binding.ivDetailStar.setOnClickListener {
-            val list = ContactDatabase.totalContactData
             if (!isFavorite) {
                 binding.ivDetailStar.setImageResource(R.drawable.star_full)
                 Toast.makeText(this, R.string.detail_favorite, Toast.LENGTH_SHORT).show()
@@ -109,7 +97,7 @@ class DetailActivity : AppCompatActivity() {
             val intent = Intent(this, AddContactActivity::class.java)
             intent.putExtra(Contants.ITEM_DATA, data)
             intent.putExtra(Contants.ITEM_INDEX, position)
-            intent.putExtra(Contants.ActType, ActType.EDIT_MY_PAGE)
+            intent.putExtra(Contants.ActType, ActType.EDIT_DETAIL)
             activityResultLauncher.launch(intent)
 
         }
@@ -117,41 +105,46 @@ class DetailActivity : AppCompatActivity() {
         //수정해서 받기
         activityResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                Log.d("myTag", "수정해서 받기. resultCode: ${it.resultCode}")
                 if (it.resultCode == RESULT_OK) {
 //                val data = intent?.getParcelableExtra<ContactData>(Contants.ITEM_DATA)
 //                val indexNum = intent?.getIntExtra(Contants.ITEM_INDEX,0)
-                    val data: ContactData? by lazy {
+                    data =
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                             intent?.getParcelableExtra(Contants.ITEM_DATA, ContactData::class.java)
                         } else {
                             intent?.getParcelableExtra<ContactData>(Contants.ITEM_DATA)
                         }
-                    }
-                    data?.profileImage?.let { binding.ivDetailPerson.setImageResource(it) }
-                    binding.tvDetailName.text = data?.name
-                    binding.tvDetailMobilePerson.text = data?.phoneNumber
-                    binding.tvDetailEmailPerson.text = data?.email
-                    binding.tvDetailGroupPerson.text = data?.group
-                    binding.tvDetailMbtiPerson.text = data?.mbti
-                    binding.tvDetailMemoPerson.text = data?.memo
-                    binding.tvDetailLocationPerson.text = data?.address
-                    binding.tvDetailBirthPerson.text = data?.birthday
-                    binding.tvDetailNotifyPerson.text = data?.notification?.toChar().toString()
-
-                    //뒤로가기(리스트로)
-                    binding.layoutDetailBack.setOnClickListener {
-                        //리스트로 즐겨찾기 변한 값 넘기기
-                        val intent = Intent(this, ContactListFragment::class.java)
-                        intent.putExtra(Contants.ITEM_INDEX, position)
-                        intent.putExtra(Contants.ITEM_DATA, data)
-                        intent.putExtra("isFavorite", isFavorite)
-                        setResult(AppCompatActivity.RESULT_FIRST_USER, intent)
-                        finish()
-
-                    }
                 }
+                setData(data)
+                Log.d("myTag", "data: $data")
 
+                //뒤로가기(리스트로)
+                binding.layoutDetailBack.setOnClickListener {
+                    //리스트로 즐겨찾기 변한 값 넘기기
+                    val intent = Intent(this, ContactListFragment::class.java)
+                    intent.putExtra(Contants.ITEM_INDEX, position)
+                    intent.putExtra(Contants.ITEM_DATA, data)
+                    intent.putExtra("isFavorite", isFavorite)
+                    setResult(AppCompatActivity.RESULT_FIRST_USER, intent)
+                    finish()
+
+                }
             }
+
+    }
+
+    private fun setData(data: ContactData?) {
+        data?.profileImage?.let { binding.ivDetailPerson.setImageResource(it) }
+        binding.tvDetailName.text = data?.name
+        binding.tvDetailMobilePerson.text = data?.phoneNumber
+        binding.tvDetailEmailPerson.text = data?.email
+        binding.tvDetailGroupPerson.text = data?.group
+        binding.tvDetailMbtiPerson.text = data?.mbti
+        binding.tvDetailMemoPerson.text = data?.memo
+        binding.tvDetailLocationPerson.text = data?.address
+        binding.tvDetailBirthPerson.text = data?.birthday
+        binding.tvDetailNotifyPerson.text = data?.notification?.toChar().toString()
     }
 }
 

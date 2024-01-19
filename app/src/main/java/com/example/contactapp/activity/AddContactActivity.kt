@@ -2,6 +2,7 @@ package com.example.contactapp.activity
 
 import android.app.DatePickerDialog
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -342,6 +343,8 @@ class AddContactActivity : AppCompatActivity() {
                 binding.btnAddContactComplete.setOnClickListener {
                     ContactDatabase.addContact(makeData())
                     Log.d("saveToDataBase", "total Contact List $totalContactData")
+                    intent.putExtra(Contants.ITEM_DATA, makeData())
+                    setResult(RESULT_OK)
                     finish()
                 }
             }
@@ -359,6 +362,9 @@ class AddContactActivity : AppCompatActivity() {
                         return@setOnClickListener
                     }
                     ContactDatabase.editContactData(index, makeData())
+                    intent.putExtra(Contants.ITEM_INDEX, index)
+                    intent.putExtra(Contants.ITEM_DATA, makeData().apply { name = "asdfasdf" })
+                    setResult(RESULT_OK)
                     finish()
                 }
             }
@@ -367,6 +373,8 @@ class AddContactActivity : AppCompatActivity() {
                 Log.d("myTag", "onClickButtonComplete ActType.EDIT_MY_PAGE")
                 binding.btnAddContactComplete.setOnClickListener {
                     ContactDatabase.myContact = makeData()
+                    intent.putExtra(Contants.ITEM_DATA, makeData())
+                    setResult(RESULT_OK)
                     finish()
                 }
             }
@@ -379,6 +387,8 @@ class AddContactActivity : AppCompatActivity() {
                 && getMessageValidEmail() == null
                 && getMessageValidAddress() == null
                 && getMessageValidMemo() == null
+        //ddd
+        binding.btnAddContactComplete.isEnabled = true
     }
 
     private fun makeData() = ContactData(
