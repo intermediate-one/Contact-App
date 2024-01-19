@@ -72,4 +72,7 @@ object ContactDatabase {
 
     // 빈 데이터 생성하는 함수
     fun new() = ContactData("이름", R.drawable.user_profile_empty, "", "", "", "", "", "", "", null, false)
+
+    // 저장된 데이터를 이름순으로 정렬하는 함수
+    fun nameSorting() = totalContactData.sortedWith(compareBy({!it.favorite},{it.name}))
 }

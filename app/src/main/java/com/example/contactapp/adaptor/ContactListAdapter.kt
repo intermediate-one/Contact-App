@@ -1,35 +1,38 @@
 package com.example.contactapp.adaptor
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.contactapp.R
 import com.example.contactapp.data.ContactData
+import com.example.contactapp.data.ContactDatabase
+import com.example.contactapp.data.ContactDatabase.nameSorting
+import com.example.contactapp.databinding.FragmentContactListBinding
 import com.example.contactapp.databinding.LayoutRvUserBinding
 import com.example.contactapp.databinding.LayoutRvUserGridBinding
 import com.example.contactapp.fragment.ContactListFragment.Companion.listGrid
+import kotlinx.coroutines.NonDisposableHandle.parent
 
-import java.lang.Exception
-
-
-
-class ContactListAdapter(private val userDataList:ArrayList<ContactData>):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ContactListAdapter(private val userDataList:List<ContactData>):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var holdList:Holder
     private lateinit var holdGrid:Hold
 
     companion object {
         private const val LINEAR_LAYOUT = 1
         private const val GRID_LAYOUT = -1
-        private const val TYPE_HEADER = 2
-        private const val TYPE_CONTENT = -2
-        private var pair:Pair<Int, Int> = Pair(0,0)
     }
 
     interface ItemClick {
         fun onClick(view : View, position:Int)
     }
     var itemClick : ItemClick? = null
+
+    interface FavoriteChange {
+        fun favChanged(view: View, position: Int)
+    }
+    var favChange : FavoriteChange? = null
 
     inner class Holder(binding: LayoutRvUserBinding):RecyclerView.ViewHolder(binding.root) {
         val image = binding.ivRvUser
@@ -45,21 +48,17 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
 
     override fun getItemViewType(position: Int):Int {   // Holder나 Hold를 Casting하기 위해 사용
         when(listGrid) {
-            LINEAR_LAYOUT -> {
-                listGrid = LINEAR_LAYOUT
-            }
-            GRID_LAYOUT -> {
-                listGrid = GRID_LAYOUT
-            }
+            LINEAR_LAYOUT -> listGrid = LINEAR_LAYOUT
+            GRID_LAYOUT -> listGrid = GRID_LAYOUT
         }
         return listGrid
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):RecyclerView.ViewHolder {
         return when(listGrid) {
-            1 -> Holder(LayoutRvUserBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-            -1 -> Hold(LayoutRvUserGridBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-            else -> throw Exception("Adapter 연결에 실패함")
+            LINEAR_LAYOUT -> Holder(LayoutRvUserBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            GRID_LAYOUT -> Hold(LayoutRvUserGridBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            else -> throw Exception("Layout Adapter 연결에 실패함")
         }
     }
 
@@ -68,8 +67,8 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
         holder.itemView.setOnClickListener{
             itemClick?.onClick(it,position)
         }
-        //이름을 사전순으로
-        userDataList.sortBy { it.name }
+//        //이름을 사전순으로
+//        userDataList.sortBy { it.name }
 
 
         when(listGrid) {
@@ -87,10 +86,12 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
                             true -> {
                                 userDataList[position].favorite = false
                                 favorite.setImageResource(R.drawable.star_empty)
+                                favChange?.favChanged(it,position)
                             }
                             false -> {
                                 userDataList[position].favorite = true
                                 favorite.setImageResource(R.drawable.star_full)
+                                favChange?.favChanged(it,position)
                             }
                         }
                     }
@@ -110,10 +111,12 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
                             true -> {
                                 userDataList[position].favorite = false
                                 favorite.setImageResource(R.drawable.star_empty)
+                                favChange?.favChanged(it,position)
                             }
                             false -> {
                                 userDataList[position].favorite = true
                                 favorite.setImageResource(R.drawable.star_full)
+                                favChange?.favChanged(it,position)
                             }
                         }
                     }
