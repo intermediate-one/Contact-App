@@ -363,8 +363,8 @@ class AddContactActivity : AppCompatActivity() {
                     }
                     ContactDatabase.editContactData(index, makeData())
                     intent.putExtra(Contants.ITEM_INDEX, index)
-                    intent.putExtra(Contants.ITEM_DATA, makeData().apply { name = "asdfasdf" })
-                    setResult(RESULT_OK)
+                    intent.putExtra(Contants.ITEM_DATA, makeData())
+                    setResult(RESULT_OK, intent)
                     finish()
                 }
             }
