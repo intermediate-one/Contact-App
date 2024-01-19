@@ -1,35 +1,43 @@
 package com.example.contactapp.adaptor
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.contactapp.R
 import com.example.contactapp.data.ContactData
+import com.example.contactapp.data.ContactDatabase
+import com.example.contactapp.data.ContactDatabase.nameSorting
+import com.example.contactapp.data.getFirstName
+import com.example.contactapp.databinding.FragmentContactListBinding
 import com.example.contactapp.databinding.LayoutRvUserBinding
 import com.example.contactapp.databinding.LayoutRvUserGridBinding
+import com.example.contactapp.databinding.LayoutRvUserTitleBinding
+import com.example.contactapp.fragment.ContactListFragment.Companion.headerFooter
 import com.example.contactapp.fragment.ContactListFragment.Companion.listGrid
+import kotlinx.coroutines.NonDisposableHandle.parent
 
-import java.lang.Exception
-
-
-
-class ContactListAdapter(private val userDataList:ArrayList<ContactData>):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var holdList:Holder
     private lateinit var holdGrid:Hold
+    private lateinit var holdTitle:Title
 
     companion object {
         private const val LINEAR_LAYOUT = 1
         private const val GRID_LAYOUT = -1
-        private const val TYPE_HEADER = 2
-        private const val TYPE_CONTENT = -2
-        private var pair:Pair<Int, Int> = Pair(0,0)
+        private const val VIEW_HEADER = 0
     }
 
     interface ItemClick {
         fun onClick(view : View, position:Int)
     }
     var itemClick : ItemClick? = null
+
+    interface FavoriteChange {  // 솔직히 어째서 되는지 잘 몰루게슴 ㅎㅎ;
+        fun favChanged(view: View, position: Int)
+    }
+    var favChange : FavoriteChange? = null
 
     inner class Holder(binding: LayoutRvUserBinding):RecyclerView.ViewHolder(binding.root) {
         val image = binding.ivRvUser
@@ -43,23 +51,25 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
         val favorite = binding.ivRvFavoriteGrid
     }
 
+    inner class Title(binding: LayoutRvUserTitleBinding): RecyclerView.ViewHolder(binding.root) {
+        val title = binding.tvTitleText
+    }
+
     override fun getItemViewType(position: Int):Int {   // Holder나 Hold를 Casting하기 위해 사용
         when(listGrid) {
-            LINEAR_LAYOUT -> {
-                listGrid = LINEAR_LAYOUT
-            }
-            GRID_LAYOUT -> {
-                listGrid = GRID_LAYOUT
-            }
+            LINEAR_LAYOUT -> listGrid = LINEAR_LAYOUT
+            GRID_LAYOUT -> listGrid = GRID_LAYOUT
+            VIEW_HEADER -> listGrid = VIEW_HEADER
         }
         return listGrid
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):RecyclerView.ViewHolder {
-        return when(listGrid) {
-            1 -> Holder(LayoutRvUserBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-            -1 -> Hold(LayoutRvUserGridBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-            else -> throw Exception("Adapter 연결에 실패함")
+        return when(viewType) {
+            LINEAR_LAYOUT -> Holder(LayoutRvUserBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            GRID_LAYOUT -> Hold(LayoutRvUserGridBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            VIEW_HEADER -> Title(LayoutRvUserTitleBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            else -> throw Exception("Layout Adapter 연결에 실패함")
         }
     }
 
@@ -74,6 +84,8 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
             1 -> {
                 holdList = holder as Holder
                 with(holdList) {
+                    userDataList = nameSorting()
+                    ContactListAdapter(userDataList).notifyItemRangeChanged(position,userDataList.size)
                     name.text = userDataList[position].name
                     image.setImageResource(userDataList[position].profileImage)
                     when(userDataList[position].favorite) {
@@ -85,18 +97,23 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
                             true -> {
                                 userDataList[position].favorite = false
                                 favorite.setImageResource(R.drawable.star_empty)
+                                favChange?.favChanged(it,position)
                             }
                             false -> {
                                 userDataList[position].favorite = true
                                 favorite.setImageResource(R.drawable.star_full)
+                                favChange?.favChanged(it,position)
                             }
                         }
                     }
+                    headerFooter = listGrid
                 }
             }
             -1 -> {
                 holdGrid = holder as Hold
                 with (holdGrid) {
+                    userDataList = nameSorting()
+                    ContactListAdapter(userDataList).notifyItemRangeChanged(position,userDataList.size)
                     name.text = userDataList[position].name
                     image.setImageResource(userDataList[position].profileImage)
                     when(userDataList[position].favorite) {
@@ -108,18 +125,26 @@ class ContactListAdapter(private val userDataList:ArrayList<ContactData>):Recycl
                             true -> {
                                 userDataList[position].favorite = false
                                 favorite.setImageResource(R.drawable.star_empty)
+                                favChange?.favChanged(it,position)
                             }
                             false -> {
                                 userDataList[position].favorite = true
                                 favorite.setImageResource(R.drawable.star_full)
+                                favChange?.favChanged(it,position)
                             }
                         }
                     }
+                    headerFooter = listGrid
                 }
             }
+//            0 -> {
+//                (holder as Title).title.text = getFirstName(userDataList[position].name).toString()
+//                listGrid = headerFooter
+//            }
             else -> throw Exception("Holder를 Casting 할 수 없습니다.")
         }
     }
 
     override fun getItemCount(): Int = userDataList.size
+
 }

@@ -1,7 +1,8 @@
 package com.example.contactapp.activity
 
 import android.app.DatePickerDialog
-import android.content.Context
+import android.content.DialogInterface
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -11,10 +12,10 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
 import com.example.contactapp.R
+import com.example.contactapp.data.ActType
 import com.example.contactapp.data.AddContactErrorMessage
 import com.example.contactapp.data.AddContactValidExtension.includeKorean
 import com.example.contactapp.data.AddContactValidExtension.includeNumberWithDash
@@ -27,6 +28,7 @@ import com.example.contactapp.data.ContactDatabase
 import com.example.contactapp.data.ContactDatabase.groupData
 import com.example.contactapp.data.ContactDatabase.mbtiData
 import com.example.contactapp.data.ContactDatabase.totalContactData
+import com.example.contactapp.data.Contants
 import com.example.contactapp.databinding.ActivityAddContactBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -40,6 +42,15 @@ class AddContactActivity : AppCompatActivity() {
     private var newContactGroup: String = ""
     private var newContactMbti: String = ""
     private var newContactBirthday: String = ""
+
+    private lateinit var actType: ActType
+    private val data: ContactData? by lazy {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent?.getParcelableExtra(Contants.ITEM_DATA, ContactData::class.java)
+        } else {
+            intent?.getParcelableExtra<ContactData>(Contants.ITEM_DATA)
+        }
+    }
 
     private val editTextArray by lazy {
         arrayOf(
@@ -56,16 +67,17 @@ class AddContactActivity : AppCompatActivity() {
         binding = ActivityAddContactBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        actType = intent.getSerializableExtra(Contants.ActType) as ActType? ?: run {
+            Log.e("myTag", "ActType null")
+            ActType.ADD_CONTACT
+        }
+
         initView()
     }
 
-    override fun onResume() {
-        super.onResume()
-        binding = ActivityAddContactBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-    }
-
     private fun initView() {
+
+        if (actType == ActType.EDIT_DETAIL || actType == ActType.EDIT_MY_PAGE) setDataToViews()
 
         setTextChangedListener()
         setOnFocusChangedListener()
@@ -78,7 +90,6 @@ class AddContactActivity : AppCompatActivity() {
         addGroupBtn()
 
     }
-
 
     private fun onClickDatePicker() {
 
@@ -134,8 +145,6 @@ class AddContactActivity : AppCompatActivity() {
 
 
             val editGroup = dialogView.findViewById<EditText>(R.id.et_dialog_add_group)
-
-
             editGroup?.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
@@ -151,7 +160,8 @@ class AddContactActivity : AppCompatActivity() {
 
                         }
 
-                        else -> editGroup.error = getString(AddContactErrorMessage.OVERLAPPING_GROUP_NAME.message)
+                        else -> editGroup.error =
+                            getString(AddContactErrorMessage.OVERLAPPING_GROUP_NAME.message)
 
                     }
                 }
@@ -159,23 +169,22 @@ class AddContactActivity : AppCompatActivity() {
                 override fun afterTextChanged(p0: Editable?) {}
             })
 
-            builder.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-                newContactGroup = editGroup.text.toString()
-                ContactDatabase.addGroup(newContactGroup)
-                setGroupProvider()
-                shortToastMessage(this, R.string.dialog_new_group_added)
-                builder.dismiss()
-            }
 
+        }
+
+        // p0에 해당 AlertDialog가 들어온다. findViewById를 통해 view를 가져와서 사용
+        val listener = DialogInterface.OnClickListener { p0, _ ->
+            val alert = p0 as AlertDialog
+            val newGroup: EditText? = alert.findViewById(R.id.et_dialog_add_group)
 
         }
 
 
     }
 
-    private fun shortToastMessage(context: Context, message: Int) {
-        Toast.makeText(context, getString(message), Toast.LENGTH_SHORT).show()
-    }
+//    private fun shortToastMessage(context: Context, message: Int) {
+//        Toast.makeText(context, getString(message), Toast.LENGTH_SHORT).show()
+//    }
 
     // 스피너에서 현재 있는 그룹 리스트를 표시해주는 함수.
     private fun setGroupProvider() {
@@ -183,9 +192,9 @@ class AddContactActivity : AppCompatActivity() {
         binding.spAddContactGroup.adapter = ArrayAdapter(
             this, android.R.layout.simple_spinner_dropdown_item,
             groupData.toList()
+
+
         )
-
-
         binding.spAddContactGroup.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -200,7 +209,6 @@ class AddContactActivity : AppCompatActivity() {
                 override fun onNothingSelected(p0: AdapterView<*>?) = Unit
 
             }
-
 
     }
 
@@ -272,7 +280,6 @@ class AddContactActivity : AppCompatActivity() {
     }
 
 
-
     private fun getMessageValidNumber(): String? {
         val text = binding.etAddContactNumber.text.toString()
         val errorCode = when {
@@ -329,28 +336,38 @@ class AddContactActivity : AppCompatActivity() {
     }
 
     private fun onClickButtonComplete() {
+        when (actType) {
+            ActType.ADD_CONTACT -> {
+                binding.btnAddContactComplete.setOnClickListener {
+                    ContactDatabase.addContact(makeData())
+                    Log.d("saveToDataBase", "total Contact List $totalContactData")
+                    finish()
+                }
+            }
 
-        binding.btnAddContactComplete.setOnClickListener {
-            ContactDatabase.addContact(
-                ContactData(
-                    binding.etAddContactName.text.toString(),
-                    R.drawable.blank_profile_image_square,
-                    binding.etAddContactNumber.text.toString(),
-                    binding.etAddContactAddress.text.toString(),
-                    binding.etAddContactEmail.text.toString(),
-                    newContactGroup,
-                    newContactBirthday,
-                    newContactMbti,
-                    binding.etAddContactMemo.text.toString(),
-                    null,
-                    false
-                )
-            )
-            Log.d("saveToDataBase", "total Contact List $totalContactData")
-            finish()
+            ActType.EDIT_DETAIL -> {
+                binding.btnAddContactComplete.setOnClickListener {
+                    if (data == null) {
+                        Log.e("myTag", "data == null")
+                        return@setOnClickListener
+                    }
+                    val index = ContactDatabase.getIndex(data!!.phoneNumber)
+                    if (index == -1) {
+                        Log.e("myTag", "index == -1")
+                        return@setOnClickListener
+                    }
+                    ContactDatabase.editContactData(index, makeData())
+                    finish()
+                }
+            }
+
+            ActType.EDIT_MY_PAGE -> {
+                binding.btnAddContactComplete.setOnClickListener {
+                    ContactDatabase.myContact = makeData()
+                    finish()
+                }
+            }
         }
-
-
     }
 
     private fun setConfirmButtonEnable() {
@@ -361,4 +378,40 @@ class AddContactActivity : AppCompatActivity() {
                 && getMessageValidMemo() == null
     }
 
+    private fun makeData() = ContactData(
+        binding.etAddContactName.text.toString(),
+        R.drawable.blank_profile_image_square,
+        binding.etAddContactNumber.text.toString(),
+        binding.etAddContactAddress.text.toString(),
+        binding.etAddContactEmail.text.toString(),
+        newContactGroup,
+        newContactBirthday,
+        newContactMbti,
+        binding.etAddContactMemo.text.toString(),
+        null,
+        false
+    )
+
+    private fun setData(data: ContactData) {
+        binding.apply {
+            ivAddContactPerson.setImageResource(data.profileImage)
+            etAddContactName.setText(data.name)
+            etAddContactNumber.setText(data.phoneNumber)
+            etAddContactAddress.setText(data.address)
+            etAddContactEmail.setText(data.email)
+            // TODO: 그룹 스피너 세팅
+            // TODO: 생일 세팅
+            // TODO: MBTI 세팅
+            // TODO: 알림 생일이면 세팅?
+            etAddContactMemo.setText(data.memo)
+        }
+    }
+
+    private fun setDataToViews() {
+        if (data == null) {
+            Log.e("myTag", "data == null")
+            return
+        }
+        setData(data!!)
+    }
 }
