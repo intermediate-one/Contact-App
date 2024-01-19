@@ -9,16 +9,19 @@ import com.example.contactapp.R
 import com.example.contactapp.data.ContactData
 import com.example.contactapp.data.ContactDatabase
 import com.example.contactapp.data.ContactDatabase.nameSorting
+import com.example.contactapp.data.getFirstName
 import com.example.contactapp.databinding.FragmentContactListBinding
 import com.example.contactapp.databinding.LayoutRvUserBinding
 import com.example.contactapp.databinding.LayoutRvUserGridBinding
 import com.example.contactapp.databinding.LayoutRvUserTitleBinding
+import com.example.contactapp.fragment.ContactListFragment.Companion.headerFooter
 import com.example.contactapp.fragment.ContactListFragment.Companion.listGrid
 import kotlinx.coroutines.NonDisposableHandle.parent
 
 class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var holdList:Holder
     private lateinit var holdGrid:Hold
+    private lateinit var holdTitle:Title
 
     companion object {
         private const val LINEAR_LAYOUT = 1
@@ -62,7 +65,7 @@ class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerVie
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):RecyclerView.ViewHolder {
-        return when(listGrid) {
+        return when(viewType) {
             LINEAR_LAYOUT -> Holder(LayoutRvUserBinding.inflate(LayoutInflater.from(parent.context), parent, false))
             GRID_LAYOUT -> Hold(LayoutRvUserGridBinding.inflate(LayoutInflater.from(parent.context), parent, false))
             VIEW_HEADER -> Title(LayoutRvUserTitleBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -103,6 +106,7 @@ class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerVie
                             }
                         }
                     }
+                    headerFooter = listGrid
                 }
             }
             -1 -> {
@@ -130,11 +134,13 @@ class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerVie
                             }
                         }
                     }
+                    headerFooter = listGrid
                 }
             }
-            0 -> {
-
-            }
+//            0 -> {
+//                (holder as Title).title.text = getFirstName(userDataList[position].name).toString()
+//                listGrid = headerFooter
+//            }
             else -> throw Exception("Holder를 Casting 할 수 없습니다.")
         }
     }
