@@ -338,6 +338,7 @@ class AddContactActivity : AppCompatActivity() {
     private fun onClickButtonComplete() {
         when (actType) {
             ActType.ADD_CONTACT -> {
+                Log.d("myTag", "onClickButtonComplete ActType.ADD_CONTACT")
                 binding.btnAddContactComplete.setOnClickListener {
                     ContactDatabase.addContact(makeData())
                     Log.d("saveToDataBase", "total Contact List $totalContactData")
@@ -346,6 +347,7 @@ class AddContactActivity : AppCompatActivity() {
             }
 
             ActType.EDIT_DETAIL -> {
+                Log.d("myTag", "onClickButtonComplete ActType.EDIT_DETAIL")
                 binding.btnAddContactComplete.setOnClickListener {
                     if (data == null) {
                         Log.e("myTag", "data == null")
@@ -362,6 +364,7 @@ class AddContactActivity : AppCompatActivity() {
             }
 
             ActType.EDIT_MY_PAGE -> {
+                Log.d("myTag", "onClickButtonComplete ActType.EDIT_MY_PAGE")
                 binding.btnAddContactComplete.setOnClickListener {
                     ContactDatabase.myContact = makeData()
                     finish()
