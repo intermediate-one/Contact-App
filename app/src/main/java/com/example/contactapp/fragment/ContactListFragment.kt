@@ -12,6 +12,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.contactapp.R
@@ -67,16 +68,16 @@ class ContactListFragment : Fragment() {
             recyclerView.adapter = clAdapter
             recyclerView.layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
             btnListGrid.setOnClickListener {
-                listGrid *= -1
                 binding.recyclerView.apply {
                     when (listGrid) {
                         1 -> {
+                            listGrid = -1
                             layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
                             btnListGrid.setImageResource(R.drawable.icon_grid_black)    // 현재가 list니 버튼을 누르면 Grid로 바꿀 수 있다는 것을 미리 보여주기 위해
                             clAdapter.notifyItemRangeChanged(userPosition,sortedList.size)
                         }
-
                         -1 -> {
+                            listGrid = 1
                             layoutManager = GridLayoutManager(mainPage, 3, GridLayoutManager.VERTICAL, false)
                             btnListGrid.setImageResource(R.drawable.icon_list_black)
                             clAdapter.notifyItemRangeChanged(userPosition,sortedList.size)
@@ -134,36 +135,24 @@ class ContactListFragment : Fragment() {
             //Detail로 보내고 다시 값 받기
             clAdapter.itemClick = object : ContactListAdapter.ItemClick{
                 override fun onClick(view: View, position: Int) {
+                    sortedList = ContactDatabase.nameSorting()  // 정렬된 Object를 다시 받아오는 작업
                     val intent = Intent(activity,DetailActivity::class.java)
                     intent.putExtra(Contants.ITEM_DATA,sortedList[position])
                     intent.putExtra(Contants.ITEM_INDEX,position)
                     activityResultLauncher.launch(intent)
                 }
             }
-//            clAdapter.favChange = object : ContactListAdapter.FavoriteChange {
-//                override fun favChanged(view: View, position: Int) {
-//                    sortedList = ContactDatabase.nameSorting()
-//                    clAdapter = ContactListAdapter(sortedList)
-//                    recyclerView.adapter = clAdapter
-//                    when (listGrid) {
-//                        1 -> {
-//                            binding.recyclerView.layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
-//                            btnListGrid.setImageResource(R.drawable.icon_grid_black)    // 현재가 list니 버튼을 누르면 Grid로 바꿀 수 있다는 것을 미리 보여주기 위해
-//                        }
-//                        -1 -> {
-//                            binding.recyclerView.layoutManager = GridLayoutManager(mainPage, 3, GridLayoutManager.VERTICAL, false)
-//                            btnListGrid.setImageResource(R.drawable.icon_list_black)
-//                        }
-//                    }
-//                }
-//            }
+            clAdapter.favChange = object : ContactListAdapter.FavoriteChange {
+                override fun favChanged(view: View, position: Int) {
+                    recyclerView.adapter = clAdapter
+                    when(listGrid) {
+                        1 -> recyclerView.layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
+                        -1 -> recyclerView.layoutManager = GridLayoutManager(mainPage, 3, GridLayoutManager.VERTICAL, false)
+                    }
+                }
+            }
         }
     }
-    //임시
-//    override fun onResume() {
-//        super.onResume()
-//        binding.recyclerView.adapter?.notifyDataSetChanged()
-//    }
 
     companion object {
 
@@ -178,6 +167,7 @@ class ContactListFragment : Fragment() {
 
         var userPosition = 0
         var listGrid = 1
+        var headerFooter = 0
     }
 
     override fun onDestroyView() {
