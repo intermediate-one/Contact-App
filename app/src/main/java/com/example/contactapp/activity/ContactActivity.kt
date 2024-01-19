@@ -3,9 +3,16 @@ package com.example.contactapp.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.viewpager2.widget.ViewPager2
+import com.example.contactapp.R
+import com.example.contactapp.adaptor.ContactListAdapter
 import com.example.contactapp.fragment.MyPageFragment
 import com.example.contactapp.adaptor.ViewPager2Adapter
+import com.example.contactapp.data.ContactData
+import com.example.contactapp.data.ContactDatabase
+import com.example.contactapp.data.Contants
 import com.example.contactapp.databinding.ActivityContactBinding
 import com.example.contactapp.fragment.ContactListFragment
 import com.example.contactapp.fragment.GroupFragment
@@ -22,6 +29,16 @@ class ContactActivity : AppCompatActivity() {
         initViewPager()
 
     }
+
+//    override fun onRestart() {
+//        super.onRestart()
+//        val position : Int by lazy {
+//            intent.getIntExtra(Contants.ITEM_INDEX,0)
+//        }
+//        if (position >=0) {
+//            setFragment(passData(ContactListFragment()))
+//        }
+//    }
 
     private fun initViewPager() {
         //ViewPager2 Adapter 셋팅
@@ -50,4 +67,27 @@ class ContactActivity : AppCompatActivity() {
             }
         }.attach()
     }
+
+//    //Detail에서 받은 정보를 ContactListFragment로 전달
+//    private fun passData(frag : Fragment) : Fragment {
+//        val data = intent.getParcelableExtra<ContactData>(Contants.ITEM_DATA)
+//        val favorite = intent.getBooleanExtra("favorite",false)
+//        val index = intent.getIntExtra(Contants.ITEM_INDEX,0)
+//        Log.d("ContactActivity","받기 : $favorite")
+//        val bundle = Bundle()
+//        bundle.putInt(Contants.ITEM_INDEX,index)
+//        bundle.putParcelable(Contants.ITEM_DATA,data)
+//        bundle.putBoolean("favorite",favorite)
+//        frag.arguments = bundle
+//        return frag
+//
+//    }
+//    private fun setFragment(frag : Fragment) {
+//        supportFragmentManager.commit {
+//            replace(R.id.viewPager_contact_activity_swipe,frag)
+//            setReorderingAllowed(true)
+//            addToBackStack("")
+//        }
+//    }
+
 }

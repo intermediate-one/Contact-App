@@ -67,6 +67,10 @@ class ContactListAdapter(private val userDataList:List<ContactData>):RecyclerVie
         holder.itemView.setOnClickListener{
             itemClick?.onClick(it,position)
         }
+        //이름을 사전순으로
+        userDataList.sortBy { it.name }
+
+
         when(listGrid) {
             1 -> {
                 holdList = holder as Holder
@@ -123,4 +127,5 @@ class ContactListAdapter(private val userDataList:List<ContactData>):RecyclerVie
     }
 
     override fun getItemCount(): Int = userDataList.size
+
 }

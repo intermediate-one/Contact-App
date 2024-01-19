@@ -1,16 +1,16 @@
 package com.example.contactapp.activity
 
 import android.app.DatePickerDialog
-import android.content.Context
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
 import com.example.contactapp.R
@@ -20,9 +20,9 @@ import com.example.contactapp.data.AddContactValidExtension.includeNumberWithDas
 import com.example.contactapp.data.AddContactValidExtension.includeValidAddress
 import com.example.contactapp.data.AddContactValidExtension.includeValidEmail
 import com.example.contactapp.data.AddContactValidExtension.includeValidMemo
+import com.example.contactapp.data.AddContactValidExtension.overlappingGroup
 import com.example.contactapp.data.ContactData
 import com.example.contactapp.data.ContactDatabase
-import com.example.contactapp.data.ContactDatabase.addGroup
 import com.example.contactapp.data.ContactDatabase.groupData
 import com.example.contactapp.data.ContactDatabase.mbtiData
 import com.example.contactapp.data.ContactDatabase.totalContactData
@@ -36,12 +36,11 @@ class AddContactActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddContactBinding
     private val calendar = Calendar.getInstance()
 
-    private var newContactName: String = ""
     private var newContactGroup: String = ""
     private var newContactMbti: String = ""
     private var newContactBirthday: String = ""
 
-    val editTextArray by lazy {
+    private val editTextArray by lazy {
         arrayOf(
             binding.etAddContactName,
             binding.etAddContactNumber,
@@ -83,7 +82,7 @@ class AddContactActivity : AppCompatActivity() {
 
     private fun showDatePicker() {
         val datePickerDialog = DatePickerDialog(
-            this, {DatePicker, year: Int, monthOfYear: Int, dayOfMonth: Int ->
+            this, { _, year: Int, monthOfYear: Int, dayOfMonth: Int ->
                 // Create a new Calendar instance to hold the selected date
                 val selectedDate = Calendar.getInstance()
                 // Set the selected date using the values received from the DatePicker dialog
@@ -93,7 +92,7 @@ class AddContactActivity : AppCompatActivity() {
                 // Format the selected date into a string
                 val formattedDate = dateFormat.format(selectedDate.time)
                 // Update the TextView to display the selected date with the "Selected Date: " prefix
-                binding.tvAddContactSelectedDate.text = "생일: $formattedDate"
+                binding.tvAddContactSelectedDate.text = formattedDate
                 newContactBirthday = formattedDate
             },
             calendar.get(Calendar.YEAR),
@@ -106,46 +105,66 @@ class AddContactActivity : AppCompatActivity() {
 
     private fun addGroupBtn() {
         binding.ibtnAddContactAddGroup.setOnClickListener {
+            val dialogView = layoutInflater.inflate(R.layout.dialog_add_group, null)
 
             val builder = AlertDialog.Builder(this)
-            builder.setTitle(getString(R.string.dialog_add_group))
-            builder.setMessage(getString(R.string.dialog_new_group))
-            builder.setIcon(R.mipmap.ic_launcher)
+                .setTitle(getString(R.string.dialog_add_group))
+                .setMessage(getString(R.string.dialog_new_group))
+                .setView(dialogView)
+                .setIcon(R.mipmap.ic_launcher)
+                .setPositiveButton(getString(R.string.dialog_confirm_add_group)) { _, _ ->
+                    //startupViewModel.checkAndReset(token, layout.newPassword.text.toString())
+                }
+                .setNegativeButton(getString(R.string.dialog_cancel_add_group)) { dialog, _ ->
+                    dialog.cancel()
+                }
+                .setCancelable(true)
+                .show()
+            builder.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = false
 
-            val v1 = layoutInflater.inflate(R.layout.dialog_add_group, null)
-            builder.setView(v1)
+//            val alertDialog = builder.create()
 
-            // p0에 해당 AlertDialog가 들어온다. findViewById를 통해 view를 가져와서 사용
-            val listener = DialogInterface.OnClickListener { p0, p1 ->
-                val alert = p0 as AlertDialog
-                val newGroup: EditText? = alert.findViewById<EditText>(R.id.et_dialog_add_group)
 
-                // 새로운 그룹 이름으로 입력 된 값이 비어 있거나 이미 있는 그룹을 입력하고
-                // 확인을 누르면 토스트 메세지를 띄우도록 만들어보았습니다.
-                // TODO : 아직 작동이 잘 되는지 확인이 안되었습니당.
+            val editGroup = dialogView.findViewById<EditText>(R.id.et_dialog_add_group)
+            editGroup?.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
-                var invalidMessage = getMessageValidGroup(newGroup?.text.toString())
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    val text = editGroup.text.toString()
+                    when {
+                        text.isBlank() -> editGroup.error =
+                            getString(AddContactErrorMessage.EMPTY_GROUP_NAME.message)
 
-                newGroup?.error = invalidMessage
+                        text.overlappingGroup() -> {
+                            editGroup.error = null
+                            builder.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = true
 
-                if (invalidMessage == null) {
-                    newContactGroup = newGroup?.text.toString()
-                    addGroup(newGroup?.text.toString())
+                        }
+
+                        else -> editGroup.error = getString(AddContactErrorMessage.OVERLAPPING_GROUP_NAME.message)
+
+                    }
                 }
 
-            }
+                override fun afterTextChanged(p0: Editable?) {}
+            })
 
-            builder.setPositiveButton(getString(R.string.dialog_confirm_add_group), listener)
-            builder.setNegativeButton(getString(R.string.dialog_cancel_add_group), null)
-
-            builder.show()
 
         }
+
+        // p0에 해당 AlertDialog가 들어온다. findViewById를 통해 view를 가져와서 사용
+        val listener = DialogInterface.OnClickListener { p0, _ ->
+            val alert = p0 as AlertDialog
+            val newGroup: EditText? = alert.findViewById(R.id.et_dialog_add_group)
+
+        }
+
+
     }
 
-    private fun shortToastMessage(context: Context, message: Int) {
-        Toast.makeText(context, getString(message), Toast.LENGTH_SHORT).show()
-    }
+//    private fun shortToastMessage(context: Context, message: Int) {
+//        Toast.makeText(context, getString(message), Toast.LENGTH_SHORT).show()
+//    }
 
     // 스피너에서 현재 있는 그룹 리스트를 표시해주는 함수.
     private fun setGroupProvider() {
@@ -153,6 +172,8 @@ class AddContactActivity : AppCompatActivity() {
         binding.spAddContactGroup.adapter = ArrayAdapter(
             this, android.R.layout.simple_spinner_dropdown_item,
             groupData.toList()
+
+
         )
         binding.spAddContactGroup.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
@@ -238,29 +259,7 @@ class AddContactActivity : AppCompatActivity() {
         }
     }
 
-    private fun getMessageValidGroup(text: String?): String? {
-        val errorCode = when {
-            text?.isBlank() == true -> AddContactErrorMessage.EMPTY_GROUP_NAME
-            text?.overlappingGroup() == true -> AddContactErrorMessage.OVERLAPPING_GROUP_NAME
-            else -> null
-        }
-        return errorCode?.let {
-            getString(it.message)
-        }
-    }
 
-    private fun String.overlappingGroup(): Boolean {
-        var answer = 0
-        groupData.forEach() {
-            when {
-                (this == it) -> answer += 1
-            }
-        }
-        return when (answer) {
-            1 -> false
-            else -> true
-        }
-    }
 
     private fun getMessageValidNumber(): String? {
         val text = binding.etAddContactNumber.text.toString()
@@ -338,8 +337,6 @@ class AddContactActivity : AppCompatActivity() {
             Log.d("saveToDataBase", "total Contact List $totalContactData")
             finish()
         }
-
-
 
 
     }
