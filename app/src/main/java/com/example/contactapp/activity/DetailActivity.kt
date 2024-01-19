@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.example.contactapp.R
 import com.example.contactapp.adaptor.ContactListAdapter
+import com.example.contactapp.data.ActType
 import com.example.contactapp.data.ContactData
 import com.example.contactapp.data.ContactDatabase
 import com.example.contactapp.data.Contants
@@ -108,6 +109,7 @@ class DetailActivity : AppCompatActivity() {
             val intent = Intent(this, AddContactActivity::class.java)
             intent.putExtra(Contants.ITEM_DATA, data)
             intent.putExtra(Contants.ITEM_INDEX, position)
+            intent.putExtra(Contants.ActType, ActType.EDIT_MY_PAGE)
             activityResultLauncher.launch(intent)
 
         }
