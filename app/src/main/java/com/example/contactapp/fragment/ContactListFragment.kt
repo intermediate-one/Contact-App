@@ -134,6 +134,7 @@ class ContactListFragment : Fragment() {
             //Detail로 보내고 다시 값 받기
             clAdapter.itemClick = object : ContactListAdapter.ItemClick{
                 override fun onClick(view: View, position: Int) {
+                    sortedList = ContactDatabase.nameSorting()  // 정렬한 Object를 다시 받아오는 작업
                     val intent = Intent(activity,DetailActivity::class.java)
                     intent.putExtra(Contants.ITEM_DATA,sortedList[position])
                     intent.putExtra(Contants.ITEM_INDEX,position)
@@ -142,7 +143,6 @@ class ContactListFragment : Fragment() {
             }
             clAdapter.favChange = object : ContactListAdapter.FavoriteChange {
                 override fun favChanged(view: View, position: Int) {
-                    clAdapter.notifyItemChanged(position)
                     recyclerView.adapter = clAdapter
                     when(listGrid) {
                         1 -> recyclerView.layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
