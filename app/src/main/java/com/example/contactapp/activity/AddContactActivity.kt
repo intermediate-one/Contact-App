@@ -341,6 +341,7 @@ class AddContactActivity : AppCompatActivity() {
                 binding.btnAddContactComplete.setOnClickListener {
                     ContactDatabase.addContact(makeData())
                     Log.d("saveToDataBase", "total Contact List $totalContactData")
+                    finish()
                 }
             }
 
@@ -356,17 +357,17 @@ class AddContactActivity : AppCompatActivity() {
                         return@setOnClickListener
                     }
                     ContactDatabase.editContactData(index, makeData())
+                    finish()
                 }
             }
 
             ActType.EDIT_MY_PAGE -> {
                 binding.btnAddContactComplete.setOnClickListener {
                     ContactDatabase.myContact = makeData()
+                    finish()
                 }
             }
         }
-
-        finish()
     }
 
     private fun setConfirmButtonEnable() {
