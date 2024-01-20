@@ -54,8 +54,7 @@ class ContactActivity : AppCompatActivity() {
             when (position) {
                 0 -> tab.text = "연락처"
                 1 -> tab.text = "그룹"
-                2 -> tab.text = "휴지통"
-                3 -> tab.text = "마이페이지"
+                2 -> tab.text = "마이페이지"
             }
         }.attach()
     }
