@@ -155,10 +155,19 @@ class GroupFragment : Fragment() {
         adapter.itemClick = object : GroupAdapter.ItemClick{
             override fun onClick(view: View, position: Int) {
 //                sortedList = ContactDatabase.nameSorting()  // 정렬된 Object를 다시 받아오는 작업
-                val intent = Intent(activity, DetailActivity::class.java)
-                intent.putExtra(Contants.ITEM_DATA, ContactDatabase.getContact(groupList[position-groupIndex[position]]))
-                intent.putExtra(Contants.ITEM_INDEX,ContactDatabase.getIndex(groupList[position-groupIndex[position]]))
-                activityResultLauncher.launch(intent)
+                when (val item = dataList[position]) {
+                    is Contacts.Title -> Unit
+                    is Contacts.ContactList -> {
+                        val intent = Intent(activity, DetailActivity::class.java)
+                        intent.putExtra(Contants.ITEM_DATA, ContactDatabase.getContact(item.cPhoneNumber))
+                        intent.putExtra(Contants.ITEM_INDEX,ContactDatabase.getIndex(item.cPhoneNumber))
+                        activityResultLauncher.launch(intent)
+                    }
+                }
+//                val intent = Intent(activity, DetailActivity::class.java)
+//                intent.putExtra(Contants.ITEM_DATA, ContactDatabase.getContact(groupList[position-groupIndex[position]]))
+//                intent.putExtra(Contants.ITEM_INDEX,ContactDatabase.getIndex(groupList[position-groupIndex[position]]))
+//                activityResultLauncher.launch(intent)
 
 
             }
