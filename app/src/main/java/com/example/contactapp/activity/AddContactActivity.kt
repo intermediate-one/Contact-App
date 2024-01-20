@@ -403,7 +403,7 @@ class AddContactActivity : AppCompatActivity() {
     }
 
     private fun onClickButtonBack() {
-        binding.ibtnAddContactBack.setOnClickListener {
+        binding.layoutDetailBack.setOnClickListener {
             finish()
         }
     }
