@@ -20,30 +20,28 @@ object MyManagers {
         if (notificationManager != null || alarmManager != null) {
             Log.e("myTag", "매니저가 있는데 init이 호출됨")
         }
-        notificationManager =
-            context.getSystemService(AppCompatActivity.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager = makeNotificationManager(context)
         alarmManager = context.getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager
-        setManagerChannel()
     }
 
-    private fun setManagerChannel() {
-        // 안드 8.0 Oreo 이상부터는 알림 채널을 먼저 만들어야 한다
-        notificationManager?.createNotificationChannel(
-            NotificationChannel(
-                channelId,
-                channelName,
-                NotificationManager.IMPORTANCE_DEFAULT
-            ).apply {
-                description = "My Channel One Description"
-                setShowBadge(true)
-                val uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)!!
-                val audioAttributes = AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .setUsage(AudioAttributes.USAGE_ALARM)
-                    .build()
-                setSound(uri, audioAttributes)
-                enableVibration(true)
-            })
-            ?: Log.e("myTag", "노티 매니저 없음")
-    }
+    fun makeNotificationManager(context: Context) =
+        (context.getSystemService(AppCompatActivity.NOTIFICATION_SERVICE) as NotificationManager).apply {
+            // 안드 8.0 Oreo 이상부터는 알림 채널을 먼저 만들어야 한다
+            createNotificationChannel(
+                NotificationChannel(
+                    channelId,
+                    channelName,
+                    NotificationManager.IMPORTANCE_DEFAULT
+                ).apply {
+                    description = "My Channel One Description"
+                    setShowBadge(true)
+                    val uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)!!
+                    val audioAttributes = AudioAttributes.Builder()
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                        .setUsage(AudioAttributes.USAGE_ALARM)
+                        .build()
+                    setSound(uri, audioAttributes)
+                    enableVibration(true)
+                })
+        }
 }

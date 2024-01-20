@@ -397,11 +397,24 @@ class AddContactActivity : AppCompatActivity() {
     }
 
     private fun setNotifications() {
-        Toast.makeText(this, "알림이 설정되었습니다", Toast.LENGTH_SHORT).show()  //ddd
-        setAlarm(makeData(), 0)  //ddd
-//        if (binding.cbAddContactBirthday.isSelected) {}
-        if (binding.cbAddContact5s.isSelected) {  // 이거 안돼...?
+        if (binding.cbAddContactBirthday.isChecked) {
+            notification(makeData())  //ddd
+            // TODO: 날짜 지정해서 알람 만드는거
+            Toast.makeText(this, "생일 알림이 설정되었습니다", Toast.LENGTH_SHORT).show()
+        }
+        if (binding.cbAddContact5s.isChecked) {  // 이거 안돼...?
             setAlarm(makeData(), 5)
+            Toast.makeText(this, "5초 뒤 알림이 설정되었습니다", Toast.LENGTH_SHORT).show()
+        }
+        if (binding.cbAddContact5m.isChecked) {
+            setAlarm(makeData(), 10)  //ddd
+//            setAlarm(makeData(), 300)
+            Toast.makeText(this, "5분 뒤 알림이 설정되었습니다", Toast.LENGTH_SHORT).show()
+        }
+        if (binding.cbAddContact10m.isChecked) {
+            setAlarm(makeData(), 20)  //ddd
+//            setAlarm(makeData(), 600)
+            Toast.makeText(this, "10분 뒤 알림이 설정되었습니다", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -506,8 +519,6 @@ class AddContactActivity : AppCompatActivity() {
             it[AlarmManager.RTC, System.currentTimeMillis() + sec * 1000] = pendingIntent
         }
             ?: Log.e("myTag", "알람 매니저 null")
-
-        Log.d("myTag", "setAlarm 종료")
 
 //        val intent2 = Intent(this, ContactActivity::class.java)
 //        val pendingIntent2 = PendingIntent.getActivity(
