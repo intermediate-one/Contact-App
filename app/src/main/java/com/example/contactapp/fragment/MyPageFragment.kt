@@ -99,7 +99,7 @@ class MyPageFragment : Fragment() {
         binding.tvMyPageGroupPerson.text = contactData.group
         binding.tvMyPageBirthPerson.text = contactData.birthday
         binding.tvMyPageMbtiPerson.text = contactData.mbti
-        binding.tvMyPageMemo.text = contactData.memo
+        binding.tvMyPageMemoPerson.text = contactData.memo
     }
 
     companion object {

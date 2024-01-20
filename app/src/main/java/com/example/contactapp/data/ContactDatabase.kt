@@ -4,8 +4,8 @@ import com.example.contactapp.R
 
 object ContactDatabase {
     // 내 정보
-//    var myContact = new()
-    var myContact = ContactData("박보영", R.drawable.boyoung, "01099887766", "집주소","boyoung@gmail.com","친구", "2003/03/03", "", "할말 없.",null, false)
+    var myContact = new()
+//    var myContact = ContactData("박보영", R.drawable.boyoung, "01099887766", "집주소","boyoung@gmail.com","친구", "2003/03/03", "", "할말 없.",null, false)
 
     // Dummy Data
     private val contact1 = ContactData("안보현", R.drawable.bohyun, "01011111111", "","bohyun1111@gmail.com", "친구","2000/01/01", "ENFP", "아무말1", null, false)
