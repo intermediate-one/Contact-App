@@ -66,7 +66,6 @@ class ContactListFragment : Fragment() {
         var clAdapter = ContactListAdapter(sortedList)
         with(binding) {
             recyclerView.adapter = clAdapter
-//            recyclerView.layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
             btnListGrid.setOnClickListener {
                 binding.recyclerView.apply {
                     listGrid *= -1
@@ -75,29 +74,21 @@ class ContactListFragment : Fragment() {
                             layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
                             btnListGrid.setImageResource(R.drawable.icon_grid_black)    // 현재가 list니 버튼을 누르면 Grid로 바꿀 수 있다는 것을 미리 보여주기 위해
                             notifyDataSetChangedStayedScroll()  //ddd
-//                            clAdapter.notifyItemRangeChanged(userPosition,sortedList.size)
                         }
                         -1 -> {
                             layoutManager = GridLayoutManager(mainPage, 3, GridLayoutManager.VERTICAL, false)
                             btnListGrid.setImageResource(R.drawable.icon_list_black)
                             notifyDataSetChangedStayedScroll()  //ddd
-//                            clAdapter.notifyItemRangeChanged(userPosition,sortedList.size)
                         }
                     }
                 }
             }
             btnUserSearch.setOnClickListener {
-                val search = ContactDatabase.totalContactData.sortedBy{ it.name }.filter { etUserName.text.toString() in it.name }
-                search.forEach { toast(it.name) }
-                if(etUserName.text.isNotEmpty()) {
-                    sortedList = search
-                    clAdapter = ContactListAdapter(sortedList)
-                    recyclerView.adapter = clAdapter
-                }
-                else {
-                    sortedList = ContactDatabase.nameSorting()
-                    recyclerView.adapter = clAdapter
-                }
+                sortedList = if(etUserName.text.trim().isNotBlank()) ContactDatabase.totalContactData.sortedBy{ it.name }.filter { etUserName.text.toString() in it.name }
+                else ContactDatabase.nameSorting()
+                clAdapter.notifyDataSetChanged()
+//                sortedList.forEach { toast(it.name) }
+                recyclerView.adapter = clAdapter
                 when(listGrid) {
                     1 -> recyclerView.layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
                     -1 -> recyclerView.layoutManager = GridLayoutManager(mainPage, 3, GridLayoutManager.VERTICAL, false)
@@ -160,15 +151,6 @@ class ContactListFragment : Fragment() {
                     intent.putExtra(Contants.ITEM_DATA,sortedList[position])
                     intent.putExtra(Contants.ITEM_INDEX,position)
                     activityResultLauncher.launch(intent)
-                }
-            }
-            clAdapter.favChange = object : ContactListAdapter.FavoriteChange {
-                override fun favChanged(view: View, position: Int) {
-                    recyclerView.adapter = clAdapter
-                    when(listGrid) {
-                        1 -> recyclerView.layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
-                        -1 -> recyclerView.layoutManager = GridLayoutManager(mainPage, 3, GridLayoutManager.VERTICAL, false)
-                    }
                 }
             }
         }
