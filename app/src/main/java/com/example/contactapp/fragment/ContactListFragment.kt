@@ -22,6 +22,7 @@ import com.example.contactapp.data.ContactData
 import com.example.contactapp.data.ContactDatabase
 import com.example.contactapp.data.Contants
 import com.example.contactapp.databinding.FragmentContactListBinding
+import java.util.Locale.filter
 
 
 private const val ARG_PARAM1 = "param1"
@@ -53,6 +54,7 @@ class ContactListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentContactListBinding.inflate(inflater, container, false)
+        binding.recyclerView.layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
         return binding.root
     }
 
@@ -64,25 +66,41 @@ class ContactListFragment : Fragment() {
         var clAdapter = ContactListAdapter(sortedList)
         with(binding) {
             recyclerView.adapter = clAdapter
-            recyclerView.layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
+//            recyclerView.layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
             btnListGrid.setOnClickListener {
                 binding.recyclerView.apply {
+                    listGrid *= -1
                     when (listGrid) {
                         1 -> {
-                            listGrid = -1
                             layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
                             btnListGrid.setImageResource(R.drawable.icon_grid_black)    // 현재가 list니 버튼을 누르면 Grid로 바꿀 수 있다는 것을 미리 보여주기 위해
                             notifyDataSetChangedStayedScroll()  //ddd
 //                            clAdapter.notifyItemRangeChanged(userPosition,sortedList.size)
                         }
                         -1 -> {
-                            listGrid = 1
                             layoutManager = GridLayoutManager(mainPage, 3, GridLayoutManager.VERTICAL, false)
                             btnListGrid.setImageResource(R.drawable.icon_list_black)
                             notifyDataSetChangedStayedScroll()  //ddd
 //                            clAdapter.notifyItemRangeChanged(userPosition,sortedList.size)
                         }
                     }
+                }
+            }
+            btnUserSearch.setOnClickListener {
+                val search = ContactDatabase.totalContactData.sortedBy{ it.name }.filter { etUserName.text.toString() in it.name }
+                search.forEach { toast(it.name) }
+                if(etUserName.text.isNotEmpty()) {
+                    sortedList = search
+                    clAdapter = ContactListAdapter(sortedList)
+                    recyclerView.adapter = clAdapter
+                }
+                else {
+                    sortedList = ContactDatabase.nameSorting()
+                    recyclerView.adapter = clAdapter
+                }
+                when(listGrid) {
+                    1 -> recyclerView.layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
+                    -1 -> recyclerView.layoutManager = GridLayoutManager(mainPage, 3, GridLayoutManager.VERTICAL, false)
                 }
             }
             //Detail에서 받았을 때
@@ -168,8 +186,10 @@ class ContactListFragment : Fragment() {
             }
 
         var userPosition = 0
-        var listGrid = 1
-        var headerFooter = 0
+        var listGrid = 1            // listGrid에 0을 입력함으로써 Title을 구현하기 위함
+        var userOldPosition = 0     // 연락처 아이템을 검색할 때 이전 아이템의 Position
+        var userNewPosition = 0     // 현재 아이템의 Position
+        var listGridTitle = 0       // Title 부분을 띄우고 기존의 리스트값으로 돌아오기 위한 temp변수
     }
 
     override fun onDestroyView() {

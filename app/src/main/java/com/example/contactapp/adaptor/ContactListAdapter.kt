@@ -8,11 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.contactapp.R
 import com.example.contactapp.data.ContactData
 import com.example.contactapp.data.ContactDatabase.nameSorting
+import com.example.contactapp.data.getFirstName
 import com.example.contactapp.databinding.LayoutRvUserBinding
 import com.example.contactapp.databinding.LayoutRvUserGridBinding
 import com.example.contactapp.databinding.LayoutRvUserTitleBinding
-import com.example.contactapp.fragment.ContactListFragment.Companion.headerFooter
 import com.example.contactapp.fragment.ContactListFragment.Companion.listGrid
+import com.example.contactapp.fragment.ContactListFragment.Companion.listGridTitle
+import com.example.contactapp.fragment.ContactListFragment.Companion.userNewPosition
+import com.example.contactapp.fragment.ContactListFragment.Companion.userOldPosition
 
 class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var holdList:Holder
@@ -103,7 +106,6 @@ class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerVie
                             }
                         }
                     }
-                    headerFooter = listGrid
                 }
             }
             -1 -> {
@@ -132,7 +134,6 @@ class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerVie
                             }
                         }
                     }
-                    headerFooter = listGrid
                 }
             }
 //            0 -> {
