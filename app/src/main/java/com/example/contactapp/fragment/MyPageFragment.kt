@@ -96,7 +96,10 @@ class MyPageFragment : Fragment() {
         contactData.profilePath?.let { binding.ivMyPagePerson.setImageURI(it.toUri()) }
         binding.tvMyPageMobilePerson.text = contactData.phoneNumber
         binding.tvMyPageEmailPerson.text = contactData.email
-        // TODO: 나머지 세팅
+        binding.tvMyPageGroupPerson.text = contactData.group
+        binding.tvMyPageBirthPerson.text = contactData.birthday
+        binding.tvMyPageMbtiPerson.text = contactData.mbti
+        binding.tvMyPageMemoPerson.text = contactData.memo
     }
 
     companion object {
