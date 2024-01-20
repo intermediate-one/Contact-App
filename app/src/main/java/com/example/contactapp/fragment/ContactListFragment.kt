@@ -86,23 +86,7 @@ class ContactListFragment : Fragment() {
                     }
                 }
             }
-            btnUserSearch.setOnClickListener {
-                val search = ContactDatabase.totalContactData.sortedBy{ it.name }.filter { etUserName.text.toString() in it.name }
-                search.forEach { toast(it.name) }
-                if(etUserName.text.isNotEmpty()) {
-                    sortedList = search
-                    clAdapter = ContactListAdapter(sortedList)
-                    recyclerView.adapter = clAdapter
-                }
-                else {
-                    sortedList = ContactDatabase.nameSorting()
-                    recyclerView.adapter = clAdapter
-                }
-                when(listGrid) {
-                    1 -> recyclerView.layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
-                    -1 -> recyclerView.layoutManager = GridLayoutManager(mainPage, 3, GridLayoutManager.VERTICAL, false)
-                }
-            }
+
             //Detail에서 받았을 때
             activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 if (it.resultCode == AppCompatActivity.RESULT_OK) {
