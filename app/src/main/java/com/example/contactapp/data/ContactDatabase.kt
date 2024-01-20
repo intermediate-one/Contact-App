@@ -39,9 +39,14 @@ object ContactDatabase {
     }
 
     // 그룹에 속해 있는 연락처 정보 가져오는 함수
-    fun getContactPerGroup(group: String): ContactData? {
-        return totalContactData.find { it.group == group }
+    fun getContactPerGroup(group: String): MutableList<ContactData> {
+        var groupData : MutableList<ContactData> = mutableListOf()
+        totalContactData.forEach {
+            if (it.group == group) groupData.add(it)
+        }
+        return groupData
     }
+
 
 
 
@@ -54,6 +59,8 @@ object ContactDatabase {
     fun getTotalContact(): ArrayList<ContactData> {
         return totalContactData
     }
+
+
 
     // 전화번호를 가지고 있는 해당 연락처 정보 가져오는 함수
     fun getContact(phoneNumber: String): ContactData? {
@@ -80,6 +87,16 @@ object ContactDatabase {
             it.email = contact.email
             it.phoneNumber = contact.phoneNumber
         }
+    }
+
+    fun editFavoriteFromNumber(phoneNumber: String) {
+        getContact(phoneNumber)?. let {
+            when (it.favorite) {
+                true -> it.favorite = false
+                false -> it.favorite = true
+            }
+        }
+
     }
 
     // 빈 데이터 생성하는 함수

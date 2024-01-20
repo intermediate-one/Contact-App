@@ -17,6 +17,7 @@ import com.example.contactapp.databinding.ActivityContactBinding
 import com.example.contactapp.fragment.ContactListFragment
 import com.example.contactapp.fragment.GroupFragment
 import com.example.contactapp.fragment.TrashBinFragment
+import com.example.contactapp.notification.MyManagers
 import com.google.android.material.tabs.TabLayoutMediator
 
 class ContactActivity : AppCompatActivity() {
@@ -26,8 +27,8 @@ class ContactActivity : AppCompatActivity() {
         binding = ActivityContactBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        MyManagers.init(applicationContext)
         initViewPager()
-
     }
 
 //    override fun onRestart() {

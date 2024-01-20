@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.AddContactActivity">
+    android:backgroundTint="@color/default_background">
 
 
     <ScrollView
@@ -356,7 +356,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
+        <ImageButton
             android:id="@+id/ibtn_add_contact_back"
             android:layout_width="45dp"
             android:layout_height="45dp"
