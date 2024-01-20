@@ -1,6 +1,7 @@
 package com.example.contactapp.fragment
 
 
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -61,23 +62,7 @@ class GroupFragment : Fragment() {
             }
         }
 
-        val groupList = arrayListOf<String>() . apply {
 
-            ContactDatabase.groupData.forEach {groupName->
-
-                ContactDatabase.getContactPerGroup(groupName).forEach{
-                    add(it.phoneNumber)
-                }
-            }
-        }
-
-        val groupIndex = arrayListOf<Int>() . apply {
-            for (i in ContactDatabase.groupData.indices) {
-                ContactDatabase.getContactPerGroup(ContactDatabase.groupData[i]).forEach{
-                    add(i)
-                }
-            }
-        }
 
         val sortedList = arrayListOf<ContactData>() . apply {
             ContactDatabase.groupData.forEach {groupName->
@@ -106,7 +91,7 @@ class GroupFragment : Fragment() {
             }
         )
         activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == AppCompatActivity.RESULT_OK) {
+            if (it.resultCode == RESULT_OK) {
                 val isFavorite = it.data?.getBooleanExtra("isFavorite",false) as Boolean
                 val itemNum = it.data?.getIntExtra(Contants.ITEM_INDEX,0) as Int
 
