@@ -33,10 +33,8 @@ class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerVie
     }
     var itemClick : ItemClick? = null
 
-    interface FavoriteChange {  // 솔직히 어째서 되는지 잘 몰루게슴 ㅎㅎ;
-        fun favChanged(view: View, position: Int)
-    }
-    var favChange : FavoriteChange? = null
+
+
 
     inner class Holder(binding: LayoutRvUserBinding):RecyclerView.ViewHolder(binding.root) {
         val image = binding.ivRvUser
@@ -92,20 +90,7 @@ class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerVie
                         true -> favorite.setImageResource(R.drawable.star_full)
                         false -> favorite.setImageResource(R.drawable.star_empty)
                     }
-                    favorite.setOnClickListener {
-                        when (userDataList[position].favorite) {
-                            true -> {
-                                userDataList[position].favorite = false
-                                favorite.setImageResource(R.drawable.star_empty)
-                                favChange?.favChanged(it,position)
-                            }
-                            false -> {
-                                userDataList[position].favorite = true
-                                favorite.setImageResource(R.drawable.star_full)
-                                favChange?.favChanged(it,position)
-                            }
-                        }
-                    }
+
                 }
             }
             -1 -> {
@@ -119,20 +104,6 @@ class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerVie
                     when(userDataList[position].favorite) {
                         true -> favorite.setImageResource(R.drawable.star_full)
                         false -> favorite.setImageResource(R.drawable.star_empty)
-                    }
-                    favorite.setOnClickListener {
-                        when (userDataList[position].favorite) {
-                            true -> {
-                                userDataList[position].favorite = false
-                                favorite.setImageResource(R.drawable.star_empty)
-                                favChange?.favChanged(it,position)
-                            }
-                            false -> {
-                                userDataList[position].favorite = true
-                                favorite.setImageResource(R.drawable.star_full)
-                                favChange?.favChanged(it,position)
-                            }
-                        }
                     }
                 }
             }

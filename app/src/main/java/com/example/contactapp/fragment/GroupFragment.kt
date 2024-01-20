@@ -170,12 +170,7 @@ class GroupFragment : Fragment() {
 
             }
         }
-        adapter.favChange = object : GroupAdapter.FavoriteChange {
-            override fun favChanged(view: View, position: Int) {
-                binding.rvGroup.adapter = adapter
-                binding.rvGroup.layoutManager = LinearLayoutManager(context)
-            }
-        }
+
     }
 
     override fun onResume() {

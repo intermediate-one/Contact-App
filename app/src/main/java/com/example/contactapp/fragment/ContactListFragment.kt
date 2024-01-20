@@ -162,15 +162,7 @@ class ContactListFragment : Fragment() {
                     activityResultLauncher.launch(intent)
                 }
             }
-            clAdapter.favChange = object : ContactListAdapter.FavoriteChange {
-                override fun favChanged(view: View, position: Int) {
-                    recyclerView.adapter = clAdapter
-                    when(listGrid) {
-                        1 -> recyclerView.layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
-                        -1 -> recyclerView.layoutManager = GridLayoutManager(mainPage, 3, GridLayoutManager.VERTICAL, false)
-                    }
-                }
-            }
+
         }
     }
 
