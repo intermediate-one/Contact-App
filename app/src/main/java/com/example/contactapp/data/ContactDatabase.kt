@@ -99,6 +99,7 @@ object ContactDatabase {
             it.profileImage = contact.profileImage
             it.email = contact.email
             it.phoneNumber = contact.phoneNumber
+            it.favorite = contact.favorite
         }
     }
 

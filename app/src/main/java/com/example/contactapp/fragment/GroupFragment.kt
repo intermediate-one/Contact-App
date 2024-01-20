@@ -155,6 +155,7 @@ class GroupFragment : Fragment() {
                 when (val item = dataList[position]) {
                     is Contacts.Title -> Unit
                     is Contacts.ContactList -> {
+                        notifyDataSetChangedStayedScroll()
                         val intent = Intent(activity, DetailActivity::class.java)
                         intent.putExtra(Contants.ITEM_DATA, ContactDatabase.getContact(item.cPhoneNumber))
                         intent.putExtra(Contants.ITEM_INDEX,ContactDatabase.getIndex(item.cPhoneNumber))
