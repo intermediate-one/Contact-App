@@ -1,22 +1,17 @@
 package com.example.contactapp.adaptor
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.contactapp.R
 import com.example.contactapp.data.ContactData
-import com.example.contactapp.data.ContactDatabase
 import com.example.contactapp.data.ContactDatabase.nameSorting
-import com.example.contactapp.data.getFirstName
-import com.example.contactapp.databinding.FragmentContactListBinding
 import com.example.contactapp.databinding.LayoutRvUserBinding
 import com.example.contactapp.databinding.LayoutRvUserGridBinding
 import com.example.contactapp.databinding.LayoutRvUserTitleBinding
 import com.example.contactapp.fragment.ContactListFragment.Companion.headerFooter
 import com.example.contactapp.fragment.ContactListFragment.Companion.listGrid
-import kotlinx.coroutines.NonDisposableHandle.parent
 
 class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var holdList:Holder
@@ -87,7 +82,8 @@ class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerVie
                     userDataList = nameSorting()
                     ContactListAdapter(userDataList).notifyItemRangeChanged(position,userDataList.size)
                     name.text = userDataList[position].name
-                    image.setImageResource(userDataList[position].profileImage)
+                    userDataList[position].profileImage?.let { image.setImageResource(it) }
+                    userDataList[position].profileUri?.let { image.setImageURI(it) }
                     when(userDataList[position].favorite) {
                         true -> favorite.setImageResource(R.drawable.star_full)
                         false -> favorite.setImageResource(R.drawable.star_empty)
@@ -115,7 +111,8 @@ class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerVie
                     userDataList = nameSorting()
                     ContactListAdapter(userDataList).notifyItemRangeChanged(position,userDataList.size)
                     name.text = userDataList[position].name
-                    image.setImageResource(userDataList[position].profileImage)
+                    userDataList[position].profileImage?.let { image.setImageResource(it) }
+                    userDataList[position].profileUri?.let { image.setImageURI(it) }
                     when(userDataList[position].favorite) {
                         true -> favorite.setImageResource(R.drawable.star_full)
                         false -> favorite.setImageResource(R.drawable.star_empty)

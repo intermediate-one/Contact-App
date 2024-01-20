@@ -444,7 +444,8 @@ class AddContactActivity : AppCompatActivity() {
 
     private fun setData(data: ContactData) {
         binding.apply {
-            ivAddContactPerson.setImageResource(data.profileImage)
+            data.profileImage?.let { ivAddContactPerson.setImageResource(it) }
+            data.profileUri?.let { ivAddContactPerson.setImageURI(it) }
             etAddContactName.setText(data.name)
             etAddContactNumber.setText(data.phoneNumber)
             etAddContactAddress.setText(data.address)

@@ -91,8 +91,8 @@ class MyPageFragment : Fragment() {
 
     private fun setData(contactData: ContactData) {
         binding.tvMyPageName.text = contactData.name
-        // TODO: 사진은 drawable로 바꿔야할듯
-        binding.ivMyPagePerson.setImageResource(contactData.profileImage)
+        contactData.profileImage?.let { binding.ivMyPagePerson.setImageResource(it) }
+        contactData.profileUri?.let { binding.ivMyPagePerson.setImageURI(it) }
         binding.tvMyPageMobilePerson.text = contactData.phoneNumber
         binding.tvMyPageEmailPerson.text = contactData.email
         // TODO: 나머지 세팅

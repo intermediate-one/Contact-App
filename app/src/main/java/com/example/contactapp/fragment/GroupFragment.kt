@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.contactapp.R
 import com.example.contactapp.activity.DetailActivity
 import com.example.contactapp.adaptor.ContactListAdapter
 import com.example.contactapp.adaptor.GroupAdapter
@@ -56,7 +57,7 @@ class GroupFragment : Fragment() {
             ContactDatabase.groupData.forEach {groupName->
                 add(Contacts.Title(groupName))
                 ContactDatabase.getContactPerGroup(groupName).forEach{
-                    add(Contacts.ContactList(it.name, it.phoneNumber, it.profileImage, it.favorite))
+                    add(Contacts.ContactList(it.name, it.phoneNumber, it.profileImage ?: R.drawable.user_profile_empty, it.favorite))
                 }
                 remove(Contacts.Title(ContactDatabase.groupData[0]))
             }
@@ -171,7 +172,7 @@ class GroupFragment : Fragment() {
             ContactDatabase.groupData.forEach {groupName->
                 add(Contacts.Title(groupName))
                 ContactDatabase.getContactPerGroup(groupName).forEach{
-                    add(Contacts.ContactList(it.name,it.phoneNumber, it.profileImage, it.favorite))
+                    add(Contacts.ContactList(it.name,it.phoneNumber, it.profileImage ?: R.drawable.user_profile_empty, it.favorite))
                 }
                 remove(Contacts.Title(ContactDatabase.groupData[0]))
             }
