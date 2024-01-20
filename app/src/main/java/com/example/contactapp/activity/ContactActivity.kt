@@ -3,20 +3,12 @@ package com.example.contactapp.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
 import androidx.viewpager2.widget.ViewPager2
-import com.example.contactapp.R
-import com.example.contactapp.adaptor.ContactListAdapter
 import com.example.contactapp.fragment.MyPageFragment
 import com.example.contactapp.adaptor.ViewPager2Adapter
-import com.example.contactapp.data.ContactData
-import com.example.contactapp.data.ContactDatabase
-import com.example.contactapp.data.Contants
 import com.example.contactapp.databinding.ActivityContactBinding
 import com.example.contactapp.fragment.ContactListFragment
 import com.example.contactapp.fragment.GroupFragment
-import com.example.contactapp.fragment.TrashBinFragment
 import com.example.contactapp.notification.MyManagers
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -46,7 +38,6 @@ class ContactActivity : AppCompatActivity() {
         var viewPager2Adapter = ViewPager2Adapter(this)
         viewPager2Adapter.addFragment(ContactListFragment())
         viewPager2Adapter.addFragment(GroupFragment())
-        viewPager2Adapter.addFragment(TrashBinFragment())
         viewPager2Adapter.addFragment(MyPageFragment())
 
         //Adapter 연결

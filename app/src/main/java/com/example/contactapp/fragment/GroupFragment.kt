@@ -51,6 +51,7 @@ class GroupFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         val dataList = arrayListOf<Contacts>() . apply {
             ContactDatabase.groupData.forEach {groupName->
                 add(Contacts.Title(groupName))
@@ -87,7 +88,7 @@ class GroupFragment : Fragment() {
         activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == RESULT_OK) {
                 val isFavorite = it.data?.getBooleanExtra("isFavorite",false) as Boolean
-                val itemNum = it.data?.getIntExtra(Contants.ITEM_INDEX,0) as Int
+                it.data?.getIntExtra(Contants.ITEM_INDEX,0) as Int
 
                 val groupPosition = it.data?.getIntExtra("groupPosition", 0)
 
@@ -140,12 +141,13 @@ class GroupFragment : Fragment() {
                 sortedList[itemNum].address = data?.address ?: "이름"
                 sortedList[itemNum].birthday = data?.birthday ?: "이름"
                 sortedList[itemNum].mbti = data?.mbti ?: "이름"
-                sortedList[itemNum].notification = data?.notification ?: null
+                sortedList[itemNum].notification = data?.notification
                 sortedList[itemNum].phoneNumber = data?.phoneNumber ?: "010-1234-1234"
                 sortedList[itemNum].memo = data?.memo ?: "010-1234-1234"
                 sortedList[itemNum].profileImage = data?.profileImage as Int
 //                GroupFragment.userPosition = itemNum
-                adapter.notifyItemRangeChanged(ContactListFragment.userPosition,sortedList.size)
+//                adapter.notifyItemRangeChanged(ContactListFragment.userPosition,sortedList.size)
+                notifyDataSetChangedStayedScroll()
             }
         }
         //Detail로 보내고 다시 값 받기
@@ -176,16 +178,16 @@ class GroupFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-//        val dataList = arrayListOf<Contacts>() . apply {
-//            ContactDatabase.groupData.forEach {groupName->
-//                add(Contacts.Title(groupName))
-//                ContactDatabase.getContactPerGroup(groupName).forEach{
-//                    add(Contacts.ContactList(it.name,it.phoneNumber, it.profileImage ?: R.drawable.user_profile_empty, it.favorite))
-//                }
-//                remove(Contacts.Title(ContactDatabase.groupData[0]))
-//            }
-//        }
-//        val adapter = GroupAdapter(dataList)
+        val dataList = arrayListOf<Contacts>() . apply {
+            ContactDatabase.groupData.forEach {groupName->
+                add(Contacts.Title(groupName))
+                ContactDatabase.getContactPerGroup(groupName).forEach{
+                    add(Contacts.ContactList(it.name,it.phoneNumber, it.profileImage ?: R.drawable.user_profile_empty, it.favorite))
+                }
+                remove(Contacts.Title(ContactDatabase.groupData[0]))
+            }
+        }
+        val adapter = GroupAdapter(dataList)
         notifyDataSetChangedStayedScroll()
     }
 
