@@ -477,7 +477,7 @@ class AddContactActivity : AppCompatActivity() {
         newContactMbti,
         binding.etAddContactMemo.text.toString(),
         null,
-        false,
+        data?.favorite ?: false,  // 좋아요는 여기서 변경 불가
         profilePath
     )
 
@@ -494,8 +494,9 @@ class AddContactActivity : AppCompatActivity() {
             // TODO: 그룹 스피너 세팅
             // TODO: 생일 세팅
             // TODO: MBTI 세팅
-            // TODO: 알림 생일이면 세팅?
             etAddContactMemo.setText(data.memo)
+            // TODO: 알림 생일이면 세팅?
+            this@AddContactActivity.data?.favorite = data.favorite  // 좋아요는 여기서 변경 불가
         }
     }
 
