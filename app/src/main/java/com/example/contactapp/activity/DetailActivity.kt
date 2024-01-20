@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import com.example.contactapp.R
 import com.example.contactapp.data.ActType
 import com.example.contactapp.data.ContactData
@@ -151,6 +152,7 @@ class DetailActivity : AppCompatActivity() {
 
     private fun setData(data: ContactData?) {
         data?.profileImage?.let { binding.ivDetailPerson.setImageResource(it) }
+        data?.profilePath?.let { binding.ivDetailPerson.setImageURI(it.toUri()) }
         binding.tvDetailName.text = data?.name
         binding.tvDetailMobilePerson.text = data?.phoneNumber
         binding.tvDetailEmailPerson.text = data?.email
