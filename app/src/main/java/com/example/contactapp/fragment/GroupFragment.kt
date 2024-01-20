@@ -176,16 +176,16 @@ class GroupFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        val dataList = arrayListOf<Contacts>() . apply {
-            ContactDatabase.groupData.forEach {groupName->
-                add(Contacts.Title(groupName))
-                ContactDatabase.getContactPerGroup(groupName).forEach{
-                    add(Contacts.ContactList(it.name,it.phoneNumber, it.profileImage ?: R.drawable.user_profile_empty, it.favorite))
-                }
-                remove(Contacts.Title(ContactDatabase.groupData[0]))
-            }
-        }
-        val adapter = GroupAdapter(dataList)
+//        val dataList = arrayListOf<Contacts>() . apply {
+//            ContactDatabase.groupData.forEach {groupName->
+//                add(Contacts.Title(groupName))
+//                ContactDatabase.getContactPerGroup(groupName).forEach{
+//                    add(Contacts.ContactList(it.name,it.phoneNumber, it.profileImage ?: R.drawable.user_profile_empty, it.favorite))
+//                }
+//                remove(Contacts.Title(ContactDatabase.groupData[0]))
+//            }
+//        }
+//        val adapter = GroupAdapter(dataList)
         notifyDataSetChangedStayedScroll()
     }
 
