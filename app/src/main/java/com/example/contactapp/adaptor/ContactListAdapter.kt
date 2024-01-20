@@ -80,9 +80,9 @@ class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerVie
         holder.itemView.setOnClickListener{
             itemClick?.onClick(it,position)
         }
-        holder.itemView.setOnClickListener {
-            itemLongClick?.onLongClick(it,position)
-        }
+//        holder.itemView.setOnClickListener {
+//            itemLongClick?.onLongClick(it,position)
+//        }
 
 
         when(listGrid) {
