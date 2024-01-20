@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import com.example.contactapp.activity.AddContactActivity
 import com.example.contactapp.data.ActType
@@ -92,7 +93,7 @@ class MyPageFragment : Fragment() {
     private fun setData(contactData: ContactData) {
         binding.tvMyPageName.text = contactData.name
         contactData.profileImage?.let { binding.ivMyPagePerson.setImageResource(it) }
-        contactData.profileUri?.let { binding.ivMyPagePerson.setImageURI(it) }
+        contactData.profilePath?.let { binding.ivMyPagePerson.setImageURI(it.toUri()) }
         binding.tvMyPageMobilePerson.text = contactData.phoneNumber
         binding.tvMyPageEmailPerson.text = contactData.email
         // TODO: 나머지 세팅

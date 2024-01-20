@@ -1,6 +1,5 @@
 package com.example.contactapp.data
 
-import android.net.Uri
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
@@ -17,5 +16,5 @@ data class ContactData(
     var memo: String,
     var notification: Int?,
     var favorite: Boolean,
-    var profileUri: Uri? = null
+    var profilePath: String? = null
 ) : Parcelable

@@ -1,12 +1,12 @@
 package com.example.contactapp.activity
 
+import RealPathUtil
 import android.app.AlarmManager
 import android.app.DatePickerDialog
 import android.app.PendingIntent
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -24,6 +24,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.core.widget.addTextChangedListener
 import com.example.contactapp.R
 import com.example.contactapp.data.ActType
@@ -57,7 +58,7 @@ class AddContactActivity : AppCompatActivity() {
     private var newContactBirthday: String = ""
 
     private var profileResId: Int? = null
-    private var profileUri: Uri? = null
+    private var profilePath: String? = null
 
     private lateinit var actType: ActType
     private var data: ContactData? = null
@@ -90,7 +91,7 @@ class AddContactActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) result.data?.data?.let {
                 profileResId = null
-                profileUri = it
+                profilePath = RealPathUtil.getRealPathFromURI_API19(this, it)
                 binding.ivAddContactPerson.setImageURI(it)
             } else Log.e("myLogTag", "result.resultCode != RESULT_OK")
         }
@@ -477,15 +478,15 @@ class AddContactActivity : AppCompatActivity() {
         binding.etAddContactMemo.text.toString(),
         null,
         false,
-        profileUri
+        profilePath
     )
 
     private fun setData(data: ContactData) {
         binding.apply {
             profileResId = data.profileImage
-            profileUri = data.profileUri
+            profilePath = data.profilePath
             data.profileImage?.let { ivAddContactPerson.setImageResource(it) }
-            data.profileUri?.let { ivAddContactPerson.setImageURI(it) }
+            data.profilePath?.let { ivAddContactPerson.setImageURI(it.toUri()) }
             etAddContactName.setText(data.name)
             etAddContactNumber.setText(data.phoneNumber)
             etAddContactAddress.setText(data.address)
@@ -579,6 +580,10 @@ class AddContactActivity : AppCompatActivity() {
     }
 
     private fun openGallery() {
+        /*
+        ACTION_PICK 으로 하면 사진 선택하게끔 나오는데 절대경로 오류남.
+        ACTION_OPEN_DOCUMENT으로 해야 가능. 맘에 안드네..
+         */
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
         pickImageLauncher.launch(intent)
     }

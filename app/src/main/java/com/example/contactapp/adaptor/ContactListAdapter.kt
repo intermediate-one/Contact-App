@@ -3,6 +3,7 @@ package com.example.contactapp.adaptor
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.example.contactapp.R
 import com.example.contactapp.data.ContactData
@@ -83,7 +84,7 @@ class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerVie
                     ContactListAdapter(userDataList).notifyItemRangeChanged(position,userDataList.size)
                     name.text = userDataList[position].name
                     userDataList[position].profileImage?.let { image.setImageResource(it) }
-                    userDataList[position].profileUri?.let { image.setImageURI(it) }
+                    userDataList[position].profilePath?.let { image.setImageURI(it.toUri()) }
                     when(userDataList[position].favorite) {
                         true -> favorite.setImageResource(R.drawable.star_full)
                         false -> favorite.setImageResource(R.drawable.star_empty)
@@ -112,7 +113,7 @@ class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerVie
                     ContactListAdapter(userDataList).notifyItemRangeChanged(position,userDataList.size)
                     name.text = userDataList[position].name
                     userDataList[position].profileImage?.let { image.setImageResource(it) }
-                    userDataList[position].profileUri?.let { image.setImageURI(it) }
+                    userDataList[position].profilePath?.let { image.setImageURI(it.toUri()) }
                     when(userDataList[position].favorite) {
                         true -> favorite.setImageResource(R.drawable.star_full)
                         false -> favorite.setImageResource(R.drawable.star_empty)
