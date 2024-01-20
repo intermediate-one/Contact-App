@@ -38,6 +38,8 @@ import com.example.contactapp.data.AddContactValidExtension.overlappingGroup
 import com.example.contactapp.data.ContactData
 import com.example.contactapp.data.ContactDatabase
 import com.example.contactapp.data.ContactDatabase.addGroup
+import com.example.contactapp.data.ContactDatabase.getGroupIndex
+import com.example.contactapp.data.ContactDatabase.getMbtiIndex
 import com.example.contactapp.data.ContactDatabase.groupData
 import com.example.contactapp.data.ContactDatabase.mbtiData
 import com.example.contactapp.data.ContactDatabase.totalContactData
@@ -509,9 +511,9 @@ class AddContactActivity : AppCompatActivity() {
             etAddContactNumber.setText(data.phoneNumber)
             etAddContactAddress.setText(data.address)
             etAddContactEmail.setText(data.email)
-            // TODO: 그룹 스피너 세팅
-            tvAddContactBirthday.text = data.birthday
-            // TODO: MBTI 세팅
+            binding.spAddContactGroup.post {binding.spAddContactGroup.setSelection(getGroupIndex(data.group))}
+            tvAddContactSelectedDate.text = data.birthday
+            binding.spAddContactMbti.post {binding.spAddContactMbti.setSelection(getMbtiIndex(data.group))}
             etAddContactMemo.setText(data.memo)
             // TODO: 알림 생일이면 세팅?
             this@AddContactActivity.data?.favorite = data.favorite  // 좋아요는 여기서 변경 불가

@@ -33,6 +33,18 @@ object ContactDatabase {
         groupData.add(group)
     }
 
+    fun getGroupIndex(group: String): Int {
+        return groupData.indexOfFirst {
+            it == group
+        }
+    }
+
+    fun getMbtiIndex(mbti: String) : Int {
+        return mbtiData.indexOfFirst {
+            it == mbti
+        }
+    }
+
 
     // 그룹 종류를 삭제하는 함수
     fun deleteGroup(group: String) {
