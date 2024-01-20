@@ -1,22 +1,21 @@
 package com.example.contactapp.adaptor
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.example.contactapp.R
 import com.example.contactapp.data.ContactData
-import com.example.contactapp.data.ContactDatabase
 import com.example.contactapp.data.ContactDatabase.nameSorting
 import com.example.contactapp.data.getFirstName
-import com.example.contactapp.databinding.FragmentContactListBinding
 import com.example.contactapp.databinding.LayoutRvUserBinding
 import com.example.contactapp.databinding.LayoutRvUserGridBinding
 import com.example.contactapp.databinding.LayoutRvUserTitleBinding
-import com.example.contactapp.fragment.ContactListFragment.Companion.headerFooter
 import com.example.contactapp.fragment.ContactListFragment.Companion.listGrid
-import kotlinx.coroutines.NonDisposableHandle.parent
+import com.example.contactapp.fragment.ContactListFragment.Companion.listGridTitle
+import com.example.contactapp.fragment.ContactListFragment.Companion.userNewPosition
+import com.example.contactapp.fragment.ContactListFragment.Companion.userOldPosition
 
 class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var holdList:Holder
@@ -34,10 +33,13 @@ class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerVie
     }
     var itemClick : ItemClick? = null
 
-    interface FavoriteChange {  // 솔직히 어째서 되는지 잘 몰루게슴 ㅎㅎ;
-        fun favChanged(view: View, position: Int)
+    interface ItemLongClick {
+        fun onLongClick(view : View, position: Int)
     }
-    var favChange : FavoriteChange? = null
+    var itemLongClick : ItemLongClick? = null
+
+
+
 
     inner class Holder(binding: LayoutRvUserBinding):RecyclerView.ViewHolder(binding.root) {
         val image = binding.ivRvUser
@@ -78,6 +80,9 @@ class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerVie
         holder.itemView.setOnClickListener{
             itemClick?.onClick(it,position)
         }
+        holder.itemView.setOnClickListener {
+            itemLongClick?.onLongClick(it,position)
+        }
 
 
         when(listGrid) {
@@ -87,26 +92,13 @@ class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerVie
                     userDataList = nameSorting()
                     ContactListAdapter(userDataList).notifyItemRangeChanged(position,userDataList.size)
                     name.text = userDataList[position].name
-                    image.setImageResource(userDataList[position].profileImage)
+                    userDataList[position].profileImage?.let { image.setImageResource(it) }
+                    userDataList[position].profilePath?.let { image.setImageURI(it.toUri()) }
                     when(userDataList[position].favorite) {
                         true -> favorite.setImageResource(R.drawable.star_full)
                         false -> favorite.setImageResource(R.drawable.star_empty)
                     }
-                    favorite.setOnClickListener {
-                        when (userDataList[position].favorite) {
-                            true -> {
-                                userDataList[position].favorite = false
-                                favorite.setImageResource(R.drawable.star_empty)
-                                favChange?.favChanged(it,position)
-                            }
-                            false -> {
-                                userDataList[position].favorite = true
-                                favorite.setImageResource(R.drawable.star_full)
-                                favChange?.favChanged(it,position)
-                            }
-                        }
-                    }
-                    headerFooter = listGrid
+
                 }
             }
             -1 -> {
@@ -115,26 +107,12 @@ class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerVie
                     userDataList = nameSorting()
                     ContactListAdapter(userDataList).notifyItemRangeChanged(position,userDataList.size)
                     name.text = userDataList[position].name
-                    image.setImageResource(userDataList[position].profileImage)
+                    userDataList[position].profileImage?.let { image.setImageResource(it) }
+                    userDataList[position].profilePath?.let { image.setImageURI(it.toUri()) }
                     when(userDataList[position].favorite) {
                         true -> favorite.setImageResource(R.drawable.star_full)
                         false -> favorite.setImageResource(R.drawable.star_empty)
                     }
-                    favorite.setOnClickListener {
-                        when (userDataList[position].favorite) {
-                            true -> {
-                                userDataList[position].favorite = false
-                                favorite.setImageResource(R.drawable.star_empty)
-                                favChange?.favChanged(it,position)
-                            }
-                            false -> {
-                                userDataList[position].favorite = true
-                                favorite.setImageResource(R.drawable.star_full)
-                                favChange?.favChanged(it,position)
-                            }
-                        }
-                    }
-                    headerFooter = listGrid
                 }
             }
 //            0 -> {

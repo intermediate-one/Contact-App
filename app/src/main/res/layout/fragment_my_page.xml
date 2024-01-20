@@ -18,7 +18,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_my_page_top"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="64dp"
                 android:background="@color/color_code_2"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -280,17 +280,17 @@
                     android:layout_marginBottom="10dp"
                     android:layout_marginStart="20dp"
                     style="@style/text20.bold"/>
+
                 <TextView
                     android:id="@+id/tv_my_page_notify_person"
+                    style="@style/text25.bold"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/tv_my_page_notify"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:text="@string/detail_notify_example"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
-                    style="@style/text25.bold"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_my_page_notify" />
                 <View
                     android:id="@+id/view_line7"
                     android:layout_width="390dp"

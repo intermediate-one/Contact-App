@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import com.example.contactapp.activity.AddContactActivity
 import com.example.contactapp.data.ActType
@@ -91,11 +92,14 @@ class MyPageFragment : Fragment() {
 
     private fun setData(contactData: ContactData) {
         binding.tvMyPageName.text = contactData.name
-        // TODO: 사진은 drawable로 바꿔야할듯
-        binding.ivMyPagePerson.setImageResource(contactData.profileImage)
+        contactData.profileImage?.let { binding.ivMyPagePerson.setImageResource(it) }
+        contactData.profilePath?.let { binding.ivMyPagePerson.setImageURI(it.toUri()) }
         binding.tvMyPageMobilePerson.text = contactData.phoneNumber
         binding.tvMyPageEmailPerson.text = contactData.email
-        // TODO: 나머지 세팅
+        binding.tvMyPageGroupPerson.text = contactData.group
+        binding.tvMyPageBirthPerson.text = contactData.birthday
+        binding.tvMyPageMbtiPerson.text = contactData.mbti
+        binding.tvMyPageMemoPerson.text = contactData.memo
     }
 
     companion object {

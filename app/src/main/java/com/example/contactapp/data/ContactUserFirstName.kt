@@ -4,7 +4,7 @@ enum class ContactUserFirstName {
     FIRST_NAME
 }
 
-fun getFirstName(s:String):Char {
+fun getFirstName(s: String):Char {
     return when(s[0]) {
         in '가' until '나' -> 'ㄱ'
         in '나' until '다' -> 'ㄴ'

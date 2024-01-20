@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import com.example.contactapp.R
 import com.example.contactapp.data.ActType
 import com.example.contactapp.data.ContactData
@@ -28,6 +29,9 @@ class DetailActivity : AppCompatActivity() {
     private var data: ContactData? = null
     private val position: Int by lazy {
         intent.getIntExtra(Contants.ITEM_INDEX, 0)
+    }
+    private val groupPosition: Int by lazy {
+        intent.getIntExtra("groupPosition", 0)
     }
 
     //즐겨찾기 상태
@@ -62,12 +66,16 @@ class DetailActivity : AppCompatActivity() {
                 Toast.makeText(this, R.string.detail_favorite, Toast.LENGTH_SHORT).show()
 //                list.find { it.phoneNumber == data?.phoneNumber }?.favorite = true
                 isFavorite = true
+                data?.favorite = true
+                data?.let { it1 -> ContactDatabase.editContactData(it1) }
                 //그 외
             } else {
                 binding.ivDetailStar.setImageResource(R.drawable.star_empty)
                 Toast.makeText(this, R.string.detail_favorite_del, Toast.LENGTH_SHORT).show()
 //                list.find { it.phoneNumber == data?.phoneNumber }?.favorite = false
                 isFavorite = false
+                data?.favorite = false
+                data?.let { it1 -> ContactDatabase.editContactData(it1) }
             }
         }
 
@@ -102,6 +110,7 @@ class DetailActivity : AppCompatActivity() {
             val intent2 = Intent(this, GroupFragment::class.java)
             intent2.putExtra(Contants.ITEM_INDEX, position)
             intent2.putExtra("isFavorite",isFavorite)
+            intent2.putExtra("groupPosition", groupPosition)
             setResult(RESULT_OK, intent2)
 
             finish()
@@ -113,6 +122,7 @@ class DetailActivity : AppCompatActivity() {
             intent.putExtra(Contants.ITEM_DATA, data)
             intent.putExtra(Contants.ITEM_INDEX, position)
             intent.putExtra(Contants.ActType, ActType.EDIT_DETAIL)
+            setResult(RESULT_OK)
             activityResultLauncher.launch(intent)
 
         }
@@ -151,6 +161,7 @@ class DetailActivity : AppCompatActivity() {
 
     private fun setData(data: ContactData?) {
         data?.profileImage?.let { binding.ivDetailPerson.setImageResource(it) }
+        data?.profilePath?.let { binding.ivDetailPerson.setImageURI(it.toUri()) }
         binding.tvDetailName.text = data?.name
         binding.tvDetailMobilePerson.text = data?.phoneNumber
         binding.tvDetailEmailPerson.text = data?.email
