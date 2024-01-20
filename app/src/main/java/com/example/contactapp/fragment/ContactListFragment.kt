@@ -62,6 +62,16 @@ class ContactListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         onClickFloatingActionButtonAddContact()
+        onViewCreatedInit()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        notifyDataSetChangedStayedScroll()
+    }
+
+
+    private fun onViewCreatedInit() {
         var sortedList = ContactDatabase.nameSorting()
         var clAdapter = ContactListAdapter(sortedList)
         with(binding) {

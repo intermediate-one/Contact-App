@@ -26,6 +26,14 @@ class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerVie
     }
     var itemClick : ItemClick? = null
 
+    interface ItemLongClick {
+        fun onLongClick(view : View, position: Int)
+    }
+    var itemLongClick : ItemLongClick? = null
+
+
+
+
     inner class Holder(binding: LayoutRvUserBinding):RecyclerView.ViewHolder(binding.root) {
         val image = binding.ivRvUser
         val name = binding.tvRvUserName
@@ -60,6 +68,9 @@ class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerVie
         holder.itemView.setOnClickListener{
             itemClick?.onClick(it,position)
         }
+//        holder.itemView.setOnClickListener {
+//            itemLongClick?.onLongClick(it,position)
+//        }
 
 
         when(listGrid) {
