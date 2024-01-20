@@ -33,6 +33,11 @@ class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerVie
     }
     var itemClick : ItemClick? = null
 
+    interface ItemLongClick {
+        fun onLongClick(view : View, position: Int)
+    }
+    var itemLongClick : ItemLongClick? = null
+
 
 
 
@@ -74,6 +79,9 @@ class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerVie
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         holder.itemView.setOnClickListener{
             itemClick?.onClick(it,position)
+        }
+        holder.itemView.setOnClickListener {
+            itemLongClick?.onLongClick(it,position)
         }
 
 

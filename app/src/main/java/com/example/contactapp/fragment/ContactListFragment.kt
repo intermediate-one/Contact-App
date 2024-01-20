@@ -63,12 +63,17 @@ class ContactListFragment : Fragment() {
 
         onClickFloatingActionButtonAddContact()
         onViewCreatedInit()
+
+
+
     }
 
     override fun onResume() {
         super.onResume()
         notifyDataSetChangedStayedScroll()
+
     }
+
 
     private fun onViewCreatedInit() {
         var sortedList = ContactDatabase.nameSorting()
@@ -112,7 +117,7 @@ class ContactListFragment : Fragment() {
                     //어댑터 갱신해주는 코드
                     notifyDataSetChangedStayedScroll()  //ddd
 //                    clAdapter.notifyItemChanged(itemNum)
-                    //수정된 값 받아오기
+                //수정된 값 받아오기
                 }else if (it.resultCode == AppCompatActivity.RESULT_FIRST_USER) {
                     val isFavorite = it.data?.getBooleanExtra("isFavorite",false) ?: false
                     val itemNum = it.data?.getIntExtra(Contants.ITEM_INDEX,0) ?: 0
