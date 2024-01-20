@@ -9,9 +9,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import com.example.contactapp.activity.AddContactActivity
+import com.example.contactapp.data.ActType
 import com.example.contactapp.data.ContactData
 import com.example.contactapp.data.ContactDatabase
+import com.example.contactapp.data.Contants
 import com.example.contactapp.databinding.FragmentMyPageBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -26,7 +32,7 @@ private const val ARG_PARAM2 = "param2"
  */
 class MyPageFragment : Fragment() {
     private lateinit var binding: FragmentMyPageBinding
-    private val me = ContactDatabase.myContact
+    private lateinit var launcher: ActivityResultLauncher<Intent>
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -53,27 +59,43 @@ class MyPageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setData(ContactDatabase.myContact)
+        launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            setData(ContactDatabase.myContact)
+        }
+        initOnClickListeners()
+    }
+
+    private fun initOnClickListeners() {
         binding.ivMyPageShare.setOnClickListener {
             val clipboard =
                 requireActivity().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clip = ClipData.newPlainText("label", me.phoneNumber)
+            val clip = ClipData.newPlainText("label", ContactDatabase.myContact.phoneNumber)
             clipboard.setPrimaryClip(clip)
+            Toast.makeText(context, "전화번호가 클립보드에 복사되었습니다", Toast.LENGTH_SHORT).show()
         }
         binding.btnMyPageMessage.setOnClickListener {
-            val phoneNumber = me.phoneNumber
+            val phoneNumber = ContactDatabase.myContact.phoneNumber
             val smsUri = Uri.parse("smsto:$phoneNumber") //phonNumber에는 01012345678과 같은 구성.
             val intent = Intent(Intent.ACTION_SENDTO)
             intent.data = smsUri
             intent.putExtra("sms_body", "") //해당 값에 전달하고자 하는 문자메시지 전달
             startActivity(intent)
         }
+        binding.btnMyPageEdit.setOnClickListener {
+            val intent = Intent(context, AddContactActivity::class.java)
+            intent.putExtra(Contants.ActType, ActType.EDIT_MY_PAGE)
+            intent.putExtra(Contants.ITEM_DATA, ContactDatabase.myContact)
+            launcher.launch(intent)
+        }
     }
 
     private fun setData(contactData: ContactData) {
         binding.tvMyPageName.text = contactData.name
+        // TODO: 사진은 drawable로 바꿔야할듯
         binding.ivMyPagePerson.setImageResource(contactData.profileImage)
         binding.tvMyPageMobilePerson.text = contactData.phoneNumber
         binding.tvMyPageEmailPerson.text = contactData.email
+        // TODO: 나머지 세팅
     }
 
     companion object {

@@ -1,9 +1,11 @@
 package com.example.contactapp.activity
 
+import android.app.AlarmManager
 import android.app.DatePickerDialog
+import android.app.PendingIntent
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,7 +14,10 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
 import androidx.core.widget.addTextChangedListener
 import com.example.contactapp.R
 import com.example.contactapp.data.ActType
@@ -30,6 +35,8 @@ import com.example.contactapp.data.ContactDatabase.mbtiData
 import com.example.contactapp.data.ContactDatabase.totalContactData
 import com.example.contactapp.data.Contants
 import com.example.contactapp.databinding.ActivityAddContactBinding
+import com.example.contactapp.notification.MyManagers
+import com.example.contactapp.notification.MyReceiver
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -44,13 +51,14 @@ class AddContactActivity : AppCompatActivity() {
     private var newContactBirthday: String = ""
 
     private lateinit var actType: ActType
-    private val data: ContactData? by lazy {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent?.getParcelableExtra(Contants.ITEM_DATA, ContactData::class.java)
-        } else {
-            intent?.getParcelableExtra<ContactData>(Contants.ITEM_DATA)
-        }
-    }
+    private var data: ContactData? = null
+//    private val data: ContactData? by lazy {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//            intent?.getParcelableExtra(Contants.ITEM_DATA, ContactData::class.java)
+//        } else {
+//            intent?.getParcelableExtra<ContactData>(Contants.ITEM_DATA)
+//        }
+//    }
 
     private val editTextArray by lazy {
         arrayOf(
@@ -71,8 +79,15 @@ class AddContactActivity : AppCompatActivity() {
             Log.e("myTag", "ActType null")
             ActType.ADD_CONTACT
         }
+        data =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+                intent?.getParcelableExtra(Contants.ITEM_DATA, ContactData::class.java)
+            else
+                intent?.getParcelableExtra<ContactData>(Contants.ITEM_DATA)
 
         initView()
+        //ddd
+        binding.btnAddContactComplete.isEnabled = true
     }
 
     private fun initView() {
@@ -338,14 +353,18 @@ class AddContactActivity : AppCompatActivity() {
     private fun onClickButtonComplete() {
         when (actType) {
             ActType.ADD_CONTACT -> {
+                Log.d("myTag", "onClickButtonComplete ActType.ADD_CONTACT")
                 binding.btnAddContactComplete.setOnClickListener {
                     ContactDatabase.addContact(makeData())
                     Log.d("saveToDataBase", "total Contact List $totalContactData")
+                    intent.putExtra(Contants.ITEM_DATA, makeData())
+                    setResult(RESULT_OK)
                     finish()
                 }
             }
 
             ActType.EDIT_DETAIL -> {
+                Log.d("myTag", "onClickButtonComplete ActType.EDIT_DETAIL")
                 binding.btnAddContactComplete.setOnClickListener {
                     if (data == null) {
                         Log.e("myTag", "data == null")
@@ -357,16 +376,45 @@ class AddContactActivity : AppCompatActivity() {
                         return@setOnClickListener
                     }
                     ContactDatabase.editContactData(index, makeData())
+                    setNotifications()
+                    intent.putExtra(Contants.ITEM_INDEX, index)
+                    intent.putExtra(Contants.ITEM_DATA, makeData())
+                    setResult(RESULT_OK, intent)
                     finish()
                 }
             }
 
             ActType.EDIT_MY_PAGE -> {
+                Log.d("myTag", "onClickButtonComplete ActType.EDIT_MY_PAGE")
                 binding.btnAddContactComplete.setOnClickListener {
                     ContactDatabase.myContact = makeData()
+                    intent.putExtra(Contants.ITEM_DATA, makeData())
+                    setResult(RESULT_OK)
                     finish()
                 }
             }
+        }
+    }
+
+    private fun setNotifications() {
+        if (binding.cbAddContactBirthday.isChecked) {
+            notification(makeData())  //ddd
+            // TODO: 날짜 지정해서 알람 만드는거
+            Toast.makeText(this, "생일 알림이 설정되었습니다", Toast.LENGTH_SHORT).show()
+        }
+        if (binding.cbAddContact5s.isChecked) {  // 이거 안돼...?
+            setAlarm(makeData(), 5)
+            Toast.makeText(this, "5초 뒤 알림이 설정되었습니다", Toast.LENGTH_SHORT).show()
+        }
+        if (binding.cbAddContact5m.isChecked) {
+            setAlarm(makeData(), 10)  //ddd
+//            setAlarm(makeData(), 300)
+            Toast.makeText(this, "5분 뒤 알림이 설정되었습니다", Toast.LENGTH_SHORT).show()
+        }
+        if (binding.cbAddContact10m.isChecked) {
+            setAlarm(makeData(), 20)  //ddd
+//            setAlarm(makeData(), 600)
+            Toast.makeText(this, "10분 뒤 알림이 설정되었습니다", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -376,6 +424,8 @@ class AddContactActivity : AppCompatActivity() {
                 && getMessageValidEmail() == null
                 && getMessageValidAddress() == null
                 && getMessageValidMemo() == null
+        //ddd
+        binding.btnAddContactComplete.isEnabled = true
     }
 
     private fun makeData() = ContactData(
@@ -413,5 +463,77 @@ class AddContactActivity : AppCompatActivity() {
             return
         }
         setData(data!!)
+    }
+
+    private fun notification(data: ContactData) {
+        // 알림에 띄울 이미지 비트맵이랑 실행시킬 인텐트 준비.
+//        val bitmap = BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
+        val intent = Intent(this, ContactActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        val pendingIntent = PendingIntent.getActivity(
+            this, 0, intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        // 알림 정보
+        val builder = NotificationCompat.Builder(this, MyManagers.channelId).apply {
+            setSmallIcon(R.drawable.call_logo)
+//            setLargeIcon(data.profileImage.toDrawable().toBitmap())
+            setWhen(System.currentTimeMillis())  // 이건 언제 보일지가 아니라 이 알림이 언제 알림인지 정보임
+            setContentTitle("띠리링! 알림!")
+            setContentText("${data.name}님께 연락할 시간입니다.")
+//            flag = !flag  // 알림 버튼 클릭 시 번갈아 스타일 보려고 만든 flag
+//            if (flag) {
+//                setStyle(
+//                    NotificationCompat.BigTextStyle()
+//                        .bigText("setStyle(NotificationCompat.BigTextStyle().bigText(지금내용)  아주 긴 텍스트를 쓸 때는 여기에 하면 된다. 아주 긴 텍스트 아주 긴 텍스트 아주 긴 텍스트 아주 긴 텍스트 아주 긴 텍스트 아주 긴 텍스트 끝")
+//                )
+//            } else {
+//                setStyle(
+//                    NotificationCompat.BigPictureStyle()
+//                        .bigPicture(bitmap)
+//                        .bigLargeIcon(null)  // hide largeIcon while expanding
+//                )
+//            }
+//            setLargeIcon(bitmap)
+            setContentIntent(pendingIntent)
+            setAutoCancel(true)
+//            addAction(R.mipmap.ic_launcher, "Action", pendingIntent)
+        }
+
+        MyManagers.notificationManager?.notify(11, builder.build())
+            ?: Log.e("myTag", "노티 매니저 없음")
+    }
+
+    private fun setAlarm(data: ContactData, sec: Long = 0) {
+        val intent = Intent(applicationContext, MyReceiver::class.java).apply {
+            putExtra("title", "띠리링! 알림!")
+            putExtra("text", "${data.name}님께 연락할 시간입니다.")
+        }
+        val pendingIntent = PendingIntent.getBroadcast(
+            applicationContext, 0, intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        MyManagers.alarmManager?.also {
+            it[AlarmManager.RTC, System.currentTimeMillis() + sec * 1000] = pendingIntent
+        }
+            ?: Log.e("myTag", "알람 매니저 null")
+
+//        val intent2 = Intent(this, ContactActivity::class.java)
+//        val pendingIntent2 = PendingIntent.getActivity(
+//            this, 101, intent2,
+//            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+//        )
+//        val builder = NotificationCompat.Builder(this, MyManagers.channelId).apply {
+//            setSmallIcon(R.mipmap.ic_launcher)
+//            setWhen(System.currentTimeMillis())  // 이건 언제 보일지가 아니라 이 알림이 언제 알림인지 정보임
+//            setContentTitle("알림 타이틀")
+//            setContentText("저장한 노티. 꺼내와봅시다.")
+//            setContentIntent(pendingIntent2)
+//            setAutoCancel(true)
+////            addAction(R.mipmap.ic_launcher, "Action", pendingIntent)
+//        }
+//        MyReceiver.savedNotification = builder.build()
     }
 }
