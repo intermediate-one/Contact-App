@@ -23,11 +23,7 @@ class GroupAdapter(private val contacts: ArrayList<Contacts>) :
         fun onClick(view: View, position: Int)
     }
 
-    interface FavoriteChange {
-        fun favChanged(view: View, position: Int)
-    }
 
-    var favChange: FavoriteChange? = null
     var itemClick: ItemClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -74,22 +70,9 @@ class GroupAdapter(private val contacts: ArrayList<Contacts>) :
                     itemClick?.onClick(it, position)
                 }
 
-                holder.favorite.setOnClickListener {
-                    when (item.cFavorite) {
-                        true -> {
-                            item.cFavorite = false
-                            ContactDatabase.editFavoriteFromNumber(item.cPhoneNumber)
-                            holder.favorite.setImageResource(R.drawable.star_empty)
-                            favChange?.favChanged(it,position)
-                        }
-                        false -> {
-                            item.cFavorite = true
-                            ContactDatabase.editFavoriteFromNumber(item.cPhoneNumber)
-                            holder.favorite.setImageResource(R.drawable.star_full)
-                            favChange?.favChanged(it,position)
-                        }
-                    }
-                }
+
+
+
             }
 
         }

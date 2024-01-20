@@ -62,6 +62,20 @@ class ContactListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         onClickFloatingActionButtonAddContact()
+        onViewCreatedInit()
+
+
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        notifyDataSetChangedStayedScroll()
+
+    }
+
+
+    private fun onViewCreatedInit() {
         var sortedList = ContactDatabase.nameSorting()
         var clAdapter = ContactListAdapter(sortedList)
         with(binding) {
@@ -72,13 +86,16 @@ class ContactListFragment : Fragment() {
                     listGrid *= -1
                     when (listGrid) {
                         1 -> {
-                            layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
+                            layoutManager =
+                                LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
                             btnListGrid.setImageResource(R.drawable.icon_grid_black)    // 현재가 list니 버튼을 누르면 Grid로 바꿀 수 있다는 것을 미리 보여주기 위해
                             notifyDataSetChangedStayedScroll()  //ddd
 //                            clAdapter.notifyItemRangeChanged(userPosition,sortedList.size)
                         }
+
                         -1 -> {
-                            layoutManager = GridLayoutManager(mainPage, 3, GridLayoutManager.VERTICAL, false)
+                            layoutManager =
+                                GridLayoutManager(mainPage, 3, GridLayoutManager.VERTICAL, false)
                             btnListGrid.setImageResource(R.drawable.icon_list_black)
                             notifyDataSetChangedStayedScroll()  //ddd
 //                            clAdapter.notifyItemRangeChanged(userPosition,sortedList.size)
@@ -86,94 +103,72 @@ class ContactListFragment : Fragment() {
                     }
                 }
             }
-            btnUserSearch.setOnClickListener {
-                val search = ContactDatabase.totalContactData.sortedBy{ it.name }.filter { etUserName.text.toString() in it.name }
-                search.forEach { toast(it.name) }
-                if(etUserName.text.isNotEmpty()) {
-                    sortedList = search
-                    clAdapter = ContactListAdapter(sortedList)
-                    recyclerView.adapter = clAdapter
-                }
-                else {
-                    sortedList = ContactDatabase.nameSorting()
-                    recyclerView.adapter = clAdapter
-                }
-                when(listGrid) {
-                    1 -> recyclerView.layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
-                    -1 -> recyclerView.layoutManager = GridLayoutManager(mainPage, 3, GridLayoutManager.VERTICAL, false)
-                }
-            }
-            //Detail에서 받았을 때
-            activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-                if (it.resultCode == AppCompatActivity.RESULT_OK) {
-                    val isFavorite = it.data?.getBooleanExtra("isFavorite",false) ?: false
-                    val itemNum = it.data?.getIntExtra(Contants.ITEM_INDEX,0) ?: 0
 
-                    if (isFavorite) {
-                        sortedList[itemNum].favorite = true
-                    } else {
-                        if (sortedList[itemNum].favorite) {
-                            sortedList[itemNum].favorite = false
-                        }
-                    }
-                    //어댑터 갱신해주는 코드
-                    notifyDataSetChangedStayedScroll()  //ddd
-//                    clAdapter.notifyItemChanged(itemNum)
-                //수정된 값 받아오기
-                }else if (it.resultCode == AppCompatActivity.RESULT_FIRST_USER) {
-                    val isFavorite = it.data?.getBooleanExtra("isFavorite",false) ?: false
-                    val itemNum = it.data?.getIntExtra(Contants.ITEM_INDEX,0) ?: 0
-                    val data: ContactData? by lazy {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                            arguments?.getParcelable(Contants.ITEM_DATA, ContactData::class.java)
+            //Detail에서 받았을 때
+            activityResultLauncher =
+                registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                    if (it.resultCode == AppCompatActivity.RESULT_OK) {
+                        val isFavorite = it.data?.getBooleanExtra("isFavorite", false) ?: false
+                        val itemNum = it.data?.getIntExtra(Contants.ITEM_INDEX, 0) ?: 0
+
+                        if (isFavorite) {
+                            sortedList[itemNum].favorite = true
                         } else {
-                            arguments?.getParcelable<ContactData>(Contants.ITEM_DATA)
+                            if (sortedList[itemNum].favorite) {
+                                sortedList[itemNum].favorite = false
+                            }
                         }
-                    }
-                    if (isFavorite) {
-                        sortedList[itemNum].favorite = true
-                    } else {
-                        if (sortedList[itemNum].favorite) {
-                            sortedList[itemNum].favorite = false
+                        //어댑터 갱신해주는 코드
+                        notifyDataSetChangedStayedScroll()  //ddd
+//                    clAdapter.notifyItemChanged(itemNum)
+                        //수정된 값 받아오기
+                    } else if (it.resultCode == AppCompatActivity.RESULT_FIRST_USER) {
+                        val isFavorite = it.data?.getBooleanExtra("isFavorite", false) ?: false
+                        val itemNum = it.data?.getIntExtra(Contants.ITEM_INDEX, 0) ?: 0
+                        val data: ContactData? by lazy {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                arguments?.getParcelable(
+                                    Contants.ITEM_DATA,
+                                    ContactData::class.java
+                                )
+                            } else {
+                                arguments?.getParcelable<ContactData>(Contants.ITEM_DATA)
+                            }
                         }
-                    }
-                    sortedList[itemNum].name = data?.name ?: "이름"
-                    sortedList[itemNum].email = data?.email ?: "이름"
-                    sortedList[itemNum].group = data?.group ?: "이름"
-                    sortedList[itemNum].address = data?.address ?: "이름"
-                    sortedList[itemNum].birthday = data?.birthday ?: "이름"
-                    sortedList[itemNum].mbti = data?.mbti ?: "이름"
-                    sortedList[itemNum].notification = data?.notification
-                    sortedList[itemNum].phoneNumber = data?.phoneNumber ?: "010-1234-1234"
-                    sortedList[itemNum].memo = data?.memo ?: "010-1234-1234"
-                    sortedList[itemNum].profileImage = data?.profileImage ?: -1
-                    userPosition = itemNum
-                    notifyDataSetChangedStayedScroll()  //ddd
+                        if (isFavorite) {
+                            sortedList[itemNum].favorite = true
+                        } else {
+                            if (sortedList[itemNum].favorite) {
+                                sortedList[itemNum].favorite = false
+                            }
+                        }
+                        sortedList[itemNum].name = data?.name ?: "이름"
+                        sortedList[itemNum].email = data?.email ?: "이름"
+                        sortedList[itemNum].group = data?.group ?: "이름"
+                        sortedList[itemNum].address = data?.address ?: "이름"
+                        sortedList[itemNum].birthday = data?.birthday ?: "이름"
+                        sortedList[itemNum].mbti = data?.mbti ?: "이름"
+                        sortedList[itemNum].notification = data?.notification
+                        sortedList[itemNum].phoneNumber = data?.phoneNumber ?: "010-1234-1234"
+                        sortedList[itemNum].memo = data?.memo ?: "010-1234-1234"
+                        sortedList[itemNum].profileImage = data?.profileImage ?: -1
+                        userPosition = itemNum
+                        notifyDataSetChangedStayedScroll()  //ddd
 //                    clAdapter.notifyItemRangeChanged(userPosition,sortedList.size)
+                    }
                 }
-            }
             //Detail로 보내고 다시 값 받기
-            clAdapter.itemClick = object : ContactListAdapter.ItemClick{
+            clAdapter.itemClick = object : ContactListAdapter.ItemClick {
                 override fun onClick(view: View, position: Int) {
                     sortedList = ContactDatabase.nameSorting()  // 정렬된 Object를 다시 받아오는 작업
-                    val intent = Intent(activity,DetailActivity::class.java)
-                    intent.putExtra(Contants.ITEM_DATA,sortedList[position])
-                    intent.putExtra(Contants.ITEM_INDEX,position)
+                    val intent = Intent(activity, DetailActivity::class.java)
+                    intent.putExtra(Contants.ITEM_DATA, sortedList[position])
+                    intent.putExtra(Contants.ITEM_INDEX, position)
                     activityResultLauncher.launch(intent)
-                }
-            }
-            clAdapter.favChange = object : ContactListAdapter.FavoriteChange {
-                override fun favChanged(view: View, position: Int) {
-                    recyclerView.adapter = clAdapter
-                    when(listGrid) {
-                        1 -> recyclerView.layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
-                        -1 -> recyclerView.layoutManager = GridLayoutManager(mainPage, 3, GridLayoutManager.VERTICAL, false)
-                    }
                 }
             }
         }
     }
-
     companion object {
 
         @JvmStatic
