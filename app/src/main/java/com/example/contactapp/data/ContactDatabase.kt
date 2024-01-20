@@ -12,8 +12,8 @@ object ContactDatabase {
     private val contact2 = ContactData("박보영", R.drawable.boyoung, "010222222222","", "boyoung22@gmail.com", "친구","1999/01/02", "ISTP", "아무말2", null, true)
     private val contact3 = ContactData("톰", R.drawable.tom, "01033333333", "","tom3333@gmail.com", "친구","1998/02/02","INTP", "아무말3", null, false)
     private val contact4 = ContactData("박은빈", R.drawable.eunbin, "01044444444", "","", "친구","1998/02/05","ESFJ", "아무말4",null , true)
-    private val contact5 = ContactData("김수현", R.drawable.suhyun, "01055555555", "","suhyun45@kakao.com","","2002/02/07", "", "", null, true)
-    private val contact6 = ContactData("젠데야", R.drawable.zendaya, "01066666666", "","zenday.thecool@naver.com", "", "2005/10/10","ISFJ", "아무말5", null, false)
+    private val contact5 = ContactData("김수현", R.drawable.suhyun, "01055555555", "","suhyun45@kakao.com","친구","2002/02/07", "", "", null, true)
+    private val contact6 = ContactData("젠데야", R.drawable.zendaya, "01066666666", "","zenday.thecool@naver.com", "친구", "2005/10/10","ISFJ", "아무말5", null, false)
     private val contact7 = ContactData("엄마", R.drawable.blank_profile_image_square, "01077777777", "","mum@gmail.com", "가족", "2001/01/01","INFJ", "아무말6", null, true)
     private val contact8 = ContactData("아빠", R.drawable.blank_profile_image_square, "01088888888", "","dad@gmail.com", "가족", "1990/12/12","ENFJ", "아무말7", null, true)
     private val contact9 = ContactData("동생", R.drawable.blank_profile_image_square, "01099999999", "","", "가족", "1995/10/23","ENTP", "아무말8", null, true)
@@ -92,7 +92,9 @@ object ContactDatabase {
     fun editFavoriteFromNumber(phoneNumber: String) {
         getContact(phoneNumber)?. let {
             when (it.favorite) {
-                true -> it.favorite = false
+                true -> {
+                    it.favorite = false
+                }
                 false -> it.favorite = true
             }
         }

@@ -36,8 +36,6 @@ class GroupFragment : Fragment() {
 
 
 
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -62,8 +60,6 @@ class GroupFragment : Fragment() {
             }
         }
 
-
-
         val sortedList = arrayListOf<ContactData>() . apply {
             ContactDatabase.groupData.forEach {groupName->
                 ContactDatabase.getContactPerGroup(groupName).forEach{
@@ -76,11 +72,8 @@ class GroupFragment : Fragment() {
 
         binding.rvGroup.layoutManager = LinearLayoutManager(context)
         binding.rvGroup.adapter = adapter
-        adapter.itemClick = object : GroupAdapter.ItemClick  {
-            override fun onClick(view: View, position: Int) {
-                //TODO : 행동
-            }
-        }
+
+
         Log.d("GroupFragment","Data List : $dataList")
         binding.rvGroup.addItemDecoration(
             StickyHeaderItemDecoration(
@@ -95,15 +88,33 @@ class GroupFragment : Fragment() {
                 val isFavorite = it.data?.getBooleanExtra("isFavorite",false) as Boolean
                 val itemNum = it.data?.getIntExtra(Contants.ITEM_INDEX,0) as Int
 
-                if (isFavorite) {
-                    sortedList[itemNum].favorite = true
-                } else {
-                    if (sortedList[itemNum].favorite) {
-                        sortedList[itemNum].favorite = false
+                val groupPosition = it.data?.getIntExtra("groupPosition", 0)
+
+                when (val item = dataList[groupPosition!!]) {
+                    is Contacts.ContactList -> {
+                        item.cFavorite = isFavorite
+                        adapter.notifyItemChanged(groupPosition)
+
+                    }
+                    is Contacts.Title -> {
+                        Log.d("GroupFragment", "Wrong groupPosition Selected")
                     }
                 }
+
+
+
+//                if (isFavorite) {
+//                    sortedList[itemNum].favorite = true
+//                    ContactDatabase.editContactData(sortedList[itemNum])
+//                } else {
+//                    if (sortedList[itemNum].favorite) {
+//                        sortedList[itemNum].favorite = false
+//                        ContactDatabase.editContactData(sortedList[itemNum])
+//
+//                    }
+//                }
                 //어댑터 갱신해주는 코드
-                adapter.notifyItemChanged(itemNum)
+
                 //수정된 값 받아오기
             }else if (it.resultCode == AppCompatActivity.RESULT_FIRST_USER) {
                 val isFavorite = it.data?.getBooleanExtra("isFavorite",false) as Boolean
@@ -146,6 +157,7 @@ class GroupFragment : Fragment() {
                         val intent = Intent(activity, DetailActivity::class.java)
                         intent.putExtra(Contants.ITEM_DATA, ContactDatabase.getContact(item.cPhoneNumber))
                         intent.putExtra(Contants.ITEM_INDEX,ContactDatabase.getIndex(item.cPhoneNumber))
+                        intent.putExtra("groupPosition",position)
                         activityResultLauncher.launch(intent)
                     }
                 }
@@ -177,8 +189,7 @@ class GroupFragment : Fragment() {
             }
         }
         val adapter = GroupAdapter(dataList)
-//        adapter.notifyItemInserted()
-
+        notifyDataSetChangedStayedScroll()
     }
 
     override fun onDestroyView() {
@@ -188,5 +199,17 @@ class GroupFragment : Fragment() {
 
     companion object {
         var userPosition = 0
+    }
+
+    /** 초필살기 (디버그용) */
+    private fun notifyDataSetChangedStayedScroll() {
+        binding.rvGroup.adapter?.notifyDataSetChanged()
+
+//        binding.recyclerView.also {
+//            // 스크롤 포지션 유지하려고 state 했는데, 스크롤 유지가 안되네
+//            val beforeState = it.layoutManager?.onSaveInstanceState()
+//            it.adapter?.notifyDataSetChanged()  //ddd
+//            it.layoutManager?.onRestoreInstanceState(beforeState)
+//        }
     }
 }

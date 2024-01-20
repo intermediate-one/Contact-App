@@ -75,20 +75,10 @@ class GroupAdapter(private val contacts: ArrayList<Contacts>) :
                 }
 
                 holder.favorite.setOnClickListener {
-                    when (item.cFavorite) {
-                        true -> {
-                            item.cFavorite = false
-                            ContactDatabase.editFavoriteFromNumber(item.cPhoneNumber)
-                            holder.favorite.setImageResource(R.drawable.star_empty)
-                            favChange?.favChanged(it,position)
-                        }
-                        false -> {
-                            item.cFavorite = true
-                            ContactDatabase.editFavoriteFromNumber(item.cPhoneNumber)
-                            holder.favorite.setImageResource(R.drawable.star_full)
-                            favChange?.favChanged(it,position)
-                        }
-                    }
+                    ContactDatabase.editFavoriteFromNumber(item.cPhoneNumber)
+                    item.cFavorite = ContactDatabase.getContact(item.cPhoneNumber)!!.favorite
+                    holder.favorite.setImageResource(R.drawable.star_empty)
+                    favChange?.favChanged(it,position)
                 }
             }
 
