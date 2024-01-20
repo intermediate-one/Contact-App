@@ -29,6 +29,7 @@ class GroupFragment : Fragment() {
             ContactDatabase.getContactPerGroup(groupName).forEach{
                 add(Contacts.ContactList(it.name, it.profileImage, it.favorite))
             }
+            remove(Contacts.Title(ContactDatabase.groupData[0]))
         }
     }
     private val adapter = GroupAdapter(dataList)
