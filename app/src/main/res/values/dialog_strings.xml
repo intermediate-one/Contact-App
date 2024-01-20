@@ -6,6 +6,7 @@
     <string name="dialog_confirm_add_group">확인</string>
     <string name="dialog_cancel_add_group">취소</string>
 
-    <string name="dialog_existing_group_message">"이미 존재하는 그룹입니다."</string>
-    <string name="dialog_empty_text_message">"그룹 이름을 입력해주세요."</string>
+    <string name="dialog_existing_group_message">이미 존재하는 그룹입니다.</string>
+    <string name="dialog_empty_text_message">그룹 이름을 입력해주세요.</string>
+    <string name="dialog_new_group_added">그룹이 추가되었습니다.</string>
 </resources>

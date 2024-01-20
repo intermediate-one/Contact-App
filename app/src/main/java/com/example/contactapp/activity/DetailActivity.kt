@@ -19,6 +19,7 @@ import com.example.contactapp.data.ContactDatabase
 import com.example.contactapp.data.Contants
 import com.example.contactapp.databinding.ActivityDetailBinding
 import com.example.contactapp.fragment.ContactListFragment
+import com.example.contactapp.fragment.GroupFragment
 
 
 class DetailActivity : AppCompatActivity() {
@@ -95,7 +96,14 @@ class DetailActivity : AppCompatActivity() {
             val intent = Intent(this, ContactListFragment::class.java)
             intent.putExtra(Contants.ITEM_INDEX, position)
             intent.putExtra("isFavorite", isFavorite)
-            setResult(AppCompatActivity.RESULT_OK, intent)
+            setResult(RESULT_OK, intent)
+
+
+            val intent2 = Intent(this, GroupFragment::class.java)
+            intent2.putExtra(Contants.ITEM_INDEX, position)
+            intent2.putExtra("isFavorite",isFavorite)
+            setResult(RESULT_OK, intent2)
+
             finish()
         }
 

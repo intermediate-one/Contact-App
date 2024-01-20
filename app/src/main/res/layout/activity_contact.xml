@@ -8,12 +8,7 @@
     android:backgroundTint="@color/default_background"
     tools:context=".activity.ContactActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/color_code_2"
-        app:title="@string/my_contacts"
-        app:titleTextColor="@color/white" />
+
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager_contact_activity_swipe"
