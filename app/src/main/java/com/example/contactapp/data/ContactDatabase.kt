@@ -33,6 +33,7 @@ object ContactDatabase {
         groupData.add(group)
     }
 
+
     // 그룹 종류를 삭제하는 함수
     fun deleteGroup(group: String) {
         groupData.remove(group)

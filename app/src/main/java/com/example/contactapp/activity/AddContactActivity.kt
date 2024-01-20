@@ -37,6 +37,7 @@ import com.example.contactapp.data.AddContactValidExtension.includeValidMemo
 import com.example.contactapp.data.AddContactValidExtension.overlappingGroup
 import com.example.contactapp.data.ContactData
 import com.example.contactapp.data.ContactDatabase
+import com.example.contactapp.data.ContactDatabase.addGroup
 import com.example.contactapp.data.ContactDatabase.groupData
 import com.example.contactapp.data.ContactDatabase.mbtiData
 import com.example.contactapp.data.ContactDatabase.totalContactData
@@ -59,6 +60,7 @@ class AddContactActivity : AppCompatActivity() {
 
     private var profileResId: Int? = null
     private var profilePath: String? = null
+    private lateinit var groupText: String
 
     private lateinit var actType: ActType
     private var data: ContactData? = null
@@ -127,7 +129,7 @@ class AddContactActivity : AppCompatActivity() {
         onClickDatePicker()
         onClickProfileImage()
 
-        setGroupProvider()
+        setGroupProvider(null)
         setMbtiProvider()
         addGroupBtn()
 
@@ -185,7 +187,9 @@ class AddContactActivity : AppCompatActivity() {
                 .setView(dialogView)
                 .setIcon(R.mipmap.ic_launcher)
                 .setPositiveButton(getString(R.string.dialog_confirm_add_group)) { _, _ ->
-                    //startupViewModel.checkAndReset(token, layout.newPassword.text.toString())
+
+                    addGroup(groupText)
+                    setGroupProvider(groupData.size-1)
                 }
                 .setNegativeButton(getString(R.string.dialog_cancel_add_group)) { dialog, _ ->
                     dialog.cancel()
@@ -209,6 +213,7 @@ class AddContactActivity : AppCompatActivity() {
 
                         text.overlappingGroup() -> {
                             editGroup.error = null
+                            groupText = text
                             builder.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = true
 
                         }
@@ -235,12 +240,19 @@ class AddContactActivity : AppCompatActivity() {
 
     }
 
+//    override fun onResume() {
+//        super.onResume()
+//
+//
+//        binding.spAddContactGroup.post {binding.spAddContactGroup.setSelection(groupData.size-1)}
+//    }
+
 //    private fun shortToastMessage(context: Context, message: Int) {
 //        Toast.makeText(context, getString(message), Toast.LENGTH_SHORT).show()
 //    }
 
     // 스피너에서 현재 있는 그룹 리스트를 표시해주는 함수.
-    private fun setGroupProvider() {
+    private fun setGroupProvider(index: Int?) {
         //object클래스 ContactDatabase.kt에 저장되어 있는 groupData에 있는 값들을 추가해준다.
         binding.spAddContactGroup.adapter = ArrayAdapter(
             this, android.R.layout.simple_spinner_dropdown_item,
@@ -248,6 +260,12 @@ class AddContactActivity : AppCompatActivity() {
 
 
         )
+
+        when (index) {
+            null -> Unit
+            else -> binding.spAddContactGroup.post {binding.spAddContactGroup.setSelection(groupData.size-1)}
+        }
+
         binding.spAddContactGroup.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -492,7 +510,7 @@ class AddContactActivity : AppCompatActivity() {
             etAddContactAddress.setText(data.address)
             etAddContactEmail.setText(data.email)
             // TODO: 그룹 스피너 세팅
-            // TODO: 생일 세팅
+            tvAddContactBirthday.text = data.birthday
             // TODO: MBTI 세팅
             etAddContactMemo.setText(data.memo)
             // TODO: 알림 생일이면 세팅?
