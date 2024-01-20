@@ -4,9 +4,9 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class ContactData (
+data class ContactData(
     var name: String,
-    var profileImage: Int,
+    var profileImage: Int?,
     var phoneNumber: String,
     var address: String,
     var email: String,
@@ -15,5 +15,6 @@ data class ContactData (
     var mbti: String,
     var memo: String,
     var notification: Int?,
-    var favorite: Boolean
-):Parcelable
+    var favorite: Boolean,
+    var profilePath: String? = null
+) : Parcelable

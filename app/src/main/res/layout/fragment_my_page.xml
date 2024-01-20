@@ -18,7 +18,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_my_page_top"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="64dp"
                 android:background="@color/color_code_2"
                 app:layout_constraintTop_toTopOf="parent">
 
