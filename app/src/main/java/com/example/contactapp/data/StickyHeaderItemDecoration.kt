@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 class StickyHeaderItemDecoration(
     recyclerView: RecyclerView,
     private val isHeader: (itemPosition: Int) -> Boolean
-) : RecyclerView.ItemDecoration() {
+) : ItemDecoration() {
 
     private var currentHeaderToShow: Pair<Int, RecyclerView.ViewHolder>? = null
 

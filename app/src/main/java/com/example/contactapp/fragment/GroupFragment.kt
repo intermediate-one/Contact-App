@@ -1,38 +1,26 @@
 package com.example.contactapp.fragment
 
-import android.content.Intent
-import android.os.Build
+
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.contactapp.R
-import com.example.contactapp.activity.ContactActivity
 import com.example.contactapp.adaptor.GroupAdapter
-import com.example.contactapp.data.ContactData
 import com.example.contactapp.data.ContactDatabase
 import com.example.contactapp.data.Contacts
+import com.example.contactapp.data.StickyHeaderItemDecoration
 import com.example.contactapp.databinding.FragmentGroupBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [GroupFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class GroupFragment : Fragment() {
-    private var recyclerView: RecyclerView? = null
+
 
     private var _binding: FragmentGroupBinding? = null
     private val binding get() = _binding!!
-    private val mainPage by lazy { context as ContactActivity }
 
 
     private val dataList = arrayListOf<Contacts>() . apply {
@@ -43,15 +31,8 @@ class GroupFragment : Fragment() {
             }
         }
     }
+    private val adapter = GroupAdapter(dataList)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        recyclerView?.layoutManager = LinearLayoutManager(context)
-        recyclerView?.adapter = GroupAdapter(dataList)
-
-
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,9 +47,22 @@ class GroupFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.rvGroup.layoutManager = LinearLayoutManager(context)
+        binding.rvGroup.adapter = adapter
+        adapter.itemClick = object : GroupAdapter.ItemClick  {
+            override fun onClick(view: View, position: Int) {
+                //TODO : 행동
+            }
+        }
+        Log.d("GroupFragment","Data List : $dataList")
+        binding.rvGroup.addItemDecoration(
+            StickyHeaderItemDecoration(
+                binding.rvGroup
+            ) { itemPosition: Int ->
+                dataList[itemPosition] is Contacts.Title
 
-
-
+            }
+        )
     }
     override fun onDestroyView() {
         super.onDestroyView()
