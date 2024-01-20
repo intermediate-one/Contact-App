@@ -5,8 +5,11 @@ import android.app.DatePickerDialog
 import android.app.PendingIntent
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -15,9 +18,12 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import com.example.contactapp.R
 import com.example.contactapp.data.ActType
@@ -50,6 +56,9 @@ class AddContactActivity : AppCompatActivity() {
     private var newContactMbti: String = ""
     private var newContactBirthday: String = ""
 
+    private var profileResId: Int? = null
+    private var profileUri: Uri? = null
+
     private lateinit var actType: ActType
     private var data: ContactData? = null
 //    private val data: ContactData? by lazy {
@@ -69,6 +78,22 @@ class AddContactActivity : AppCompatActivity() {
             binding.etAddContactMemo
         )
     }
+
+    private val requestPermissionLauncher: ActivityResultLauncher<String> =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) openGallery()
+            else Log.e("myLogTag", "RequestPermission not granted")
+        }
+
+    // 가져온 사진 이미지뷰에 세팅
+    private val pickImageLauncher: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) result.data?.data?.let {
+                profileResId = null
+                profileUri = it
+                binding.ivAddContactPerson.setImageURI(it)
+            } else Log.e("myLogTag", "result.resultCode != RESULT_OK")
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,11 +124,23 @@ class AddContactActivity : AppCompatActivity() {
         onClickButtonComplete()
         onClickButtonBack()
         onClickDatePicker()
+        onClickProfileImage()
 
         setGroupProvider()
         setMbtiProvider()
         addGroupBtn()
 
+    }
+
+    private fun onClickProfileImage() {
+        binding.ivAddContactPerson.setOnClickListener {
+            val permission = android.Manifest.permission.READ_EXTERNAL_STORAGE
+            // TODO: 한번 권한 거부하면 다시 요청이 불가능한 문제. 버튼이 무반응이 된다.
+            if (ContextCompat.checkSelfPermission(this, permission)
+                != PackageManager.PERMISSION_GRANTED
+            ) requestPermissionLauncher.launch(permission)
+            else openGallery()
+        }
     }
 
     private fun onClickDatePicker() {
@@ -430,7 +467,7 @@ class AddContactActivity : AppCompatActivity() {
 
     private fun makeData() = ContactData(
         binding.etAddContactName.text.toString(),
-        R.drawable.blank_profile_image_square,
+        profileResId,
         binding.etAddContactNumber.text.toString(),
         binding.etAddContactAddress.text.toString(),
         binding.etAddContactEmail.text.toString(),
@@ -439,11 +476,14 @@ class AddContactActivity : AppCompatActivity() {
         newContactMbti,
         binding.etAddContactMemo.text.toString(),
         null,
-        false
+        false,
+        profileUri
     )
 
     private fun setData(data: ContactData) {
         binding.apply {
+            profileResId = data.profileImage
+            profileUri = data.profileUri
             data.profileImage?.let { ivAddContactPerson.setImageResource(it) }
             data.profileUri?.let { ivAddContactPerson.setImageURI(it) }
             etAddContactName.setText(data.name)
@@ -536,5 +576,10 @@ class AddContactActivity : AppCompatActivity() {
 ////            addAction(R.mipmap.ic_launcher, "Action", pendingIntent)
 //        }
 //        MyReceiver.savedNotification = builder.build()
+    }
+
+    private fun openGallery() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+        pickImageLauncher.launch(intent)
     }
 }
