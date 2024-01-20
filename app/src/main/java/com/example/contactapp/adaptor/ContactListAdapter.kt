@@ -10,7 +10,9 @@ import com.example.contactapp.data.ContactData
 import com.example.contactapp.data.ContactDatabase.nameSorting
 import com.example.contactapp.databinding.LayoutRvUserBinding
 import com.example.contactapp.databinding.LayoutRvUserGridBinding
+import com.example.contactapp.fragment.ContactListFragment
 import com.example.contactapp.fragment.ContactListFragment.Companion.listGrid
+import com.example.contactapp.fragment.ContactListFragment.Companion.sorted
 
 class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var holdList:Holder
@@ -34,6 +36,9 @@ class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerVie
 
 
 
+    interface ItemFilter{
+        fun filter(list:List<ContactData>)
+    }
     inner class Holder(binding: LayoutRvUserBinding):RecyclerView.ViewHolder(binding.root) {
         val image = binding.ivRvUser
         val name = binding.tvRvUserName
@@ -78,7 +83,6 @@ class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerVie
                 holdList = holder as Holder
                 with(holdList) {
                     userDataList = nameSorting()
-                    ContactListAdapter(userDataList).notifyItemRangeChanged(position,userDataList.size)
                     name.text = userDataList[position].name
                     userDataList[position].profileImage?.let { image.setImageResource(it) }
                     userDataList[position].profilePath?.let { image.setImageURI(it.toUri()) }
@@ -92,7 +96,6 @@ class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerVie
                 holdGrid = holder as Hold
                 with (holdGrid) {
                     userDataList = nameSorting()
-                    ContactListAdapter(userDataList).notifyItemRangeChanged(position,userDataList.size)
                     name.text = userDataList[position].name
                     userDataList[position].profileImage?.let { image.setImageResource(it) }
                     userDataList[position].profilePath?.let { image.setImageURI(it.toUri()) }

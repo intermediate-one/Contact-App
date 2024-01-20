@@ -93,18 +93,6 @@ class ContactListFragment : Fragment() {
                     }
                 }
             }
-            btnUserSearch.setOnClickListener {
-                sortedList = if(etUserName.text.trim().isNotBlank()) ContactDatabase.totalContactData.sortedBy{ it.name }.filter { etUserName.text.toString() in it.name }
-                else ContactDatabase.nameSorting()
-                clAdapter.notifyDataSetChanged()
-//                sortedList.forEach { toast(it.name) }
-                recyclerView.adapter = clAdapter
-                when(listGrid) {
-                    1 -> recyclerView.layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
-                    -1 -> recyclerView.layoutManager = GridLayoutManager(mainPage, 3, GridLayoutManager.VERTICAL, false)
-                }
-            }
-            //Detail에서 받았을 때
             activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 if (it.resultCode == AppCompatActivity.RESULT_OK) {
                     val isFavorite = it.data?.getBooleanExtra("isFavorite",false) ?: false
@@ -179,9 +167,7 @@ class ContactListFragment : Fragment() {
 
         var userPosition = 0
         var listGrid = 1            // listGrid에 0을 입력함으로써 Title을 구현하기 위함
-        var userOldPosition = 0     // 연락처 아이템을 검색할 때 이전 아이템의 Position
-        var userNewPosition = 0     // 현재 아이템의 Position
-        var listGridTitle = 0       // Title 부분을 띄우고 기존의 리스트값으로 돌아오기 위한 temp변수
+        var sorted:List<ContactData> = ContactDatabase.nameSorting()
     }
 
     override fun onDestroyView() {
