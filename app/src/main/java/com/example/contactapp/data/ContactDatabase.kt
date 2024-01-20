@@ -89,6 +89,16 @@ object ContactDatabase {
         }
     }
 
+    fun editFavoriteFromNumber(phoneNumber: String) {
+        getContact(phoneNumber)?. let {
+            when (it.favorite) {
+                true -> it.favorite = false
+                false -> it.favorite = true
+            }
+        }
+
+    }
+
     // 빈 데이터 생성하는 함수
     fun new() = ContactData("이름", R.drawable.user_profile_empty, "", "", "", "", "", "", "", null, false)
 

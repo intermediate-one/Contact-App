@@ -116,8 +116,8 @@ class DetailActivity : AppCompatActivity() {
 
         //수정해서 받기
         activityResultLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-                if (it.resultCode == RESULT_OK) {
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+                if (activityResult.resultCode == RESULT_OK) {
 //                val data = intent?.getParcelableExtra<ContactData>(Contants.ITEM_DATA)
 //                val indexNum = intent?.getIntExtra(Contants.ITEM_INDEX,0)
                     val data: ContactData? by lazy {

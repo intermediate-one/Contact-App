@@ -1,49 +1,53 @@
 package com.example.contactapp.adaptor
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.contactapp.R
-import com.example.contactapp.data.ContactData
 import com.example.contactapp.data.ContactDatabase
 import com.example.contactapp.data.Contacts
-import com.example.contactapp.data.StickyHeaderItemDecoration
 import com.example.contactapp.databinding.HeaderGroupBinding
 import com.example.contactapp.databinding.LayoutRvUserBinding
 
 
-const val TYPE_HEADER = 0
-const val TYPE_ITEM = 1
+class GroupAdapter(private val contacts: ArrayList<Contacts>) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-class GroupAdapter(val contacts: ArrayList<Contacts>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    val itemList = mutableListOf<Contacts>()
     companion object {
         private const val VIEW_TYPE_TITLE = 1
         private const val VIEW_TYPE_ITEM = 2
     }
 
     interface ItemClick {
-        fun onClick(view : View, position : Int)
+        fun onClick(view: View, position: Int)
     }
 
-    var itemClick : ItemClick? = null
+    interface FavoriteChange {
+        fun favChanged(view: View, position: Int)
+    }
+
+    var favChange: FavoriteChange? = null
+    var itemClick: ItemClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
-        return when(viewType) {
+        return when (viewType) {
             1 -> {
-                val binding = HeaderGroupBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+                val binding =
+                    HeaderGroupBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 TitleViewHolder(binding)
             }
+
             2 -> {
-                val binding = LayoutRvUserBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+                val binding =
+                    LayoutRvUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 ItemViewHolder(binding)
             }
+
             else -> {
-                val binding = LayoutRvUserBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+                val binding =
+                    LayoutRvUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 ItemViewHolder(binding)
             }
 
@@ -51,18 +55,41 @@ class GroupAdapter(val contacts: ArrayList<Contacts>): RecyclerView.Adapter<Recy
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        holder.itemView.setOnClickListener{
-            itemClick?.onClick(it,position)
-        }
+
 
         when (val item = contacts[position]) {
             is Contacts.Title -> {
                 (holder as TitleViewHolder).title.text = item.ctitle
             }
+
             is Contacts.ContactList -> {
                 (holder as ItemViewHolder).name.text = item.cname
-//                holder.favorite. = item.cFavorite
+                when (item.cFavorite) {
+                    true -> holder.favorite.setImageResource(R.drawable.star_full)
+                    false -> holder.favorite.setImageResource(R.drawable.star_empty)
+                }
                 holder.image.setImageResource(item.cImage)
+
+                holder.itemView.setOnClickListener {
+                    itemClick?.onClick(it, position)
+                }
+
+                holder.favorite.setOnClickListener {
+                    when (item.cFavorite) {
+                        true -> {
+                            item.cFavorite = false
+                            ContactDatabase.editFavoriteFromNumber(item.cPhoneNumber)
+                            holder.favorite.setImageResource(R.drawable.star_empty)
+                            favChange?.favChanged(it,position)
+                        }
+                        false -> {
+                            item.cFavorite = true
+                            ContactDatabase.editFavoriteFromNumber(item.cPhoneNumber)
+                            holder.favorite.setImageResource(R.drawable.star_full)
+                            favChange?.favChanged(it,position)
+                        }
+                    }
+                }
             }
 
         }
@@ -84,10 +111,13 @@ class GroupAdapter(val contacts: ArrayList<Contacts>): RecyclerView.Adapter<Recy
     }
 
 
-    inner class TitleViewHolder(binding: HeaderGroupBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class TitleViewHolder(binding: HeaderGroupBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         val title = binding.tvHeader
     }
-    inner class ItemViewHolder(binding: LayoutRvUserBinding) : RecyclerView.ViewHolder(binding.root) {
+
+    inner class ItemViewHolder(binding: LayoutRvUserBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         val image = binding.ivRvUser
         val name = binding.tvRvUserName
         val favorite = binding.ivRvFavorite
