@@ -3,6 +3,7 @@ package com.example.contactapp.adaptor
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.example.contactapp.R
 import com.example.contactapp.data.ContactData
@@ -85,7 +86,8 @@ class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerVie
                     userDataList = nameSorting()
                     ContactListAdapter(userDataList).notifyItemRangeChanged(position,userDataList.size)
                     name.text = userDataList[position].name
-                    image.setImageResource(userDataList[position].profileImage)
+                    userDataList[position].profileImage?.let { image.setImageResource(it) }
+                    userDataList[position].profilePath?.let { image.setImageURI(it.toUri()) }
                     when(userDataList[position].favorite) {
                         true -> favorite.setImageResource(R.drawable.star_full)
                         false -> favorite.setImageResource(R.drawable.star_empty)
@@ -112,7 +114,8 @@ class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerVie
                     userDataList = nameSorting()
                     ContactListAdapter(userDataList).notifyItemRangeChanged(position,userDataList.size)
                     name.text = userDataList[position].name
-                    image.setImageResource(userDataList[position].profileImage)
+                    userDataList[position].profileImage?.let { image.setImageResource(it) }
+                    userDataList[position].profilePath?.let { image.setImageURI(it.toUri()) }
                     when(userDataList[position].favorite) {
                         true -> favorite.setImageResource(R.drawable.star_full)
                         false -> favorite.setImageResource(R.drawable.star_empty)
@@ -134,8 +137,8 @@ class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerVie
                 }
             }
 //            0 -> {
-//                titleHolder.title.text = getFirstName(userDataList[position].name).toString()
-//                listGrid = listGridTitle
+//                (holder as Title).title.text = getFirstName(userDataList[position].name).toString()
+//                listGrid = headerFooter
 //            }
             else -> throw Exception("Holder를 Casting 할 수 없습니다.")
         }
