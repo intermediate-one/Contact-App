@@ -24,30 +24,13 @@ import com.example.contactapp.data.Contants
 import com.example.contactapp.databinding.FragmentContactListBinding
 import java.util.Locale.filter
 
-
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-
 class ContactListFragment : Fragment() {
     lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
 
-    private var param1: String? = null
-    private var param2: String? = null
-
-
     private var _binding:FragmentContactListBinding? = null
     private val binding get() = _binding!!
+
     private val mainPage by lazy { context as ContactActivity }
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,15 +46,11 @@ class ContactListFragment : Fragment() {
 
         onClickFloatingActionButtonAddContact()
         onViewCreatedInit()
-
-
-
     }
 
     override fun onResume() {
         super.onResume()
         notifyDataSetChangedStayedScroll()
-
     }
 
 
@@ -80,7 +59,6 @@ class ContactListFragment : Fragment() {
         var clAdapter = ContactListAdapter(sortedList)
         with(binding) {
             recyclerView.adapter = clAdapter
-//            recyclerView.layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
             btnListGrid.setOnClickListener {
                 binding.recyclerView.apply {
                     listGrid *= -1
@@ -89,19 +67,15 @@ class ContactListFragment : Fragment() {
                             layoutManager = LinearLayoutManager(mainPage, LinearLayoutManager.VERTICAL, false)
                             btnListGrid.setImageResource(R.drawable.icon_grid_black)    // 현재가 list니 버튼을 누르면 Grid로 바꿀 수 있다는 것을 미리 보여주기 위해
                             notifyDataSetChangedStayedScroll()  //ddd
-//                            clAdapter.notifyItemRangeChanged(userPosition,sortedList.size)
                         }
                         -1 -> {
                             layoutManager = GridLayoutManager(mainPage, 3, GridLayoutManager.VERTICAL, false)
                             btnListGrid.setImageResource(R.drawable.icon_list_black)
                             notifyDataSetChangedStayedScroll()  //ddd
-//                            clAdapter.notifyItemRangeChanged(userPosition,sortedList.size)
                         }
                     }
                 }
             }
-
-            //Detail에서 받았을 때
             activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 if (it.resultCode == AppCompatActivity.RESULT_OK) {
                     val isFavorite = it.data?.getBooleanExtra("isFavorite",false) ?: false
@@ -115,8 +89,7 @@ class ContactListFragment : Fragment() {
                         }
                     }
                     //어댑터 갱신해주는 코드
-                    notifyDataSetChangedStayedScroll()  //ddd
-//                    clAdapter.notifyItemChanged(itemNum)
+                    notifyDataSetChangedStayedScroll()
                 //수정된 값 받아오기
                 }else if (it.resultCode == AppCompatActivity.RESULT_FIRST_USER) {
                     val isFavorite = it.data?.getBooleanExtra("isFavorite",false) ?: false
@@ -146,8 +119,7 @@ class ContactListFragment : Fragment() {
                     sortedList[itemNum].memo = data?.memo ?: "010-1234-1234"
                     sortedList[itemNum].profileImage = data?.profileImage ?: -1
                     userPosition = itemNum
-                    notifyDataSetChangedStayedScroll()  //ddd
-//                    clAdapter.notifyItemRangeChanged(userPosition,sortedList.size)
+                    notifyDataSetChangedStayedScroll()
                 }
             }
             //Detail로 보내고 다시 값 받기
@@ -160,37 +132,18 @@ class ContactListFragment : Fragment() {
                     activityResultLauncher.launch(intent)
                 }
             }
-
         }
     }
 
     companion object {
-
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ContactListFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-
         var userPosition = 0
         var listGrid = 1            // listGrid에 0을 입력함으로써 Title을 구현하기 위함
-        var userOldPosition = 0     // 연락처 아이템을 검색할 때 이전 아이템의 Position
-        var userNewPosition = 0     // 현재 아이템의 Position
-        var listGridTitle = 0       // Title 부분을 띄우고 기존의 리스트값으로 돌아오기 위한 temp변수
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
-    fun toast(s:String) {
-        Toast.makeText(mainPage,s,Toast.LENGTH_SHORT).show()
-    }
-
 
     // 플로팅 액션 버튼 클릭 시 연락처 추가 액티비티 (AddContactActivity.kt)로 이동하는 코드
     private fun onClickFloatingActionButtonAddContact() {
@@ -203,12 +156,5 @@ class ContactListFragment : Fragment() {
     /** 초필살기 (디버그용) */
     private fun notifyDataSetChangedStayedScroll() {
         binding.recyclerView.adapter?.notifyDataSetChanged()
-
-//        binding.recyclerView.also {
-//            // 스크롤 포지션 유지하려고 state 했는데, 스크롤 유지가 안되네
-//            val beforeState = it.layoutManager?.onSaveInstanceState()
-//            it.adapter?.notifyDataSetChanged()  //ddd
-//            it.layoutManager?.onRestoreInstanceState(beforeState)
-//        }
     }
 }
