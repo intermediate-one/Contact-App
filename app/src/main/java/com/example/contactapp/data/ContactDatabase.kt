@@ -19,9 +19,14 @@ object ContactDatabase {
     private val contact9 = ContactData("동생", R.drawable.blank_profile_image_square, "01099999999", "","", "가족", "1995/10/23","ENTP", "아무말8", null, true)
     private val contact10 = ContactData("형", R.drawable.blank_profile_image_square, "01000000000", "","", "가족", "2001/01/03","INFP", "아무말9", null, true)
     private val contact11 = ContactData("직장상사1", R.drawable.blank_profile_image_square, "01012345678", "","workplace@companyName.ac.kr", "회사", "","", "아무말10", null, false)
+    private val contact12 = ContactData("김세정", R.drawable.sejeong, "01011112222", "","workplace@companyName.ac.kr", "회사", "","", "아무말10", null, false)
+    private val contact13 = ContactData("김연아", R.drawable.yuna, "01011113333", "","workplace@companyName.ac.kr", "회사", "","", "아무말10", null, false)
+    private val contact14 = ContactData("이승기", R.drawable.seunggi, "01011114444", "","workplace@companyName.ac.kr", "회사", "","", "아무말10", null, false)
+    private val contact15 = ContactData("마블리", R.drawable.mably, "01011115555", "","workplace@companyName.ac.kr", "회사", "","", "아무말10", null, false)
+    private val contact16 = ContactData("이효리", R.drawable.hyori, "01011116666", "","workplace@companyName.ac.kr", "회사", "","", "아무말10", null, false)
 
 
-    var totalContactData: ArrayList<ContactData> = arrayListOf(contact1, contact2, contact3, contact4, contact5, contact6, contact7, contact8, contact9, contact10, contact11)
+    var totalContactData: ArrayList<ContactData> = arrayListOf(contact1, contact2, contact3, contact4, contact5, contact6, contact7, contact8, contact9, contact10, contact11, contact12, contact13, contact14, contact15, contact16)
 
     var mbtiData: List<String> = listOf("선택 안함", "ESTJ", "ESTP", "ESFJ", "ESFP", "ENTJ", "ENTP", "ENFJ", "ENFP","ISTJ", "ISTP", "ISFJ", "ISFP", "INTJ", "INTP", "INFJ", "INFP")
 
@@ -116,7 +121,7 @@ object ContactDatabase {
     }
 
     // 빈 데이터 생성하는 함수
-    fun new() = ContactData("이름", R.drawable.blank_profile_image_square, "", "", "", "", "", "", "", null, false)
+    fun new() = ContactData("이름", R.drawable.blank_profile_image_square, "01000000000", "", "", "", "", "", "", null, false)
 
     // 저장된 데이터를 이름순으로 정렬하는 함수
     fun nameSorting() = totalContactData.sortedWith(compareBy({!it.favorite},{it.name}))

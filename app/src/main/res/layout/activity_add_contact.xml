@@ -20,7 +20,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_add_contact_top"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/actionBarSize"
                 android:background="@color/color_code_2"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -43,7 +44,7 @@
 
                         <Button
                             android:id="@+id/btn_add_contact_complete"
-                            style="@style/text25.bold"
+                            style="@style/text20"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/color_code_3"
@@ -357,8 +358,8 @@
 
         <ImageView
             android:id="@+id/ibtn_add_contact_back"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/back"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

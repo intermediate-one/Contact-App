@@ -18,13 +18,14 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_my_page_top"
                 android:layout_width="match_parent"
-                android:layout_height="64dp"
+                android:layout_height="wrap_content"
                 android:background="@color/color_code_2"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:minHeight="?attr/actionBarSize"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -41,9 +42,9 @@
 
                         <TextView
                             android:id="@+id/btn_my_page_edit"
-                            style="@style/text25.bold"
+                            style="@style/text20"
                             android:layout_width="80dp"
-                            android:layout_height="50dp"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="@string/detail_edit"
                             android:textColor="@color/white"
@@ -84,10 +85,10 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:text="@string/detail_name_example"
-                    style="@style/text35.bold"/>
+                    style="@style/text35"/>
                 <TextView
                     android:id="@+id/tv_my_page_mobile_person"
-                    style="@style/text25.bold"
+                    style="@style/text25"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
@@ -154,7 +155,7 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/detail_email"
                     android:layout_marginStart="20dp"
-                    style="@style/text20.bold"
+                    style="@style/text20"
                     />
                 <TextView
                     android:id="@+id/tv_my_page_email_person"
@@ -166,7 +167,7 @@
                     android:text="@string/detail_email_example"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
-                    style="@style/text25.bold"/>
+                    style="@style/text20"/>
                 <View
                     android:id="@+id/view_line3"
                     android:layout_width="390dp"
@@ -186,7 +187,7 @@
                     android:text="@string/detail_group"
                     android:layout_marginBottom="10dp"
                     android:layout_marginStart="20dp"
-                    style="@style/text20.bold"/>
+                    style="@style/text20"/>
                 <TextView
                     android:id="@+id/tv_my_page_group_person"
                     android:layout_width="0dp"
@@ -197,7 +198,7 @@
                     android:text="@string/detail_group_person"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
-                    style="@style/text25.bold"/>
+                    style="@style/text20"/>
                 <View
                     android:id="@+id/view_line4"
                     android:layout_width="390dp"
@@ -217,7 +218,7 @@
                     android:text="@string/detail_birth"
                     android:layout_marginStart="20dp"
                     android:layout_marginBottom="10dp"
-                    style="@style/text20.bold"/>
+                    style="@style/text20"/>
                 <TextView
                     android:id="@+id/tv_my_page_birth_person"
                     android:layout_width="0dp"
@@ -228,7 +229,7 @@
                     android:text="@string/detail_birth_person"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
-                    style="@style/text25.bold"/>
+                    style="@style/text20"/>
                 <View
                     android:id="@+id/view_line5"
                     android:layout_width="390dp"
@@ -248,7 +249,7 @@
                     android:text="@string/detail_mbti"
                     android:layout_marginBottom="10dp"
                     android:layout_marginStart="20dp"
-                    style="@style/text20.bold"/>
+                    style="@style/text20"/>
                 <TextView
                     android:id="@+id/tv_my_page_mbti_person"
                     android:layout_width="0dp"
@@ -259,7 +260,7 @@
                     android:text="@string/detail_mbti_person"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
-                    style="@style/text25.bold"/>
+                    style="@style/text20"/>
                 <View
                     android:id="@+id/view_line6"
                     android:layout_width="390dp"
@@ -279,7 +280,7 @@
                     android:text="@string/detail_notify"
                     android:layout_marginBottom="10dp"
                     android:layout_marginStart="20dp"
-                    style="@style/text20.bold"/>
+                    style="@style/text20"/>
 
                 <TextView
                     android:id="@+id/tv_my_page_notify_person"
@@ -310,7 +311,7 @@
                     android:text="@string/detail_memo"
                     android:layout_marginBottom="10dp"
                     android:layout_marginStart="20dp"
-                    style="@style/text20.bold"/>
+                    style="@style/text20"/>
                 <TextView
                     android:id="@+id/tv_my_page_memo_person"
                     android:layout_width="0dp"
@@ -321,7 +322,7 @@
                     android:text="@string/detail_memo_person"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
-                    style="@style/text25.bold"/>
+                    style="@style/text20"/>
                 <View
                     android:id="@+id/view_line8"
                     android:layout_width="390dp"
