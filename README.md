@@ -1,11 +1,52 @@
-<img src="https://github.com/intermediate-one/Contact-App/assets/62335652/d0d27662-9fc8-4f36-a9be-8d7eb620c686" height="200" />
-띠리링!
+<h1 align="center">
+<img width="80px" src="https://github.com/intermediate-one/Contact-App/assets/62335652/d0d27662-9fc8-4f36-a9be-8d7eb620c686" align="center" alt="" />
+&nbsp
+<img width="160px" src="https://github.com/intermediate-one/Contact-App/assets/62335652/671bc274-f7f4-4bd2-8c5b-55269ecd9a54" align="center" alt="" />
+</h1>
+ <p align="center">
+   <a>간편하고 이쁜 UI의 연락처 앱!</a>
+   <br />
+  </p>
+  <p align="center">
+    <a> 프로젝트 팀원</a>
+    <br />
+    <a href="https://github.com/jericho31">이용제</a>
+    ·
+    <a href="https://github.com/kgdrjsen">김건두</a>
+    ·
+    <a href="https://github.com/eun-24k">김은이</a>
+    ·
+    <a href="https://github.com/UChangh">홍유창</a>
+  </p>
+  <p align="center">
+    <a>페이지 상세 설명</a>
+    <br />
+    <a href="https://github.com/intermediate-one/Contact-App/blob/main/Md/ContactListFragment.md">연락처 목록 탭</a>
+    ·
+    <a href="https://github.com/intermediate-one/Contact-App/blob/main/Md/GroupFragment.md">그룹별 보기 탭</a>
+    ·
+    <a href="https://github.com/intermediate-one/Contact-App/blob/main/Md/MyPageFragment.md">마이페이지 탭</a>
+    ·
+    <a href="https://github.com/intermediate-one/Contact-App/blob/main/Md/AddContactActivity.md">연락처 추가 페이지</a>
+    ·
+    <a href="https://github.com/intermediate-one/Contact-App/blob/main/Md/Detail.md">연락처 상세정보 페이지</a>
+  </p>
+</p>
+ <h3 align = "center">PreView</h3>
+
+ <p align ="center">
+ <img alt="" src ="https://github.com/intermediate-one/Contact-App/assets/62335652/952c94f7-c45d-4070-acea-cc26f8471d2e" height="380"/>
+ <img alt="" src ="https://github.com/intermediate-one/Contact-App/assets/62335652/520ef269-ccf6-4692-a51b-c125eccec61b" height="380" />
+ <img alt="" src ="https://github.com/intermediate-one/Contact-App/assets/62335652/4f679fa9-2337-4caa-bc22-437b86c1c778" height="380" />
+ <img alt="" src ="https://github.com/intermediate-one/Contact-App/assets/62335652/7d0d2bc5-66db-433c-be6d-2b8832cbd893" height="380" />
+ <img alt="" src ="https://github.com/intermediate-one/Contact-App/assets/62335652/cb2bdc5f-19a6-4767-b3ae-02b993f475b5" height="380" />
+ <img alt="" src ="https://github.com/intermediate-one/Contact-App/assets/62335652/704791c2-8f78-459b-84d3-f2365e3b940c" height="380" />
+ <img alt="" src ="https://github.com/intermediate-one/Contact-App/assets/62335652/a77d9260-0b99-4571-87e3-508a69b6fe6a" height="380" />
+</p>
+
 
 # Contact-App
 앱개발 숙련 팀플 - 연락처 앱
-
-
-
 
 ### 프로젝트 팀원
 이용제, 김은이, 홍유창, 김건두
