@@ -10,9 +10,7 @@ import com.example.contactapp.data.ContactData
 import com.example.contactapp.data.ContactDatabase.nameSorting
 import com.example.contactapp.databinding.LayoutRvUserBinding
 import com.example.contactapp.databinding.LayoutRvUserGridBinding
-import com.example.contactapp.fragment.ContactListFragment
 import com.example.contactapp.fragment.ContactListFragment.Companion.listGrid
-import com.example.contactapp.fragment.ContactListFragment.Companion.sorted
 
 class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var holdList:Holder
@@ -28,17 +26,6 @@ class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerVie
     }
     var itemClick : ItemClick? = null
 
-    interface ItemLongClick {
-        fun onLongClick(view : View, position: Int)
-    }
-    var itemLongClick : ItemLongClick? = null
-
-
-
-
-    interface ItemFilter{
-        fun filter(list:List<ContactData>)
-    }
     inner class Holder(binding: LayoutRvUserBinding):RecyclerView.ViewHolder(binding.root) {
         val image = binding.ivRvUser
         val name = binding.tvRvUserName
@@ -73,9 +60,6 @@ class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerVie
         holder.itemView.setOnClickListener{
             itemClick?.onClick(it,position)
         }
-//        holder.itemView.setOnClickListener {
-//            itemLongClick?.onLongClick(it,position)
-//        }
 
 
         when(listGrid) {
