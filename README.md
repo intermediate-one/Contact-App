@@ -68,6 +68,13 @@
 
 <Figma 링크>
 
+<p align="center">
+ <a href="https://www.figma.com/file/FBuwfsaWWQwWYkBMvutzhS?&viewer=1">
+  <img alt="Wire Frame" src="https://github.com/intermediate-one/Contact-App/assets/62335652/8522dc45-84be-45ba-a834-04a110bc4e10" />
+ </a>
+</p>
+
+
 [//]: # (<p align="center">)
 
 [//]: # ( <a href="https://www.figma.com/file/W77t6eKPMSJsTW6WhqeqCJ/%EB%B3%84%EA%B0%9C%EB%83%A5?type=design&mode=design&t=WLSCOLn5fvtgA33U-1">)
