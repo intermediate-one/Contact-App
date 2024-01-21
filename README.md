@@ -31,10 +31,13 @@
 
 <Figma 링크>
 
-<p align="center">
- <a href="https://www.figma.com/file/W77t6eKPMSJsTW6WhqeqCJ/%EB%B3%84%EA%B0%9C%EB%83%A5?type=design&mode=design&t=WLSCOLn5fvtgA33U-1">
-  <img alt="와이어프레임" src="https://github.com/heesoo-park/TeamAssignment3_2/assets/116724657/901448b8-cb81-49bb-a4bb-ef29a7fa5121"
-</p>
+[//]: # (<p align="center">)
+
+[//]: # ( <a href="https://www.figma.com/file/W77t6eKPMSJsTW6WhqeqCJ/%EB%B3%84%EA%B0%9C%EB%83%A5?type=design&mode=design&t=WLSCOLn5fvtgA33U-1">)
+
+[//]: # (  <img alt="와이어프레임" src="https://github.com/heesoo-park/TeamAssignment3_2/assets/116724657/901448b8-cb81-49bb-a4bb-ef29a7fa5121")
+
+[//]: # (</p>)
 
 ### 역할 분담
 박희수 : 사용자 정보 저장소 구현 & 메인 페이지 구현 & 프로필 이미지 선택 페이지 구현 & 발표 & 가로모드 구현
