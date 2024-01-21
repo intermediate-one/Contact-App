@@ -99,7 +99,7 @@ class DetailActivity : AppCompatActivity() {
         }
 
         //뒤로가기(리스트로)
-        binding.layoutDetailBack.setOnClickListener {
+        binding.ivDetailBack.setOnClickListener {
             //리스트로 즐겨찾기 변한 값 넘기기
             val intent = Intent(this, ContactListFragment::class.java)
             intent.putExtra(Contants.ITEM_INDEX, position)
