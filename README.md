@@ -1,13 +1,14 @@
+# Contact-App
+
 <h1 align="center">
-<img width="80px" src="https://github.com/intermediate-one/Contact-App/assets/62335652/d0d27662-9fc8-4f36-a9be-8d7eb620c686" align="center" alt="" />
+<img height="90px" src="https://github.com/intermediate-one/Contact-App/assets/62335652/d0d27662-9fc8-4f36-a9be-8d7eb620c686" align="center" alt="" />
 &nbsp
-<img width="160px" src="https://github.com/intermediate-one/Contact-App/assets/62335652/671bc274-f7f4-4bd2-8c5b-55269ecd9a54" align="center" alt="" />
+<img height="80px" src="https://github.com/intermediate-one/Contact-App/assets/62335652/671bc274-f7f4-4bd2-8c5b-55269ecd9a54" align="center" alt="" />
 </h1>
  <p align="center">
    <a>간편하고 이쁜 UI의 연락처 앱!</a>
    <br />
-  </p>
-  <p align="center">
+   <br />
     <a> 프로젝트 팀원</a>
     <br />
     <a href="https://github.com/jericho31">이용제</a>
@@ -17,8 +18,8 @@
     <a href="https://github.com/eun-24k">김은이</a>
     ·
     <a href="https://github.com/UChangh">홍유창</a>
-  </p>
-  <p align="center">
+   <br />
+   <br />
     <a>페이지 상세 설명</a>
     <br />
     <a href="https://github.com/intermediate-one/Contact-App/blob/main/Md/ContactListFragment.md">연락처 목록 탭</a>
@@ -30,7 +31,6 @@
     <a href="https://github.com/intermediate-one/Contact-App/blob/main/Md/AddContactActivity.md">연락처 추가 페이지</a>
     ·
     <a href="https://github.com/intermediate-one/Contact-App/blob/main/Md/Detail.md">연락처 상세정보 페이지</a>
-  </p>
 </p>
  <h3 align = "center">PreView</h3>
 
@@ -42,14 +42,10 @@
  <img alt="" src ="https://github.com/intermediate-one/Contact-App/assets/62335652/cb2bdc5f-19a6-4767-b3ae-02b993f475b5" height="380" />
  <img alt="" src ="https://github.com/intermediate-one/Contact-App/assets/62335652/704791c2-8f78-459b-84d3-f2365e3b940c" height="380" />
  <img alt="" src ="https://github.com/intermediate-one/Contact-App/assets/62335652/a77d9260-0b99-4571-87e3-508a69b6fe6a" height="380" />
-</p>
-
-
-# Contact-App
-앱개발 숙련 팀플 - 연락처 앱
+ </p>
 
 ### 프로젝트 팀원
-이용제, 김은이, 홍유창, 김건두
+이용제, 김건두, 김은이, 홍유창 
 
 ### 앱 이름
 띠리링!
@@ -95,20 +91,20 @@
 
 가장 기본적인 부분에 대한 코드 컨벤션을 다음과 같이 설정했다.
 
-| 제목                        |내용|
-|---------------------------|---|
-| 클래스 이름                    |PascalCase|
-| 함수 이름                     |camelCase|
-| 변수 이름                     |camelCase|
-| 문자열 리소스 이름                |snake_case|
-| 문자열 이름                    |(페이지_)용도|
-| 레이아웃 이름                   |속성_페이지_위치|
-| 뷰 이름                      |속성_페이지_용도(_사용방법)|
-| 리스트 내 변수                  |엔터로 정리|
-| enum class 내 변수 이름        |모두 다 대문자|
-| drawable 내 이미지/셀렉터/아이콘 이름 |img/selector/ic(_위치)_용도|
-| 조건이 3개 이상일 때              |when 사용|
-| 기본적인 코드 정리                |CTRL + ALT + L|
+| 제목                        | 내용                      |
+|---------------------------|-------------------------|
+| 클래스 이름                    | PascalCase              |
+| 함수 이름                     | camelCase               |
+| 변수 이름                     | camelCase               |
+| 문자열 리소스 이름                | snake_case              |
+| 문자열 이름                    | (페이지_)용도                |
+| 레이아웃 이름                   | 속성_페이지_위치               |
+| 뷰 이름                      | 속성_페이지_용도(_사용방법)        |
+| 리스트 내 변수                  | 엔터로 정리                  |
+| enum class 내 변수 이름        | 모두 다 대문자                |
+| drawable 내 이미지/셀렉터/아이콘 이름 | img/selector/ic(_위치)_용도 |
+| 조건이 3개 이상일 때              | when 사용                 |
+| 기본적인 코드 정리                | CTRL + ALT + L          |
 
 ### 협업 관련 사항 조정
 **안드로이드 스튜디오** 사용
