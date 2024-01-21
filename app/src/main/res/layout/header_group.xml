@@ -6,7 +6,7 @@
     android:background="@color/default_background">
 
     <TextView
-        style="@style/text20.bold"
+        style="@style/text20"
         android:id="@+id/tv_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
