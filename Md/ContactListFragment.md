@@ -250,9 +250,3 @@ class ContactListAdapter(private var userDataList:List<ContactData>):RecyclerVie
     override fun getItemCount(): Int = userDataList.size
 }
 ```
--------------
-
-버그발생!
-사용자 추가 후 추가된 사용자를 클릭한 후에 즐겨찾기에 추가를 하게 될 경우
--> 기존의 사용자 아이템을 버그조건과 동일하게 진행했을 경우 => 문제가 발생하지 않음
--> 바로 위 아이템을 포함해 2개의 아이템의 이름? 값? 이 바뀌는 문제 발생
