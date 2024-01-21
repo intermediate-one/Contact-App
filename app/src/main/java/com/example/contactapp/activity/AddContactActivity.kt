@@ -123,6 +123,12 @@ class AddContactActivity : AppCompatActivity() {
     private fun initView() {
 
         if (actType == ActType.EDIT_DETAIL || actType == ActType.EDIT_MY_PAGE) setDataToViews()
+        if (actType == ActType.EDIT_MY_PAGE) {
+            binding.apply {
+                etAddContactName.setText("")
+                etAddContactNumber.setText("")
+            }
+        }
 
         setTextChangedListener()
         setOnFocusChangedListener()

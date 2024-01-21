@@ -1,14 +1,51 @@
-<img src="https://github.com/intermediate-one/Contact-App/assets/62335652/d0d27662-9fc8-4f36-a9be-8d7eb620c686" height="200" />
-띠리링!
-
 # Contact-App
-앱개발 숙련 팀플 - 연락처 앱
 
+<h1 align="center">
+<img height="90px" src="https://github.com/intermediate-one/Contact-App/assets/62335652/d0d27662-9fc8-4f36-a9be-8d7eb620c686" align="center" alt="" />
+&nbsp
+<img height="80px" src="https://github.com/intermediate-one/Contact-App/assets/62335652/671bc274-f7f4-4bd2-8c5b-55269ecd9a54" align="center" alt="" />
+</h1>
+ <p align="center">
+   <a>간편하고 이쁜 UI의 연락처 앱!</a>
+   <br />
+   <br />
+    <a> 프로젝트 팀원</a>
+    <br />
+    <a href="https://github.com/jericho31">이용제</a>
+    ·
+    <a href="https://github.com/kgdrjsen">김건두</a>
+    ·
+    <a href="https://github.com/eun-24k">김은이</a>
+    ·
+    <a href="https://github.com/UChangh">홍유창</a>
+   <br />
+   <br />
+    <a>페이지 상세 설명</a>
+    <br />
+    <a href="https://github.com/intermediate-one/Contact-App/blob/main/Md/ContactListFragment.md">연락처 목록 탭</a>
+    ·
+    <a href="https://github.com/intermediate-one/Contact-App/blob/main/Md/GroupFragment.md">그룹별 보기 탭</a>
+    ·
+    <a href="https://github.com/intermediate-one/Contact-App/blob/main/Md/MyPageFragment.md">마이페이지 탭</a>
+    ·
+    <a href="https://github.com/intermediate-one/Contact-App/blob/main/Md/AddContactActivity.md">연락처 추가 페이지</a>
+    ·
+    <a href="https://github.com/intermediate-one/Contact-App/blob/main/Md/Detail.md">연락처 상세정보 페이지</a>
+</p>
+ <h3 align = "center">PreView</h3>
 
-
+ <p align ="center">
+ <img alt="" src ="https://github.com/intermediate-one/Contact-App/assets/62335652/952c94f7-c45d-4070-acea-cc26f8471d2e" height="380"/>
+ <img alt="" src ="https://github.com/intermediate-one/Contact-App/assets/62335652/520ef269-ccf6-4692-a51b-c125eccec61b" height="380" />
+ <img alt="" src ="https://github.com/intermediate-one/Contact-App/assets/62335652/4f679fa9-2337-4caa-bc22-437b86c1c778" height="380" />
+ <img alt="" src ="https://github.com/intermediate-one/Contact-App/assets/62335652/7d0d2bc5-66db-433c-be6d-2b8832cbd893" height="380" />
+ <img alt="" src ="https://github.com/intermediate-one/Contact-App/assets/62335652/cb2bdc5f-19a6-4767-b3ae-02b993f475b5" height="380" />
+ <img alt="" src ="https://github.com/intermediate-one/Contact-App/assets/62335652/704791c2-8f78-459b-84d3-f2365e3b940c" height="380" />
+ <img alt="" src ="https://github.com/intermediate-one/Contact-App/assets/62335652/a77d9260-0b99-4571-87e3-508a69b6fe6a" height="380" />
+ </p>
 
 ### 프로젝트 팀원
-이용제, 김은이, 홍유창, 김건두
+이용제, 김건두, 김은이, 홍유창 
 
 ### 앱 이름
 띠리링!
@@ -31,6 +68,13 @@
 
 <Figma 링크>
 
+<p align="center">
+ <a href="https://www.figma.com/file/FBuwfsaWWQwWYkBMvutzhS?&viewer=1">
+  <img alt="Wire Frame" src="https://github.com/intermediate-one/Contact-App/assets/62335652/8522dc45-84be-45ba-a834-04a110bc4e10" />
+ </a>
+</p>
+
+
 [//]: # (<p align="center">)
 
 [//]: # ( <a href="https://www.figma.com/file/W77t6eKPMSJsTW6WhqeqCJ/%EB%B3%84%EA%B0%9C%EB%83%A5?type=design&mode=design&t=WLSCOLn5fvtgA33U-1">)
@@ -40,13 +84,13 @@
 [//]: # (</p>)
 
 ### 역할 분담
-이용제 : MyPageFragment,연락처 복사,알림, 깃과 전체적인 코드 관리
+이용제 : MyPageFragment, 갤러리 이미지 가져오기, 연락처 복사, 푸시 예약 알림, 깃과 전체적인 코드 관리
+
+김건두 : DetailActivity, 전화걸기, 문자보내기
 
 김은이 : ContactActivity, GroupFragment, AddContactActivity, Dialog
 
 홍유창 : ContactListFragment
-
-김건두 : DetailActivity, 전화걸기, 문자보내기
 
 
 ### 코드 컨벤션
@@ -54,20 +98,20 @@
 
 가장 기본적인 부분에 대한 코드 컨벤션을 다음과 같이 설정했다.
 
-| 제목                        |내용|
-|---------------------------|---|
-| 클래스 이름                    |PascalCase|
-| 함수 이름                     |camelCase|
-| 변수 이름                     |camelCase|
-| 문자열 리소스 이름                |snake_case|
-| 문자열 이름                    |(페이지_)용도|
-| 레이아웃 이름                   |속성_페이지_위치|
-| 뷰 이름                      |속성_페이지_용도(_사용방법)|
-| 리스트 내 변수                  |엔터로 정리|
-| enum class 내 변수 이름        |모두 다 대문자|
-| drawable 내 이미지/셀렉터/아이콘 이름 |img/selector/ic(_위치)_용도|
-| 조건이 3개 이상일 때              |when 사용|
-| 기본적인 코드 정리                |CTRL + ALT + L|
+| 제목                        | 내용                      |
+|---------------------------|-------------------------|
+| 클래스 이름                    | PascalCase              |
+| 함수 이름                     | camelCase               |
+| 변수 이름                     | camelCase               |
+| 문자열 리소스 이름                | snake_case              |
+| 문자열 이름                    | (페이지_)용도                |
+| 레이아웃 이름                   | 속성_페이지_위치               |
+| 뷰 이름                      | 속성_페이지_용도(_사용방법)        |
+| 리스트 내 변수                  | 엔터로 정리                  |
+| enum class 내 변수 이름        | 모두 다 대문자                |
+| drawable 내 이미지/셀렉터/아이콘 이름 | img/selector/ic(_위치)_용도 |
+| 조건이 3개 이상일 때              | when 사용                 |
+| 기본적인 코드 정리                | CTRL + ALT + L          |
 
 ### 협업 관련 사항 조정
 **안드로이드 스튜디오** 사용
@@ -140,7 +184,12 @@ Readme.md를 이용해서 개발 기록 작성 및 트러블 슈팅 관련 사�
 3) StickyHeader가 표시하는 아이템의 갯수가 0개가 되면 다른 Header에 의해 바깥으로 밀려나감
 
 #### 11. notification
-1) 연락처 설정에서 생일을 입력하면, 해당 날짜가 될 때 알림을 수신함
+1) 연락처 수정에서 생일 알림을 설정하면 해당 날짜가 될 때 알림을 수신함
+2) 연락처 수정에서 5초뒤, 5분뒤, 10분뒤 알림을 설정하면 해당 시간 이후 알림을 수신함
+
+#### 12. 갤러리에서 이미지 가져오기
+1) 연락처 수정에서 이미지 영역을 누르면 갤러리에서 이미지를 선택하여 가져옴
+2) 가져온 이미지는 Uri를 절대경로로 변경하여 저장
 
 ## TroubleShooting
 - Github Organization Repository 추가 문제 -> 해결
